@@ -1,0 +1,137 @@
+/*
+======== FONDO ANIMACIONES=========
+*/
+
+.animate-left {
+  animation-duration: 1s;
+  animation-name: slideleft;
+}
+
+.animate-right {
+  animation-duration: 1s;
+  animation-name: slideright;
+}
+
+.animate-bottom {
+  animation-duration: 1s;
+  animation-name: slide_bottom;
+}
+
+.show-left {
+  animation-duration: 1s;
+  animation-name: showleft;
+}
+
+@-webkit-keyframes slideleft {
+  from {
+    margin-left: 40%;
+    width: 100%
+  }
+  to {
+    margin-left: 0%;
+    width: 100%;
+  }
+}
+
+@-moz-keyframes slideleft {
+    from {
+    margin-left: 40%;
+    width: 100%
+  }
+  to {
+    margin-left: 0%;
+    width: 100%;
+  }
+}
+
+@keyframes slideleft {
+  from {
+    margin-left: 40%;
+    width: 100%
+  }
+  to {
+    margin-left: 0%;
+    width: 100%;
+  }
+}
+
+@-webkit-keyframes slideright {
+    from {
+    margin-left: -40%;
+    width: 100%
+  }
+  to {
+    margin-left: 0%;
+    width: 100%;
+  }
+}
+
+@-moz-keyframes slideright {
+    from {
+    margin-left: -40%;
+    width: 100%
+  }
+  to {
+    margin-left: 0%;
+    width: 100%;
+  }
+}
+
+@keyframes slideright {
+  from {
+    margin-left: -40%;
+    width: 100%
+  }
+  to {
+    margin-left: 0%;
+    width: 100%;
+  }
+}
+
+@keyframes showleft {
+ from {
+    margin-left: -40%;
+  }
+  to {
+    margin-left: 0%;
+  }
+}
+
+
+
+@-webkit-keyframes slide_bottom {
+  from {
+    margin-bottom: 100%;
+    /*width: 100%*/
+  }
+  to {
+    margin-bottom: 0%;
+    /*width: 100%;*/
+  }
+}
+
+@-moz-keyframes slide_bottom {
+  from {
+    margin-bottom: 100%;
+    /*width: 100%*/
+  }
+  to {
+    margin-bottom: 0%;
+    /*width: 100%;*/
+  }
+}
+
+@keyframes slide_bottom {
+  from {
+    margin-bottom: 100%;
+    /*width: 100%*/
+  }
+  to {
+    margin-bottom: 0%;
+    /*width: 100%;*/
+  }
+}
+
+/*
+======== FIN - ANIMACIONES =========
+*/

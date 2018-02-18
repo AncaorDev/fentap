@@ -1,0 +1,25 @@
+#content-form{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: rgba(14, 17, 9,.9);
+	color: rgb(255, 49, 49);
+	border:4px solid white;
+	-webkit-box-shadow: 1px -1px 5px 0px rgba(85, 16, 1,6.75);
+	-moz-box-shadow: 1px -1px 5px 0px rgba(85, 16, 1,6.75);
+	box-shadow: 1px -1px 5px 0px rgba(85, 16, 1,6.75);
+
+}
+.form-contact{
+	padding-top: 20px;
+	padding-bottom: 20px;
+	display: block;
+}
+
+input.form-control{
+	border-radius: 2px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	padding-left: 6px;
+	padding-right: 6px;
+	height: auto;
+}

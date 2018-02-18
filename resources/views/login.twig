@@ -1,0 +1,15 @@
+{% extends "base.twig" %}
+{% block title %} Inicio {% endblock %}
+{% block head %}{{parent()}}
+<link rel="stylesheet" type="text/css" href="./css/inicio.css?id={{random()}}">
+{% endblock %}
+{% block content %}
+<section id="inicio">
+	{% include 'includes/header.twig' %}
+	
+	<div class="content-cabecera">
+		
+	</div>
+</section>
+
+{% endblock %}

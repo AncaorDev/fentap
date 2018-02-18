@@ -1,0 +1,73 @@
+/*Aviso: Las fuentes siguien estan siendo usada bajo la
+SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007 
+los respectivos derechos de creación les pertenece a sus autores.
+*/
+
+/*---------------------------------------
+	Sarala
+---------------------------------------*/
+@font-face {
+   font-family: "Sarala";
+   font-style: normal;
+   font-weight: normal;
+   src: url('Sarala/Sarala-Regular.ttf');
+}
+@font-face {
+   font-family: "Sarala";
+   font-style: normal;
+   font-weight: 700;
+   src: url('Sarala/Sarala-Bold.ttf');
+}
+
+/*---------------------------------------
+	Abel
+---------------------------------------*/
+@font-face {
+   font-family: "Abel";
+   font-style: normal;
+   font-weight: normal;
+   src: url('Abel/abel-regular.ttf');
+}
+
+/*Aviso: Las fuentes siguien estan siendo usada bajo la
+Apache License Version 2.0, January 2004
+los respectivos derechos de creación les pertenece a sus autores.
+*/
+/*---------------------------------------
+	Amble
+---------------------------------------*/
+@font-face {
+   font-family: "Amble";
+   font-style: italic;
+   font-weight: normal;
+   src: url('Amble/Amble-Italic.ttf');
+}
+
+@font-face {
+   font-family: "Amble";
+   font-style: italic;
+   font-weight: bold;
+   src: url('Amble/Amble-BoldItalic.ttf');
+}
+
+
+@font-face {
+   font-family: "Amble";
+   font-style: normal;
+   font-weight: 100;
+   src: url('Amble/Amble-Light.ttf');
+}
+
+@font-face {
+   font-family: "Amble";
+   font-style: italic;
+   font-weight: 100;
+   src: url('Amble/Amble-LightItalic.ttf');
+}
+
+@font-face {
+   font-family: "Amble";
+   font-style: normal;
+   font-weight: normal;
+   src: url('Amble/Amble-Regular.ttf');
+}

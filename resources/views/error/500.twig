@@ -1,0 +1,31 @@
+{% extends "base.twig" %}
+{% block title %} Inicio {% endblock %}
+{% block head %}{{parent()}}
+<link rel="stylesheet" type="text/css" href="./css/error.css">
+{% endblock %}
+{% block content %}
+<section id="inicio" style="background: url(./images/fondos/lock.png);background-size: cover;">
+	<div class="inicio-cabecera">
+		<h3 class="txt-cbc"> Ancaor </h3>
+		<p class="txtsub-cbc">"Ama lo que haces"</p>
+	</div>
+	<div>
+		<nav class="inicio-nav" id="cbc">
+			<ul>
+				<li class="none"><a class="normal" href="#inicio">Inicio</a></li>
+				<li class="none"><a class="normal" href="#diseno"> Lykrune </a></li>
+				<li class="none"><a class="normal" href="#about"> LunarCode </a></li>
+			</ul>
+		</nav>
+	</div>
+	<div class="content-cabecera">
+		<h3 id="text-logo-body" class="text-logo-body animate-left"><img src="./images/lock.png" alt="Ancaor Logo">  </h3>
+		<div class="separador">
+			<hr>
+		</div>
+		<p id="text-frase" class="txt-msj animate-right">{{ "ERROR 500" }}</p>
+		<p id="text-frase" class="animate-left">{{ datos }}</p>
+		<h3 id="none"> </h3>
+	</div>
+</section>
+{% endblock %}

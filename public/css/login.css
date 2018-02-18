@@ -1,0 +1,5 @@
+.prueba {
+	background-color: var(--color_prueba);
+	height: 80px;
+	color:var(--letras);
+}

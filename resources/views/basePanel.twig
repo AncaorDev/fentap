@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+{% block head %}
+<head>
+<base href="{{BASE}}" target="_self" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, user-scalable=no">
+<meta name="Author" content="{{AUTHOR}}" />
+<meta property='og:locale' content='es_ES'/>
+<meta property='og:type' content='website'/>
+<meta property='og:url' content="{{ BASE }}">
+<meta property='og:image' content="{{BASE}}images/ancaor/logo_ancaor(128x128).png">
+<meta property='og:site_name' content='{{ WEBSITE }}'/>
+<meta name="robots" content="index,follow">
+<meta name="description" content="Ancaor, Lykrune Art, RunceCube Dev">
+<meta name="keywords" content="Anthony Cajacuri Ordoñez, Ancaor, Programación, Lykrune, Design, Diseño Web">
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="./images/favicon/Ancaor2017.ico">
+<meta name="msapplication-TileColor" content="#0E2F80">
+<meta name="msapplication-TileImage" content="images/favicon/logo_ancaor(32x32).ico">
+<meta name="theme-color" content="#FF3131">
+<!-- Bootstrap -->
+<link href="{{DIR_LIBS}}bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome -->
+<link href="{{DIR_LIBS}}font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<!-- NProgress -->
+<link href="{{DIR_LIBS}}nprogress/nprogress.css" rel="stylesheet">
+<!-- iCheck -->
+<link href="{{DIR_LIBS}}iCheck/skins/flat/green.css" rel="stylesheet">
+<!-- bootstrap-progressbar -->
+<link href="{{DIR_LIBS}}bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+<!-- Datatables -->
+<link href="{{DIR_LIBS}}datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+<link href="{{DIR_LIBS}}datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+<link href="{{DIR_LIBS}}datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+<link href="{{DIR_LIBS}}datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+<link href="{{DIR_LIBS}}datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+<!-- JQVMap -->
+<link href="{{DIR_LIBS}}jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+<!-- bootstrap-daterangepicker -->
+<link href="{{DIR_LIBS}}bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+<!-- jquery Confirm -->
+<link href="{{DIR_LIBS}}jqueryConfirm/jquery-confirm.min.css" rel="stylesheet">
+<!-- Fontello -->
+<link rel="stylesheet" type="text/css" href="./css/fontello/css/fontello.css">
+<!-- Main Theme Style -->
+<link href="{{DIR_RS}}css/main.css" rel="stylesheet">
+<!-- LidPanel Theme Style -->
+<link href="{{DIR_RS}}css/panel/custom.min.css" rel="stylesheet">
+<!-- jQuery 1.11 -->
+<script src="{{DIR_LIBS}}jquery/1.11.0/jquery.min.1.11.0.js"></script>
+<!-- /jQuery 1.11 -->
+<!-- jquery Confirm -->
+<script src="{{DIR_LIBS}}jqueryConfirm/jquery-confirm.min.js"></script>
+<script src="{{DIR_LIBS}}clipboard/clipboard.min.js"></script>
+<!-- Main Theme Style -->
+<!-- <link href="<?=DIR_RS?>css/panel/lidpanel.css" rel="stylesheet"> -->
+{% endblock %}
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-75222059-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<title>{% block title %} {% endblock %} - Ancaor</title>
+</head>
+<body class="login">
+{% block content %}{% endblock %}
+  
+{% block footer %}
+
+{% endblock %}
+
+{% block postfooter %}{% endblock %}
+
+<script src="./js/jquery/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Organization",
+    "name" : "Ancaor",
+    "email" : "contacto@ancaor.com",
+    "url": "{{ BASE }}",
+    "logo": "{{ BASE }}images/ancaor/logo_ancaor(128x128).png",
+    "founder" :"Anthony Cajacuri Ordoñez",
+    "description" : "Creado con el fin de mostrar mis conocimientos de Programación y Diseño Web"
+  }
+</script>
+<script type="text/javascript" type="application/ld+json" charset="utf-8">
+
+</script>
+{# <script src="./js/generales.js?id={{random()}}"></script>
+<script src="./js/scroll.js?id={{random()}}"></script>
+<script src="./js/cambios.js?id={{random()}}"></script>
+<script src="./js/ajax.js?id={{random()}}"></script> #}
+</body>
+</html> 

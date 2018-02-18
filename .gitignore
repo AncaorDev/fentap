@@ -1,0 +1,7 @@
+known/
+.phpintel/
+app/log/
+vendor/
+node_modules/
+public/libs
+*.zip

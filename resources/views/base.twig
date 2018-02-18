@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>{% block title %} {% endblock %} - Fentap </title>
+{% block head %}
+<!-- Meta, title, CSS, favicons, etc. -->
+<!-- Metas -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, user-scalable=no">
+<base href="{{BASE}}" target="_self" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="Author" content="{{AUTHOR}}" />
+<meta property='og:locale' content='es_ES'/>
+<meta property='og:type' content='website'/>
+<meta property='og:url' content="{{ BASE }}">
+<meta property='og:image' content="{{BASE}}">
+<meta property='og:site_name' content='{{ WEBSITE }}'/>
+<meta name="robots" content="index,follow">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="">
+<meta name="msapplication-TileColor" content="">
+<meta name="msapplication-TileImage" content="">
+<meta name="theme-color" content="#4285F4">
+
+<!-- Bootstrap -->
+<link rel="stylesheet" type="text/css" href="{{DIR_LIBS}}bootstrap4/css/bootstrap.css">
+<link rel="stylesheet" href="{{DIR_LIBS}}mdb/css/mdb.css">
+<!-- Swiper -->
+<link rel="stylesheet" type="text/css" href="{{DIR_LIBS}}swiper/css/swiper.min.css">
+<!-- Material Bootstrap -->
+<!-- <link rel="stylesheet" type="text/css" href="{{DIR_LIBS}}bootstrap-material-design/css/bootstrap-material-design.min.css"> -->
+<!-- Fontello -->
+<link rel="stylesheet" type="text/css" href="./css/fontello/css/fontello.css?id={{random()}}">
+<!-- ESTILOS -->
+<link rel="stylesheet" type="text/css" href="./css/normalize.css">
+<link rel="stylesheet" type="text/css" href="./css/ancaor/fonts/fonts.css?id={{random()}}">
+<link rel="stylesheet" type="text/css" href="./css/main.css?id={{random()}}">
+<link rel="stylesheet" type="text/css" href="./css/JVectorMap/jquery-jvectormap-1.2.2.css?id={{random()}}">
+
+{% endblock %}
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-75222059-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</head>
+<body>
+{% block content %} {% endblock %}
+{% block footer %}
+{% include 'includes/footer.twig' %}
+{% endblock %}		
+{% block postfooter %}
+{% endblock %}
+<!-- <script src="{{DIR_LIBS}}jquery/jquery.min-1.4.2.js"></script> -->
+<script src="{{DIR_LIBS}}jquery/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{DIR_LIBS}}popper.js/popper.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{DIR_LIBS}}tether/js/tether.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{DIR_LIBS}}bootstrap4/js/bootstrap.bundle.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{DIR_LIBS}}bootstrap4/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{DIR_LIBS}}mdb/js/mdb.js" type="text/javascript" charset="utf-8"></script>
+<!-- <script src="{{DIR_LIBS}}bootstrap-material-design/js/bootstrap-material-design.min.js" type="text/javascript" charset="utf-8"></script> -->
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> -->
+<!-- <script src="{{DIR_LIBS}}mdb/js/mdb.js" type="text/javascript" charset="utf-8"></script> -->
+<!-- <script src="{{DIR_LIBS}}swiper/js/swiper.esm.js" type="text/javascript" charset="utf-8"></script> -->
+<script src="{{DIR_LIBS}}swiper/js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+<!-- Configuracion del Slider -->
+<!-- <script language="javascript" src="{{R_JS}}confSlider.js"></script> -->
+<script src="./js/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="./js/jvectormap/jvectormap.peru.js"></script>
+<script src="./js/configMapa.js"></script>
+<script type="text/javascript" type="application/ld+json" charset="utf-8">
+
+</script>
+<!-- <script src="./js/generales.js?id={{random()}}"></script>
+<script src="./js/scroll.js?id={{random()}}"></script>
+<script src="./js/cambios.js?id={{random()}}"></script> -->
+<script src="./js/ajax.js?id={{random()}}"></script>
+{% block script %}
+{% endblock %}
+</body>
+</html>
+
