@@ -80,22 +80,27 @@ gulp.task('bmd_js', function() {
 *************************** MDL FOR BOOTSTRAP *************************
 ***********************************************************************/
 // Ruta compilación Bootstrap Material Design
-var  bmd_css = lbs+'mdb/css/';
-var  bmd_js  = lbs+'mdb/js/';
+var  mdb_css = lbs+'mdb/css/';
+var  mdb_js  = lbs+'mdb/js/';
+var  mdb_img = lbs+'mdb/img/';
 
 // Copiando 
-gulp.task('mdl_sass', function() {
+gulp.task('mdb_css', function() {
     return gulp.src(['node_modules/mdbootstrap/css/mdb.css'])
-        .pipe(gulp.dest(bmd_css))
+        .pipe(gulp.dest(mdb_css))
 });
 
 // Copiando los archivos Js
-gulp.task('mdl_js', function() {
+gulp.task('mdb_js', function() {
     return gulp.src(['node_modules/mdbootstrap/js/mdb.js'])
-        .pipe(gulp.dest(bmd_js))
+        .pipe(gulp.dest(mdb_js))
 });
 
-
+// Copiando los archivos Js
+gulp.task('mdb_img', function() {
+    return gulp.src(['node_modules/mdbootstrap/img/**/*'])
+        .pipe(gulp.dest(mdb_img))
+});
 
 
 /***********************************************************************
@@ -165,5 +170,7 @@ gulp.task('ps', function() {
 
 gulp.task('run_b4', ['sass','js', 'fa', 'jq', 'fa_fonts','bmd_sass','bmd_js','tt_css','tt_js','ps','sw_css','sw_js']);
 
-gulp.task('run_mdl', ['sass','js', 'fa', 'jq', 'fa_fonts','mdl_sass','mdl_js','tt_css','tt_js','ps','sw_css','sw_js']);
+gulp.task('run_mdb', ['sass','js', 'fa', 'jq', 'fa_fonts','mdb_css','mdb_js','mdb_img','tt_css','tt_js','ps','sw_css','sw_js']);
+
+
 

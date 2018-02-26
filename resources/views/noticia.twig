@@ -1,0 +1,288 @@
+{% extends "base.twig" %}
+{% block title %} Sobre Nosotros {% endblock %}
+{% block head %}{{parent()}}
+
+{% endblock %}
+{% block content %}
+
+{% include 'includes/slider.twig' %}
+
+{% include 'includes/header.twig' %}
+<main>
+<!-- <h2 class="title-services pt-4 blue-text text-center">Nuestros Servicios</h2> -->
+ <!--Main layout-->
+<div class="container-fluid">
+    <!--Primera División-->
+    <div class="row pt-4">
+        <!--Card-1-->
+        <div class="d-sm-none d-md-block col-lg-3">
+            <!--Card-->
+{#             <div class="card wow fadeIn" data-wow-delay="0.4s">
+                <div class="card-header bg-primary text-center text-white">
+                    <!--Title-->
+                    Concejo Directorio Nacional
+                </div>
+                <!--Card content-->
+                <div class="card-body">
+                    <!--Text-->
+                    <p class="card-text">Servicios de calidad con respecto a la contrucción.</p>
+                    <a href="#" class="blue-text mt-0 d-flex flex-row-reverse">
+                        <h5 class="waves-effect p-2">Leer Mas</h5>
+                    </a>
+                </div>
+            </div> #}
+            <!--/.Card-->
+
+            <!--Card-->
+            <div class="card wow fadeIn" data-wow-delay="0.4s">
+                <div class="card-header bg-fentap3 text-center text-white">
+                    <!--Title-->
+                   Noticiones
+                </div>
+                <!--Card content-->
+                <div class="card-body py-1" style="background-color:rgb(22, 141, 171);">
+                    <!--Text-->
+                    {% for key, hidro_notice in datos['hidro'] %}
+                        <div class="content-notice row pt-1">                            
+                            <div class="col-sm-4 p-0">
+                                <img class="w-100" src="{{IMAGE}}fentap/noticias/defensoria_constata.jpg" alt="">
+                            </div>
+                            <div class="col-sm-8"> 
+                                <a href="">
+                                    <span class="font-weight-bold text-white p-0" style="font-size:11px;">Defensoría pide urgente intervención de Fiscalía y EPS Grau por colapso de desagües en 9 de Octubre de Sullana </span> 
+                                </a>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="d-flex pb-0 text-white">
+                                    <div class="mr-auto"> <span style="font-size:12px;" class="font-weight-light">Publicado en: EMPRESAS DE AGUA</span></div>
+                                    <div> <span class="font-weight-light" style="font-size:12px;">ENE 19, 2018</span> </div>
+                                </div>                                 
+                            </div>
+                        </div> 
+                        {% if key < 2 %}
+                             <hr>
+                        {% endif %}
+                       
+                    {% endfor %}                   
+                </div>
+            </div>
+            <!--/.Card-->
+            <!--Card-->
+            <div class="card wow fadeIn mt-2" data-wow-delay="0.4s">
+                <div class="card-header bg-fentap3 text-center text-white">
+                    <!--Title-->
+                   Galeria de Imagenes
+                </div>
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner" style="height:200px;">
+                    <div class="carousel-item active">
+                        <img class="d-block w-100" src="{{IMAGE}}fentap/noticias/defensoria_constata.jpg" alt="First slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{{IMAGE}}fentap/noticias/defensoria_constata.jpg" alt="Second slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="{{IMAGE}}fentap/noticias/defensoria_constata.jpg" alt="Third slide">
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+            </div>
+            <!--/.Card-->
+            <!--Card-->                       
+            <div class="card wow fadeIn mt-2" data-wow-delay="0.4s">
+                <div class="card-header bg-fentap3 text-center text-white">
+                    <!--Title-->
+                   Galeria de Videos
+                </div>
+                <div class="card-body p-0" style="height:200px;" style="background-color:rgb(22, 141, 171);">
+                    <div id="SlideShow" style="height:100%;">
+                      <!-- Slide Images -->
+                      <div class="slideobject">
+                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/WIjGeZ13-rQ" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                      </div>
+                      <div class="slideobject">
+                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/WIjGeZ13-rQ" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                      </div>
+                      <!-- Descriptions for Slides -->
+                      <div id="slide1" class="caption">This is the description for the first slide. <a href="#">Example of a link.</a></div>
+                    </div>
+                </div>
+            </div>
+            <!--/.Card-->
+            <hr>
+            <!--Card-->
+            <div class="card wow fadeIn bg-fentap1 text-white text-center" data-wow-delay="0.4s">
+                <!--Card content-->
+                <div class="card-body pt-4">
+                    <a class="text-white" href="construccion"><h2>LUCHA CONTRA LA CORRUCCIÓN</h2></a>               
+                </div>
+            </div>
+            <!--/.Card-->
+        </div>
+        <!--First columnn-->
+
+        <!--Second columnn-->
+        <div class="col-sm-6 col-lg-6">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{HOME}}">Inicio</a></li>
+                <li class="breadcrumb-item">Noticia</li>
+                <li class="breadcrumb-item active" aria-current="page">Titulo de la noticia</li>
+              </ol>
+            </nav>
+            <div class="card wow fadeIn" data-wow-delay="0.4s">
+                <div class="card-header card-header-title text-center text-white text-uppercase">
+                    <!--Title-->
+                    Mercurio, cadmio y plomo en los indígenas de Perú 
+                </div>
+                <!--Card content-->
+                <div class="card-body pt-0">
+                    <!--Text-->
+                    <div class="content-notice">
+                        <div class="d-flex pb-2">
+                            <div class="mr-auto"> <span style="font-size:12px;" class="font-weight-light">Autor : Ancaor</span></div>
+                            <div> <span class="font-weight-light" style="font-size:12px;">Fecha : 19/02/2018 </span> </div>
+                        </div>
+                          <p class="card-text text-justify card-body-title pt-3 color-fentap1"  style="font-size:19px;line-height:21px;">
+ Dos comunidades indígenas de la Amazonía peruana que viven próximas al oleoducto más grande del país tienen niveles corporales de mercurio, cadmio y plomo que pueden ser perjudiciales para la salud. Así lo concluye un estudio llevado a cabo entre el Instituto de Salud Global de Barcelona y el Centro Nacional de Salud Ocupacional y Protección del Medio Ambiente para la Salud de Perú, con el apoyo del Ministerio de Salud de Perú</p>
+                            <img class="w-100" src="{{IMAGE}}fentap/noticias/1.jpg" alt="">
+                            <p class="card-text text-justify card-body-title pt-3" style="line-height:15px;">
+http://www.agenciasinc.es – 12/02/18.- Un estudio liderado por Instituto de Salud Global de Barcelona (ISGlobal) ha evaluado los niveles corporales de mercurio, cadmio, plomo y arsénico en poblaciones cercanas al oleoducto Norperuano, el más gran del país.
+<br>
+La investigación, publicada en la revista Environmental Health, se propuso evaluar los niveles corporales de cuatro metales (mercurio, cadmio, plomo, arsénico) en las poblaciones de San Pedro y Cuninico (Loreto, Perú), comunidades indígenas de etnia Kukama, que se vieron afectadas por  dos vertidos importantes de petróleo en 2014 procedentes del oleoducto Norperuano.
+<br>
+“A pesar de que hay muchas personas potencialmente expuestas a la contaminación causada por la extracción de petróleo, prácticamente no hay estudios que evalúen los efectos en la salud de las poblaciones que viven cerca de las zonas de extracción y que se ven afectadas con frecuencia por vertidos de petróleo”, explica Cristina O’Callaghan Gordo, primera autora de la publicación e investigadora de ISGlobal.
+<br>
+El análisis, que se realizó 13 y 16 meses después de los derrames, en un grupo de 130 personas, encontró que el 50% de la población estudiada tenía niveles de mercurio en la orina superiores a los recomendados por el Ministerio de Salud del país. En el caso de los niños y niñas menores de 10 años, este porcentaje aumentaba hasta el 64%.
+<br>
+Para O’Callaghan Gordo, estos resultados “son preocupantes ya que la exposición al mercurio se asocia con problemas neurológicos, psicológicos, renales, respiratorios y cardiovasculares”. El petróleo crudo puede contener mercurio y otros metales, y se han reportado niveles elevados en el medio ambiente y organismos acuáticos alrededor de los sitios de extracción de petróleo y en áreas afectadas por vertidos.
+<br>
+Por otro lado, el 17% de la población estudiada también presentó niveles de cadmio en la orina superiores a los recomendados. La exposición al cadmio aumenta el riesgo de daño renal, incluido la insuficiencia renal crónica, y puede causar cáncer de pulmón, próstata y riñón.
+<br>
+Riesgos para la salud
+<br>
+En referencia al plomo, aunque ningún valor en sangre se considera seguro, el 19% de los niños y niñas menores de 10 años tenían concentraciones en sangre con un riesgo alto para la salud, según los varemos de los Centros para el Control y la Prevención de Enfermedades (CDC, Estados Unidos). La exposición al plomo se relaciona con riesgos neurológicos y alteración del comportamiento, incluida la capacidad intelectual reducida.
+<br>
+Ningún participante superó los niveles de arsénico que se consideran perjudiciales para la salud.
+<br>
+“Los derrames de petróleo pueden ser una fuente de exposición a estos metales, aunque no podemos excluir la existencia de otras fuentes de exposición, especialmente para el mercurio que se asocia también a otras actividades frecuentes en la Amazonía peruana, como la deforestación o la minería de oro”, añade la investigadora de ISGlobal.
+<br>
+Manolis Kogevinas, jefe del programa de Cáncer de ISGlobal y que también ha participado en el estudio, recomienda que las próximas investigaciones se centren en “evaluar las fuentes específicas de exposición” y que, en caso de un derrame, el seguimiento “se inicie en cuanto antes para recopilar datos que reflejen mejor la exposición a los contaminantes relacionados con el petróleo”.
+
+                        </p>
+                    </div>                
+                </div>
+            </div>
+        </div>
+        <!--Third columnn-->
+        <div class="col-lg-3">
+             <!--Card-->
+            <div class="card wow fadeIn" data-wow-delay="0.4s">
+                <div class="card-header card-header-title text-center text-white text-uppercase">
+                    <!--Title-->
+                    Hidroboletín 
+                </div>
+                <!--Card content-->
+                <div class="card-body pt-0">
+                    <!--Text-->
+                    {% for key, hidro_notice in datos['hidro'] %}
+                        <div class="content-notice">
+                            <p class="title text-left m-0 card-body-title pt-2 color-fentap1">"{{ hidro_notice.title }}"</p>
+                            <div class="d-flex pb-2">
+                                <div class="mr-auto"> <span style="font-size:12px;" class="font-weight-light">Autor : {{ hidro_notice.autor }}</span></div>
+                                <div> <span class="font-weight-light" style="font-size:12px;">Fecha : {{ hidro_notice.fecha }} </span> </div>
+                            </div>
+                            <p class="card-text text-justify card-body-parrafo" style="line-height:15px;">
+                               {{ hidro_notice.content }}<a class="btn btn-primary btn-sm px-2" style="padding-bottom:2px;padding-top:2px;" href="{{ hidro_notice.enlace }}">Leer más</a>
+                            </p>
+                        </div> 
+                        {% if key < 1 %}
+                             <hr>
+                        {% endif %}
+                       
+                    {% endfor %}                   
+                </div>
+            </div>
+            <!--/.Card-->
+            <hr>
+            <!--Card-->
+            <div class="card wow fadeIn" data-wow-delay="0.4s">
+                <div class="card-header text-center text-white">
+                    <!--Title-->
+                    Publicaciones:
+                </div>
+                <!--Card content-->
+                <div class="card-body pt-0">
+                    <!--Text-->
+                    {% for key, hidro_notice in datos['hidro'] %}
+                        <div class="d-flex pb-2">
+                            <div class="mr-auto"> <span style="font-size:12px;" class="font-weight-light">Autor : {{ hidro_notice.autor }}</span></div>
+                            <div> <span class="font-weight-light" style="font-size:12px;">Fecha : {{ hidro_notice.fecha }} </span> </div>
+                        </div>
+                        <div class="content-notice">
+                            <p class="title text-uppercase p-0 m-0">"{{ hidro_notice.title }}"</p>
+                            <p class="card-text text-justify" style="line-height:19px;">
+                               {{ hidro_notice.content }}<a class="btn btn-primary btn-sm px-2" style="padding-bottom:2px;padding-top:2px;" href="{{ hidro_notice.enlace }}">Leer más</a>
+                            </p>
+                        </div> 
+                        <hr>
+                    {% endfor %}                   
+                </div>
+            </div>
+            <!--/.Card-->
+             <hr>
+            <!--Card-->
+            <div class="card wow fadeIn bg-fentap1 text-white text-center" data-wow-delay="0.4s">
+                <!--Card content-->
+                <div class="card-body pt-4">
+                    <a class="text-white" href="construccion"><h2>NORMAS LEGALES</h2>   </a>               
+                </div>
+            </div>
+            <!--/.Card-->
+        </div>
+        <!--Third columnn-->
+    </div>
+    <!--/.Second row-->
+</div>
+<!--/.Main layout-->
+</main>
+{% endblock %}
+
+
+{% block script %}
+    <script>
+        $('#SlideShow').SlideShow();
+        $('.carouselExampleIndicators').carousel()
+        var swiper = new Swiper('.swiper-container', {
+        // autoHeight: true, //enable auto height
+        spaceBetween: 20,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        effect : 'cube',
+        autoplay: {
+           delay: 5000,
+        },
+        virtualTranslate : true,
+        loop: true
+        });
+    </script>
+{% endblock %}

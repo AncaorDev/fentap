@@ -28,19 +28,16 @@ function index() { //Función que se jecuta al recibir una variable del tipo con
 			} else {
 				F::redirect('login'); // Redirección en caso que no exista un metodo
 			}
-		} else { // Aquí en caso de que la vista sea publica 
+		} else { // Aquí en caso de que la vista sea pública 
 			// ---- En esta parte el programador es libre de manejarlo a su manera //
-
-			$datos = []; //creación de una variable array
-			/* Usamos la instancia del controlador para extraer lo que deseamos 
-				en {extractData} enviamos en nombre del modelo y lo que necesitamos
-				std = estado actual de la tabla en la BD, información general, ejem extractData('phrase|std')
-				count = nos mostrara el numero de datos encontrados
-			*/
-			$info = $this -> ctr -> extractData('phrase|count'); // asignación de datos a la variable array	
-			$num = mt_rand(0,$info['count']-1); // genero un número aleatorio 
-			$datos['frase'] = $info['phrase'][$num]['content_phrase']; // extraigo una frase aleatoria
-			// invoco al metodo estatico de la vista y muestro la vista
+			$content = 'Los dirigentes nativos piden el mejoramiento de la estructura del Oleoducto Norperuano, la compensación por los derrames de petróleo y la remediación por contaminación petrolera.';
+			$content = strlen($content) > 84 ? substr($content, 0, 84).'...' : $content ; 
+			$autor   = 'Ancaor';
+			$fecha   = '18/02/2018';
+			$title   = 'Loreto: Comunidades nativas desbloquearon cuencas tras acuerdo con el Gobierno';
+			$title   = strlen($title) > 84 ? substr($title, 0, 84).'...' : $title ; 
+			$datos['hidro'] = array(array('autor' => $autor,'fecha' =>  $fecha, 'title' => $title , 'content' => $content, 'enlace' => 'noticia'),
+						            array('autor' => $autor,'fecha' =>  $fecha, 'title' => $title , 'content' => $content, 'enlace' => 'noticia'));
 			View::renderPage('inicio',$this -> ctr -> ld,$datos);
 
 			// ---------------------------------------------------------------- //

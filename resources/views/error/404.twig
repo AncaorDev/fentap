@@ -1,32 +1,95 @@
 {% extends "base.twig" %}
-{% block title %} Inicio {% endblock %}
+{% block title %} Sobre Nosotros {% endblock %}
 {% block head %}{{parent()}}
-<link rel="stylesheet" type="text/css" href="./css/error.css">
+
+<style>
+    .swiper-container {
+      width: 100%;
+      height: 300px;
+    }
+    .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+      /* Center slide text vertically */
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+    }
+</style>
 {% endblock %}
 {% block content %}
-<section id="inicio" style="background: url(./images/fondos/no_lock.jpg);background-size: cover;">
-	<div class="inicio-cabecera">
-		<h3 class="txt-cbc"> Ancaor </h3>
-		<p class="txtsub-cbc">"Ama lo que haces"</p>
+
+<div class="row px-0 mx-0" style="background-color:rgb(0, 88, 110);">
+    <div class="col-sm-2 align-self-center">
+        <img class="w-100 animate-right" src="{{IMAGE}}fentap/fentapv1.png" alt="">
+    </div>
+    <div class="col-sm-10 pr-0">
+        <!-- Swiper -->
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+              <!-- <div class="swiper-slide slider-portada" style="background-image:url({{IMAGE}}fentap/portada/portada1.jpg)"></div> -->
+              <div class="swiper-slide slider-portada" style="background-image:url({{IMAGE}}fentap/portada/portada2.jpg)"></div>
+              <div class="swiper-slide slider-portada" style="background-image:url({{IMAGE}}fentap/portada/portada3.jpg)"></div>
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+            <!-- Add Pagination -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+    </div>
+</div>
+
+{% include 'includes/header.twig' %}
+
+<main>
+<!-- <h2 class="title-services pt-4 blue-text text-center">Nuestros Servicios</h2> -->
+ <!--Main layout-->
+<div class="container-fluid p-0">
+	<div class="row w-100" style="text-align:center;">
+		<div class="d-block w-100"> 
+			<p class="d-block text-white mx-auto w-100 pt-4" style="font-size:21px;position:absolute;margin:0 auto;text-align:center;"> ERROR 404 - Página no encontrada.</p>
+			<a class="d-block text-white mx-auto w-100" style="padding-top:120px;position:absolute;margin:0 auto;text-align:center;" href="{{HOME}}">Ir al Inicio</a>
+		</div>		
 	</div>
-	<div>
-		<nav class="inicio-nav" id="cbc">
-			<ul>
-				<li class="none"><a class="normal" href="#inicio">Inicio</a></li>
-				<li class="none"><a class="normal" href="#diseno"> Lykrune </a></li>
-				<li class="none"><a class="normal" href="#about"> LunarCode </a></li>
-			</ul>
-		</nav>
-	</div>
-	<div class="content-cabecera">
-		<h3 id="text-logo-body" class="text-logo-body animate-left"><img src="./images/lock.png" alt="Ancaor Logo">  </h3>
-		<div class="separador">
-			<hr>
-		</div>
-		<p id="text-frase" class="txt-msj animate-right">{{ "ERROR 404" }}</p>
-		<p id="text-frase" class="animate-left"> La página que has solicitado no fue encontrada</p>
-		<a class="btn btn-danger" href="{{BASE}}">Ir al inicio</a>
-		<h3 id="none"> </h3>
-	</div>
-</section>
+	<img class="w-100" src="{{IMAGE}}fondos/7.jpg" alt="">
+</div>
+<!--/.Main layout-->
+</main>
+{% endblock %}
+
+
+{% block script %}
+    <script>
+        $('#SlideShow').SlideShow();
+        $('.carouselExampleIndicators').carousel()
+        var swiper = new Swiper('.swiper-container', {
+        // autoHeight: true, //enable auto height
+        spaceBetween: 20,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        effect : 'cube',
+        autoplay: {
+           delay: 5000,
+        },
+        virtualTranslate : true,
+        loop: true
+        });
+    </script>
 {% endblock %}

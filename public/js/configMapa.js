@@ -1,6 +1,6 @@
 $(document).ready(function(e){
-  var regiones = {"d200":"1","d26":"2","d2" : "3","d3" : "3","d19" : "3","d20" : "3","d21" : "3","d22" : "3","d24" : "3"}
-  var projects = {"2" : "En evaluación (2)","3" : "En evaluación (8)","19" : "En evaluación (4)","20" : "En evaluación (4)","21" : "En evaluación (24)","22" : "En evaluación (2)","24" : "En evaluación (1)"}
+  var regiones = {"d200":"1","d26":"2","d2" : "3","d3" : "3"}
+  var projects = {"3" : "Concejo: ", "2" : "Concejo: "}
   $('#world-map').vectorMap({
     map: 'peru',
     onRegionOver: function (e, code) {
@@ -20,7 +20,7 @@ $(document).ready(function(e){
     series: {
     regions: [{
       values: regiones,
-      scale: ['#819830', '#b3d1ff',"#FFDE54"],
+      scale: ['#E0E0E0', '#b3d1ff',"#1A3984"],
       normalizeFunction: 'polynomial',
     }]
     },
@@ -59,7 +59,7 @@ $(document).ready(function(e){
       var objregion = map.regions[code];
       var data = objregion.config;
       if(typeof(projects[data.id]) != "undefined"){
-        var proyecto = "Proyectos :</br>" + projects[data.id];
+        var proyecto = projects[data.id];
       } else {
         var proyecto = "";
       }

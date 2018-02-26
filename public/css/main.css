@@ -7,14 +7,27 @@
 @import 'https://fonts.googleapis.com/css?family=Hammersmith+One';
 @import 'https://fonts.googleapis.com/css?family=Russo+One';
 @import 'https://fonts.googleapis.com/css?family=Passion+One';
+@import url('https://fonts.googleapis.com/css?family=Bree+Serif|Pacifico');
 @import url('./animaciones.css');
 /* VARIABLES */
 
 :root {
     --color_prueba   :black;
     --color_ancaor   :rgb(255, 49, 49);
+    --color_fentap1  :rgb(221, 84, 63);
+    --color_fentap2  :rgb(31, 98, 147);
+    --color_fentap3  :rgb(0, 88, 110);
+    --color_fentap   :rgb(26, 57, 132);
     --letras         :rgb(255, 255, 255);
     --card-principal : rgb(41, 43, 44);
+    
+    --fs-18          : 1.8rem;
+    --fs-16          : 1.6rem;
+    --fs-14          : 1.4rem;
+    --fs-12          : 1.2rem;
+    --s-title        : 1.0rem;
+    --s-sub-title    : .8rem;
+    --s-parrafo      : .7rem;
 }
 
 /* FIN - VARIABLES */
@@ -235,36 +248,56 @@ a:focus{
     color: white;
 }   
 
+.card-header-title{
+    font-size: var(--s-title);
+}
+
+.card-body-title {
+    font-size: var(--s-sub-title);
+    font-weight: bolder;
+}
+.card-body-parrafo {
+    font-size: var(--s-parrafo) !important;
+}
+.color-fentap1 {
+    color: var(--color_fentap1) !important;
+}
+.color-fentap2 {
+    color: var(--color_fentap2) !important;
+}
+.color-fentap3 {
+    color: var(--color_fentap3) 
+}
+.bg-fentap {
+    background-color: var(--color_fentap) !important;
+}
+.bg-fentap1 {
+    background-color: var(--color_fentap1) !important;
+}
+.bg-fentap2 {
+    background-color: var(--color_fentap2) !important;
+}
+.bg-fentap3 {
+    background-color: var(--color_fentap3) 
+}
 #card-principal .card-footer {
     background: var(--card-principal);
 }
 
-
-.footer {
-    padding: 10px;
-     background: var(--card-principal);
-     color: white;
+.card .card-header {
+    background-color: var(--color_fentap);
+    padding-top: 4px;
+    padding-bottom: 4px; 
 }
 
-.cabecera-footer {
-    height: 100%;
-}
 
-.cabecera-footer p{
-    text-align: center;
-}
-
-.redes-sociales {
-    text-align: center;
-    color: white;
-    padding-top: 6px;
-    padding-bottom: 6px;
-}
-.enlace-footer-ext {
-    color: rgba(255,255,255,.5);
-}
-.redes-sociales > a{
-    color: white;
+/* ==========================================================================
+  Estilos del Slider.
+========================================================================== */
+.slider-portada {
+    background-size: cover !important;
+    background-position: center  !important;
+    background-repeat: no-repeat !important;
 }
 
 /* ==========================================================================
@@ -289,6 +322,20 @@ a:focus{
         transform: scale(0.43614005393110454) translate(11.45386438151036, 0);
     }
 }
+
+@media (min-width: 1025px) {
+    .mapa-general {
+        height: 760px;
+        border:3px solid #798CC7;
+    }
+    .jvectormap-container > svg {
+        height: 760px;
+    }
+    
+    .jvectormap-container > svg > g{
+        transform: scale(0.43614005393110454) translate(11.45386438151036, 0);
+    }
+}
 /* ==========================================================================
    Media Queries
    ========================================================================== */
@@ -304,6 +351,101 @@ a:focus{
 
 }
 
+.footer {
+    padding: 20px;
+    background: var(--card-principal);
+    color: white;
+}
+
+.cabecera-footer {
+    height: 100%;
+}
+
+.cabecera-footer p{
+    text-align: center;
+}
+
+.redes-sociales {
+    text-align: center;
+    color: white;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+.enlace-footer-ext {
+    color: rgba(255,255,255,.5);
+}
+.redes-sociales > a{
+    color: white;
+}
+
+.footer-post .separador-footer {
+    background-color: rgb(135, 138, 143);
+}
+
+.footer-post{
+    color :white;
+    background-color: rgb(44, 54, 61);
+    padding: 40px;
+    text-align: center;
+    font-size: var(--s-sub-title);
+}
+
+.footer-post p{
+    padding: 0;
+}
+
+.cont-icon-redes > .icon-item-redes {
+    padding-top: 8px;
+    padding-bottom:  8px;
+    padding-right: 10px;
+    padding-left: 10px;
+    background-color: rgb(135, 138, 143);
+    display:  inline-block;  
+    border-radius: 50%;  
+}
+
+.cont-icon-redes > .icon-item-redes > i{
+    font-size: var(--s-parrafo);
+}
+
+.footer-post > .footer-frase {
+    display: block;
+    font-size: var(--fs-14);
+    color: rgb(190, 192, 194);
+    font-family: 'Pacifico';
+    text-shadow: 1px 1px 3px rgba(154, 150, 150, 0.65);
+    /*font-family: 'Bree Serif';*/
+}
+
+.cont-item:hover .icon-item {
+    cursor: pointer;
+    color:white;
+}
+.cont-item:hover .title-item {
+    cursor: pointer;
+}
+.cont-item:hover .val-item {
+    cursor: pointer;
+    color:white;
+}
+
+.cont-item .icon-item {
+    display: block;
+    font-size: var(--fs-16);
+    color:rgb(135, 138, 143);
+}
+.cont-item .title-item {
+    letter-spacing: 3px;
+    font-size: var(--s-sub-title) !important;
+    padding: 4px;
+    text-transform: uppercase;
+    font-weight: bold;
+    display: block;
+}
+.cont-item .val-item {
+    color:rgb(135, 138, 143);
+    display: block;
+}
 /* ==========================================================================
    Helper classes
    ========================================================================== */

@@ -39,6 +39,32 @@
 <link rel="stylesheet" type="text/css" href="./css/ancaor/fonts/fonts.css?id={{random()}}">
 <link rel="stylesheet" type="text/css" href="./css/main.css?id={{random()}}">
 <link rel="stylesheet" type="text/css" href="./css/JVectorMap/jquery-jvectormap-1.2.2.css?id={{random()}}">
+<link rel="stylesheet" type="text/css" href="./css/jquery-slideshow.css?id={{random()}}">
+
+<style>
+    .swiper-container {
+      width: 100%;
+      height: 300px;
+    }
+    .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+      /* Center slide text vertically */
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+    }
+</style>
 
 {% endblock %}
 <script>
@@ -51,11 +77,18 @@
 </script>
 </head>
 <body>
-{% block content %} {% endblock %}
+
+{% block content %} 
+
+{% endblock %}
+
+
 {% block footer %}
-{% include 'includes/footer.twig' %}
+	{% include 'includes/footer.twig' %}
 {% endblock %}		
+
 {% block postfooter %}
+
 {% endblock %}
 <!-- <script src="{{DIR_LIBS}}jquery/jquery.min-1.4.2.js"></script> -->
 <script src="{{DIR_LIBS}}jquery/jquery.min.js" type="text/javascript" charset="utf-8"></script>
@@ -72,15 +105,37 @@
 <!-- Configuracion del Slider -->
 <!-- <script language="javascript" src="{{R_JS}}confSlider.js"></script> -->
 <script src="./js/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="./js/jvectormap/jvectormap.peru.js"></script>
-<script src="./js/configMapa.js"></script>
+<script src="./js/jvectormap/jvectormap.peru.js?id={{random()}}"></script>
+<script src="./js/configMapa.js?id={{random()}}"></script>
+<script src="./js/jquery.slideshow.js?id={{random()}}"></script>
 <script type="text/javascript" type="application/ld+json" charset="utf-8">
-
 </script>
 <!-- <script src="./js/generales.js?id={{random()}}"></script>
 <script src="./js/scroll.js?id={{random()}}"></script>
 <script src="./js/cambios.js?id={{random()}}"></script> -->
 <script src="./js/ajax.js?id={{random()}}"></script>
+ <script>
+        $('#SlideShow').SlideShow();
+        $('.carouselExampleIndicators').carousel()
+        var swiper = new Swiper('.swiper-container', {
+        // autoHeight: true, //enable auto height
+        spaceBetween: 20,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        effect : 'fade',
+        autoplay: {
+           delay: 5000,
+        },
+        virtualTranslate : true,
+        loop: true
+        });
+ </script>
 {% block script %}
 {% endblock %}
 </body>

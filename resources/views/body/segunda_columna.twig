@@ -1,0 +1,68 @@
+<!--Third columnn-->
+<div class="col-lg-3">
+     <!--Card-->
+    <div class="card wow fadeIn" data-wow-delay="0.4s">
+        <div class="card-header card-header-title text-left text-white text-uppercase">
+            <!--Title-->
+           <i class="icon icon-newspaper"></i> Hidroboletín 
+        </div>
+        <!--Card content-->
+        <div class="card-body pt-0">
+            <!--Text-->
+            {% for key, hidro_notice in datos['hidro'] %}
+                <div class="content-notice">
+                    <p class="title text-left m-0 card-body-title pt-2">"{{ hidro_notice.title }}"</p>
+                    <div class="notice-info">
+                        <div class="d-flex pb-2">
+                            <div class="mr-auto"> <span style="font-size:12px;" class="font-weight-light">Autor : {{ hidro_notice.autor }}</span></div>
+                            <div> <span class="font-weight-light" style="font-size:12px;">Fecha : {{ hidro_notice.fecha }} </span> </div>
+                        </div>
+                        <p class="card-text text-justify card-body-parrafo" style="line-height:15px;">
+                           {{ hidro_notice.content }}<a class="btn btn-primary btn-sm px-2" style="padding-bottom:2px;padding-top:2px;" href="{{ hidro_notice.enlace }}">Leer más</a>
+                        </p>
+                    </div>
+                </div> 
+                {% if key < 1 %}
+                     <hr>
+                {% endif %}
+               
+            {% endfor %}                   
+        </div>
+    </div>
+    <!--/.Card-->
+    <hr>
+    <!--Card-->
+    <div class="card wow fadeIn" data-wow-delay="0.4s">
+        <div class="card-header text-center text-white">
+            Publicaciones:
+        </div>
+        <!--Card content-->
+        <div class="card-body pt-0">
+            <!--Text-->
+            {% for key, hidro_notice in datos['hidro'] %}
+                <div class="d-flex pb-2">
+                    <div class="mr-auto"> <span style="font-size:12px;" class="font-weight-light">Autor : {{ hidro_notice.autor }}</span></div>
+                    <div> <span class="font-weight-light" style="font-size:12px;">Fecha : {{ hidro_notice.fecha }} </span> </div>
+                </div>
+                <div class="content-notice">
+                    <p class="title text-uppercase p-0 m-0">"{{ hidro_notice.title }}"</p>
+                    <p class="card-text text-justify" style="line-height:19px;">
+                       {{ hidro_notice.content }}<a class="btn btn-primary btn-sm px-2" style="padding-bottom:2px;padding-top:2px;" href="{{ hidro_notice.enlace }}">Leer más</a>
+                    </p>
+                </div> 
+                <hr>
+            {% endfor %}                   
+        </div>
+    </div>
+    <!--/.Card-->
+    <hr>
+    <!--Card-->
+    <div class="card wow fadeIn bg-fentap1 text-white text-center" data-wow-delay="0.4s">
+        <!--Card content-->
+        <div class="card-body pt-4">
+            <a class="text-white" href="construccion"><h2>NORMAS LEGALES</h2>   </a>               
+        </div>
+    </div>
+    <!--/.Card-->
+</div>
+<!--Third columnn-->
