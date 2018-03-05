@@ -1,0 +1,31 @@
+{% extends "panel/base.twig" %}
+{% block title %} Inicio {% endblock %}
+{% block head %}
+    {{parent()}}
+{% endblock %}
+{% block content %}
+
+<!-- page content -->
+<div class="right_col" role="main">
+<!-- top tiles -->
+<div class="col-md-12 col-sm-4 col-xs-12 tile_stats_count">
+	{# <i class="fa fa-user"> #}
+    <h2 class="count_top"></i> Frase de la p&aacute;gina :</h2>
+{#     <div class="count">20</div> #}
+    <h1 class="count_bottom"><i class="green"></i> "Defender el agua es defender la vida"</h1>
+        {{data.permisos}}
+    {% for key, permiso in data['permisos'] %}
+        {{key}}
+    {% endfor %} 
+    <p>{{ session.id_user }}</p>
+    <p>{{ session.time_session }}</p>
+    <p>{{ datos.hola}}</p>
+</div>
+<!-- /top tiles -->
+</div>
+<!-- /page content -->
+
+{% endblock %}
+{% block scripts %}   
+  {{parent()}}
+{% endblock %}

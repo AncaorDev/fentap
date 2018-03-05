@@ -21,7 +21,7 @@ gulp.task('sass', function() {
 
 // Moviendo los archivos Js
 gulp.task('js', function() {
-    return gulp.src(['node_modules/bootstrap/dist/js/*.min.js'])
+    return gulp.src(['node_modules/bootstrap/dist/js/*.min.js','node_modules/bootstrap/dist/js/*.min.js.map'])
         .pipe(gulp.dest(b_js))
         // .pipe(browserSync.stream());
 });
@@ -77,12 +77,13 @@ gulp.task('bmd_js', function() {
 });
 
 /***********************************************************************
-*************************** MDL FOR BOOTSTRAP *************************
+*************************** MDB FOR BOOTSTRAP *************************
 ***********************************************************************/
 // Ruta compilación Bootstrap Material Design
-var  mdb_css = lbs+'mdb/css/';
-var  mdb_js  = lbs+'mdb/js/';
-var  mdb_img = lbs+'mdb/img/';
+var  mdb_css   = lbs+'mdb/css/';
+var  mdb_js    = lbs+'mdb/js/';
+var  mdb_img   = lbs+'mdb/img/';
+var  mdb_fonts = lbs+'mdb/font/';
 
 // Copiando 
 gulp.task('mdb_css', function() {
@@ -96,10 +97,16 @@ gulp.task('mdb_js', function() {
         .pipe(gulp.dest(mdb_js))
 });
 
-// Copiando los archivos Js
+// Copiando los archivos de imagen
 gulp.task('mdb_img', function() {
     return gulp.src(['node_modules/mdbootstrap/img/**/*'])
         .pipe(gulp.dest(mdb_img))
+});
+
+// Copiando las fuentes
+gulp.task('mdb_fonts', function() {
+    return gulp.src(['node_modules/mdbootstrap/font/**/*'])
+        .pipe(gulp.dest(mdb_fonts))
 });
 
 
@@ -150,7 +157,7 @@ var  ps = lbs+'popper.js';
 
 // Copiando los archivos Js
 gulp.task('ps', function() {
-    return gulp.src(['node_modules/popper.js/dist/umd/*.min.js'])
+    return gulp.src(['node_modules/popper.js/dist/umd/*.min.js','node_modules/popper.js/dist/umd/*.min.js.map'])
         .pipe(gulp.dest(ps))
 });
 
@@ -170,7 +177,7 @@ gulp.task('ps', function() {
 
 gulp.task('run_b4', ['sass','js', 'fa', 'jq', 'fa_fonts','bmd_sass','bmd_js','tt_css','tt_js','ps','sw_css','sw_js']);
 
-gulp.task('run_mdb', ['sass','js', 'fa', 'jq', 'fa_fonts','mdb_css','mdb_js','mdb_img','tt_css','tt_js','ps','sw_css','sw_js']);
+gulp.task('run_mdb', ['sass','js', 'fa', 'jq', 'fa_fonts','mdb_css','mdb_js','mdb_img','mdb_fonts','tt_css','tt_js','ps','sw_css','sw_js']);
 
 
 

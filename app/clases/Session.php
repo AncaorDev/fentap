@@ -12,6 +12,11 @@ class Session{
 	static function setValue($var,$val){
 		$_SESSION[$var] = $val;
 	}
+	static function setData($array){
+		foreach ($array as $key => $value) {
+			$_SESSION[$key] = $value;
+		}
+	}
 	static function unsetValue($var){
 		if (isset($_SESSION[$var])) {
 			unset($_SESSION[$var]);

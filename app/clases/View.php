@@ -11,13 +11,15 @@
 				'debug' => false,
 				'cache' => false
 			));
-			$twig->addGlobal('BASE'     , BASE);
-			$twig->addGlobal('WEBSITE'  , WEBSITE);
-			$twig->addGlobal('AUTHOR'   , AUTHOR);	
-			$twig->addGlobal('DIR_LIBS' , DIR_LIBS);	
-			$twig->addGlobal('IMAGE'    , IMAGE);	
+			$twig->addGlobal('session'   , $_SESSION);
+			$twig->addGlobal('BASE'      , BASE);
+			$twig->addGlobal('BASE_PANEL', BASE.'panel/');
+			$twig->addGlobal('WEBSITE'   , WEBSITE);
+			$twig->addGlobal('AUTHOR'    , AUTHOR);	
+			$twig->addGlobal('DIR_LIBS'  , DIR_LIBS);
+			$twig->addGlobal('DIR_LIBS2' , DIR_LIBS2);
+			$twig->addGlobal('IMAGE'     , IMAGE);	
 			// $layout = $twig->load(__DIR__.'/../../../resources/views/base.twig');
-			// print_r($datos);
 			$twig->display($ruta.'twig',compact('datos'));		
 		}
 		public function render($c ,$p , $datos=""){

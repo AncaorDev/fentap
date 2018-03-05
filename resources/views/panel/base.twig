@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<base href="{{BASE}}" target="_top" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{# <link rel="stylesheet" href="{{DIR_LIBS}}mdb/css/mdb.css"> #}
+{# <link href="https://bootswatch.com/3/lumen/bootstrap.min.css" rel="stylesheet"> #}
+<!-- Bootstrap -->
+<link href="{{DIR_LIBS2}}bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link href="{{DIR_LIBS2}}font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<!-- NProgress -->
+<link href="{{DIR_LIBS2}}nprogress/nprogress.css" rel="stylesheet">
+<!-- iCheck -->
+<link href="{{DIR_LIBS2}}iCheck/skins/flat/green.css" rel="stylesheet">
+<!-- bootstrap-progressbar -->
+<link href="{{DIR_LIBS2}}bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+<!-- JQVMap -->
+<link href="{{DIR_LIBS2}}jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+<!-- bootstrap-daterangepicker -->
+<link href="{{DIR_LIBS2}}bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+<!-- jquery Confirm -->
+<link href="{{DIR_LIBS2}}jqueryConfirm/jquery-confirm.min.css" rel="stylesheet">
+<!-- Custom Theme Style -->
+<link href="./css/main.css" rel="stylesheet">
+<!-- include summernote css/js-->
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/theme/monokai.css">
+<!-- Custom Theme Style -->
+<link href="./css/panel/custom.min.css" rel="stylesheet">
+<!-- Custom Theme Style -->
+<link href="./css/main.css" rel="stylesheet">
+<style type="text/css">
+.control-group {
+  display: inline-block;
+  vertical-align: top;
+  background: #fff;
+  text-align: left;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  padding: 30px;
+  width: 200px;
+  height: 210px;
+  margin: 10px;
+}
+.control {
+  display: block;
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+.control input {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+.control__indicator {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background: #e6e6e6;
+}
+.control--radio .control__indicator {
+  border-radius: 50%;
+}
+.control:hover input ~ .control__indicator,
+.control input:focus ~ .control__indicator {
+  background: #ccc;
+}
+.control input:checked ~ .control__indicator {
+  background: #2aa1c0;
+}
+.control:hover input:not([disabled]):checked ~ .control__indicator,
+.control input:checked:focus ~ .control__indicator {
+  background: #0e647d;
+}
+.control input:disabled ~ .control__indicator {
+  background: #e6e6e6;
+  opacity: 0.6;
+  pointer-events: none;
+}
+.control__indicator:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+.control input:checked ~ .control__indicator:after {
+  display: block;
+}
+.control--checkbox .control__indicator:after {
+  left: 8px;
+  top: 6px;
+  width: 3px;
+  height: 8px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.control--checkbox input:disabled ~ .control__indicator:after {
+  border-color: #7b7b7b;
+}
+.control--radio .control__indicator:after {
+  left: 7px;
+  top: 7px;
+  height: 6px;
+  width: 6px;
+  border-radius: 50%;
+  background: #fff;
+}
+.control--radio input:disabled ~ .control__indicator:after {
+  background: #7b7b7b;
+}
+.select {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 15px;
+  width: 100%;
+}
+.select select {
+  display: inline-block;
+  width: 100%;
+  cursor: pointer;
+  padding: 10px 15px;
+  outline: 0;
+  border: 0;
+  border-radius: 0;
+  background: #e6e6e6;
+  color: #7b7b7b;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+.select select::-ms-expand {
+  display: none;
+}
+.select select:hover,
+.select select:focus {
+  color: #000;
+  background: #ccc;
+}
+.select select:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.select__arrow {
+  position: absolute;
+  top: 16px;
+  right: 15px;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  border-style: solid;
+  border-width: 8px 5px 0 5px;
+  border-color: #7b7b7b transparent transparent transparent;
+}
+.select select:hover ~ .select__arrow,
+.select select:focus ~ .select__arrow {
+  border-top-color: #000;
+}
+.select select:disabled ~ .select__arrow {
+  border-top-color: #ccc;
+}
+</style>
+<title> Panel de Administración {% block title %}  {% endblock %} </title>
+{% block head %}
+{% endblock %}
+</head>
+<!-- BODY -->
+<body class="nav-md" style="background:white;;">
+  <div class="container body">
+    <!--  Main-Container -->
+    <div class="main_container">
+    {% include 'panel/includes/panel-menu.twig' %}
+    {% include 'panel/includes/panel-top-navigation.twig' %} 
+
+      {% block content %}
+
+
+
+      {% endblock %} 
+    </div>
+     <!--  /Main-Container -->
+  </div>
+<!-- /BODY -->
+{% include 'panel/includes/panel-footer-files.twig' %}  
+{% block scripts %}
+{% endblock %}
+<!-- footer content -->
+<footer>
+  <div class="pull-right">
+    Theme by <a href="https://colorlib.com">Colorlib</a> - Edited by <a href="http://lykrune.tk">Lykrune</a> - Back-End <a href="http://ancaor.com">Ancaor</a>
+  </div>
+  <div class="clearfix"></div>
+</footer>
+<!-- /footer content -->
+</body>
+</html>

@@ -3,7 +3,7 @@
 * @ Index
 **/ 
 require_once(realpath(__DIR__ . '/../app/time.php'));
-app\Time::Time(true); 
+app\Time::Time(false); 
 /* ---------------------------------------------------
 Archivo Gestor de dependencias 
 --------------------------------------------------- */

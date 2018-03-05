@@ -3,7 +3,7 @@
 "HOST"   : "localhost",
 "USER"   : "root",
 "PASS"   : "",
-"DBNAME" : "ubigeoperu",
+"DBNAME" : "ancaor",
 "DEBUG"  : true,
 
 "######" : "Configuración Metas Web",

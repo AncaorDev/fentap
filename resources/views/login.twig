@@ -1,15 +1,155 @@
-{% extends "base.twig" %}
-{% block title %} Inicio {% endblock %}
-{% block head %}{{parent()}}
-<link rel="stylesheet" type="text/css" href="./css/inicio.css?id={{random()}}">
-{% endblock %}
-{% block content %}
-<section id="inicio">
-	{% include 'includes/header.twig' %}
-	
-	<div class="content-cabecera">
-		
-	</div>
-</section>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<base href="{{BASE}}" target="_top" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap -->
+<link rel="stylesheet" type="text/css" href="{{DIR_LIBS}}bootstrap4/css/bootstrap.css">
+<link rel="stylesheet" href="{{DIR_LIBS}}mdb/css/mdb.css">
+<!-- Font Awesome -->
+<link href="{{DIR_LIBS}}font-awesome/css/font-awesome.min.css" rel="stylesheet">
+{# <!-- NProgress -->
+<link href="{{DIR_LIBS}}nprogress/nprogress.css" rel="stylesheet"> #}
+<!-- iCheck -->
+{# <link href="{{DIR_LIBS}}iCheck/skins/flat/green.css" rel="stylesheet"> #}
+<!-- bootstrap-progressbar -->
+{# <link href="{{DIR_LIBS}}bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet"> #}
+<!-- JQVMap -->
+{# <link href="{{DIR_LIBS}}jqvmap/dist/jqvmap.min.css" rel="stylesheet"/> #}
+<!-- bootstrap-daterangepicker -->
+{# <link href="{{DIR_LIBS}}bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet"> #}
+<!-- jquery Confirm -->
+{# <link href="{{DIR_LIBS}}jqueryConfirm/jquery-confirm.min.css" rel="stylesheet"> #}
 
-{% endblock %}
+<!-- Custom Theme Style -->
+{# <link href="<?=DIR_RS?>css/main.css" rel="stylesheet"> #}
+
+<!-- include summernote css/js-->
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.css">
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/theme/monokai.css">
+
+<!-- Custom Theme Style -->
+<link href="./css/panel/custom.min.css" rel="stylesheet">
+<!-- jQuery 1.11 -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<!-- /jQuery 1.11 -->
+<title></title>
+</head>
+  <body class="login">
+    <div>
+    
+      <div class="login_wrapper">
+        
+        <div class="animate form login_form">
+          <section class="login_content">
+          <div id="ajaxlogin" >
+          
+        </div>
+            <form id="formlogin" action="" method="POST" class="form-horizontal form-label-left" novalidate>
+
+              <h1>Iniciar Sesión</h1>
+              <div>
+                <input id="user" name="user" type="text" class="form-control" placeholder="Username" data-validate-length-range="5,20" required="required" />
+              </div>
+              <div>
+                <input id="pass" type="password" class="form-control" placeholder="Password" required="required"/>
+              </div>
+              <div style="margin-top:-10px;padding-bottom:10px;">
+                <input id="sesion" type="checkbox"> Mantener Sesión  
+              </div>
+              <div>
+                <input id="ingresar" class="btn btn-default submit" type="submit"> 
+                <input id="limpiar" class="btn btn-default submit" type="reset">
+                <!-- <a class="reset_pass" >Recuperar Contraseña</a> -->
+              </div>
+              <div>
+                 
+              </div>
+
+              <div class="clearfix"> </div>
+
+              <div class="separator">
+                
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                  <h1><i class="glyphicon glyphicon-knight"></i> Ancaor </h1>
+                  <p> Ingreso al Panel Control</p>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
+      </div>
+    </div>
+<!-- Custom Theme Scripts -->
+{#<script src="<?=DIR_RS?>css/panel/js/custom.min.js"></script>
+
+<!-- include codemirror (codemirror.css, codemirror.js, xml.js, formatting.js) -->
+{# <link rel="stylesheet" type="text/css" href="{{DIR_LIBS}}codemirror/codemirror.css">
+<link rel="stylesheet" type="text/css" href="{{DIR_LIBS}}codemirror/monokai.css"> #}
+{# <script type="text/javascript" src="{{DIR_LIBS}}codemirror/codemirror.js"></script>
+<script type="text/javascript" src="{{DIR_LIBS}}codemirror/xml.js"></script>
+<script type="text/javascript" src="{{DIR_LIBS}}codemirror/formatting.js"></script>
+ #}
+<script src="{{DIR_LIBS}}jquery/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{DIR_LIBS}}popper.js/popper.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{DIR_LIBS}}tether/js/tether.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{DIR_LIBS}}bootstrap4/js/bootstrap.bundle.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{DIR_LIBS}}bootstrap4/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{DIR_LIBS}}mdb/js/mdb.js" type="text/javascript" charset="utf-8"></script>
+
+{# <script src="{{DIR_LIBS}}summernote/summernote.js"></script>
+<script src="{{DIR_LIBS}}summernote/lang/summernote-es-ES.js"></script>
+<script src="{{DIR_LIBS}}summernote/plugin/img/summernote-image-attributes.js"></script>
+<script src="<?=HOME?>core/js/summernoteconf.js"></script> 
+ #}
+<script type="text/javascript" src="{{DIR_LIBS}}validator/validator.js"></script>
+{# 
+<script src="<?=HOME?>core/js/registrodata.js"></script>
+<script src="<?=HOME?>core/js/modificardata.js"></script>#}
+<script src="./js/panel/login.js?id={{random()}}"></script> 
+
+<!-- validator -->
+    <script>
+      // initialize the validator function
+      validator.message.date = 'not a real date';
+
+      // validate a field on "blur" event, a 'select' on 'change' event & a '.reuired' classed multifield on 'keyup':
+      $('form')
+        .on('blur', 'input[required], input.optional, select.required', validator.checkField)
+        .on('change', 'select.required', validator.checkField)
+        .on('keypress', 'input[required][pattern]', validator.keypress);
+
+      $('.multi.required').on('keyup blur', 'input', function() {
+        validator.checkField.apply($(this).siblings().last()[0]);
+      });
+
+      $('form').submit(function(e) {
+        e.preventDefault();
+        var submit = false;
+
+        // evaluate the form using generic validaing
+        if (!validator.checkAll($(this))) {
+          submit = false;
+        }
+
+        if (submit)
+          this.submit();
+        return false;
+      });
+    </script>
+    <!-- /validator -->
+
+
+
+
+
+  </body>
+</html>

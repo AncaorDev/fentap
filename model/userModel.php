@@ -5,6 +5,7 @@
 
 use app\clases\gestionBD;
 use model\Model;
+use Exception;
 
 class userModel 
 {
@@ -57,29 +58,74 @@ class userModel
 		}
 	}
 	public function registrarUser($datos){
+		$data['error'] = 1;
+		$data['msj']   = null;
 		try {
-			$sql = "INSERT INTO proyectos (descripProy,idDepa) VALUES ("
-			."'".$datos['descripProy']."',"
-			."'".$datos['idDepa']."')";
-			$sql = $this -> con -> ejecutar($sql);
-			if ($sql) {
-				$id = $this -> con -> lastId();
-				$html = $this -> crudHTML -> crearHtml($id);
-				$response = ['sql' => $sql,
-							'msg-html' => $html['msg'],
-							'std-html' => $html['std'],
-							'idProy' => $id];
-			} else {
-				$response = ['sql' => $sql,
-							'msg-html' => 'No se ejecuto',
-							'std-html' => false];
-			}		
-			return  $response;	
+			extract($datos);
+			$name_User = trim($name_User);
+			$sql = "INSERT INTO user (name_User, pass_User, mail_User, status_User) 
+							VALUES ('{$name_User} ', '{$pass_User}', '', '1')";
+			$sql = $this->con->ejecutar($sql);
+			if ($sql != 1) {
+				throw new Exception($sql);
+			}
+			$id_user = $this->con->lastId();
+			$permisos = explode(',', $permisos);
+			foreach ($permisos as $permiso) {
+				$sql = "INSERT INTO tab_user (id_user, id_tab) 
+							VALUES ('{$id_user} ', '{$permiso}')";
+				$this->con->ejecutar($sql);
+			}	
+			$data['error'] = 0;
+			$data['msj']   = 1;
 		} catch (Exception $e) {
-			throw $e;
+			$data['msj']  =  $e->getMessage();
 		}
+		return $data;
 	}
 	
+	public function getPermisosbyIdUser($id_user) {
+		$sql = "SELECT * 
+				  FROM  tabs t,tab_user tu 
+				  WHERE CASE WHEN (SELECT id_tab FROM tab_user WHERE id_user = {$id_user} LIMIT 1) = 0 
+					         THEN 1 = 1
+		                     ELSE t.id_tab=tu.id_tab 
+		                END
+				   AND id_user = {$id_user};";
+		$eje = $this->con->ejecutar($sql);
+		if ($eje->num_rows > 0) {
+			$error  = 0;
+			$stdsql = 1;
+			$datos  = $this->con->ejecutararray($sql);
+			$this -> con -> liberar($eje);	
+		} else {
+			$datos	= null;
+			$stdsql	= 0;
+			$error  = 1;
+		}
+		\__log(print_r($datos,true));
+		return array('stdsql' => $stdsql, 'error' => $error , 'data' => $datos);
+	}
+
+	public function deleterUser($id_user){
+		$data['error'] = 1;
+		$data['msj']   = null;
+		try {
+			$sql = "DELETE FROM user WHERE id_User = {$id_user}";
+			$sql = $this->con->ejecutar($sql);
+			$sql = "DELETE FROM tab_user WHERE id_user = {$id_user}";
+			$sql = $this->con->ejecutar($sql);
+			if ($sql != 1) {
+				throw new Exception($sql);
+			}	
+			$data['error'] = 0;
+			$data['msj']   = 1;
+		} catch (Exception $e) {
+			$data['msj']  =  $e->getMessage();
+		}
+		return $data;
+	}
+
 	public function actualizarUser($datos){
 		try {
 			$sql = 'UPDATE user u INNER JOIN person p ON u.id_User=p.id_User SET ';

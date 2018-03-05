@@ -58,6 +58,7 @@ function ejecutar(){
 
 	DEFINE('COPY','Ancaor &trade;'.' 2015 - '.date('Y')); //<-- Copy Right
 	DEFINE('DIR_LIBS','libs/');  // <-- Dirección de archivos HTML
+	DEFINE('DIR_LIBS2','librerias/');
 	DEFINE('DIR_BS','libs/bootstrap/'); // BOOTSTRAP	
 	DEFINE('DIR_RS','./'); // RESOURCES
 	DEFINE('IMAGE','./images/'); // <-- IMAGES

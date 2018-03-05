@@ -9,6 +9,7 @@ use app\clases\View;
 use app\clases\Controller;
 use app\clases\Functions as F;
 
+
 class inicioController extends Controller {
 private $dp;
 private $ctr;

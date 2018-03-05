@@ -26,6 +26,8 @@ public function __construct($bd = true,$data = "page",$id="") {
 		$data = self::verificarData($data);
 		$this -> ld = self::obtnerLista($data,$id);
 	} 
+	$this -> load('functions');
+	// $this->ajaxPost();
 } 
 /* Función Mostrar Página con la lista general
  	Se requieren 4 datos : $p, $data y $id
@@ -108,5 +110,17 @@ function authenticate($acceso){
 		return true;
 	}
 }
+
+function load($load){
+	include_once(realpath(__DIR__.'/../load/'.$load.'_load.php'));
+}
+
+function ajaxPost() {
+	if (isset($_POST)) {
+
+		\__log(print_r($_GET,true));
+	}
+}
+
 //Fin clase
 }
