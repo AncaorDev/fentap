@@ -6,7 +6,7 @@
 Clase que se encarga de recibir los datos según eso mostrar sus vistas correspondientes 
 con la información adecuada.
 */
-
+use Carbon\Carbon;
 class Controller {
 /*  
 	Leyenda de las variables
@@ -14,9 +14,9 @@ class Controller {
 	$rsp => Respuesta de los Funciones Modelo.
 	$lp => Lista del modelo por defecto
 */
-private $md;
-private $det;
-private $bd;
+private   $md;
+private   $det;
+private   $bd;
 protected $ld;
 
 // Método constructor, la funcion se ejecutara al instanciarla.
@@ -114,13 +114,5 @@ function authenticate($acceso){
 function load($load){
 	include_once(realpath(__DIR__.'/../load/'.$load.'_load.php'));
 }
-
-function ajaxPost() {
-	if (isset($_POST)) {
-
-		\__log(print_r($_GET,true));
-	}
-}
-
 //Fin clase
 }

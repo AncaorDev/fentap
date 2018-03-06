@@ -11,38 +11,63 @@ class utilsModel extends Model{
 	}
 
 	public function _getById($table , $campos = '*', $where = null){
+		$data['error']  = 1;
+		$data['data']	= null;
+		$data['stdsql']	= 0;
 		try{
-
 			$sql = "SELECT {$campos} 
 					  FROM {$table}";
 			if ( $where != null) {
 				if (is_array($where)) {
 					$and = ' WHERE ';
 					foreach ($where as $key => $value) {
-						$sql .=	"$and {$key} = {$value}"; 
+						$sql .=	"$and {$key} = '{$value}'"; 
 						$and = ' AND '; 
 					}
 				}
 						
-			}		  	 
+			}	
+			\__log($sql);	  	 
 			$eje = $this->con->ejecutar($sql);
 			if ($eje->num_rows > 0) {
-				$error  = 0;
-				$stdsql = 1;
-				$datos  = $this->con->ejecutararray($sql);
+				$data['error']  = 0;
+				$data['stdsql'] = 1;
+				$data['data']  = $this->con->ejecutararray($sql);
 				$this -> con -> liberar($eje);	
-			} else {
-				$datos	= null;
-				$stdsql	= 0;
-				$error  = 1;
-			}
-			return array('stdsql' => $stdsql, 'error' => $error , 'data' => $datos);
+			} 
+		} catch(Exception $e){
+			$data['error'] = $e->getMessage();
 		}
-		catch(Exception $ex){
-			throw $ex;
-		}
+		return $data;
 	}
 
+	public function _deleteRow($table , $where = null){
+		$data['error']  = 1;
+		$data['datos']	= null;
+		$data['stdsql']	= 0;
+		try{
+			$sql = "DELETE FROM {$table}";
+			if ( $where != null) {
+				if (is_array($where)) {
+					$and = ' WHERE ';
+					foreach ($where as $key => $value) {
+						$sql .=	"$and {$key} = '{$value}'"; 
+						$and = ' AND '; 
+					}
+				}
+						
+			}	
+			\__log($sql);
+			$eje = $this->con->ejecutar($sql);
+			if ($eje == 0) {
+				$data['error']  = 0;
+				$data['stdsql'] = 1;
+				$this -> con -> liberar($eje);	
+			} 
+		} catch(Exception $ex){
+			$data['error'] = $e->getMessage();
+		}
+	}	
 	public function logout(){
 			Session::init();  
 			Session::destroy();  
