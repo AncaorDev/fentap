@@ -9,6 +9,9 @@ if (!function_exists('__log')) {
             $ruta = explode(DIRECTORY_SEPARATOR, $dbgt[0]['file']);
             $class = end($ruta);
         }
+        if (is_array($var)) {
+        	$var = print_r($var,true);
+        }
         error('( '.$class.' -> '.$dbgt[1]['function'].') (linea: '.$dbgt[0]['line'].') >> '.$var, 'error');
 	}
 }

@@ -9,11 +9,11 @@
     <!-- Header Pages -->
     <div class="header-pages">   
         <div class="col-md-12 col-sm-12 col-xs-12">
-        {% if datos.page %}
+        {% if datos.notices %}
           <div class="x_panel">
             <div class=" row x_title">
               <div class="col-md-8 col-xs-12">  
-              <h2 class="h2-none" style="width:100%;"><span class="glyphicon glyphicon-book"></span> Editar Página ({{ datos.page.title_Page }})  </h2>
+              <h2 class="h2-none" style="width:100%;"><span class="glyphicon glyphicon-book"></span> Editar Noticia ({{ datos.page.title_Page }})  </h2>
               </div>
               <div class="col-md-4" style="text-align:right;">
                 <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -21,50 +21,13 @@
             </div>
             <!-- x content-->
             <div class="x_content"> 
-            <div class="data-page-panel">
-              <div class="" role="tabpanel" data-example-id="togglable-tabs">
-                <ul id="tabPages" class="nav nav-tabs bar_tabs" role="tablist">
-                  <li role="presentation" class="active">
-                    <a href="#lpages" id="lpages-tab" role="tab" data-toggle="tab" aria-expanded="true"> Contenido  de la Página</a>
-                  </li>
-                  <!-- data-toggle="modal" data-target="#FormPage" -->
-                  <li role="presentation" class="">
-                    <a href="#formpage" role="tab" id="formpage-tab" data-toggle="tab" aria-expanded="false"> Detalles de la Página </a>
-                  </li>
-                </ul>
-                <div id="myTabContent" class="tab-content">
-                  <div role="tabpanel" class="tab-pane fade active in" id="lpages" aria-labelledby="lpages-taba"> 
-                  {% if  datos.page.id_AttributePage == 1  %}
-                    <div class="row">
-                      <div id="contentsummer" class="col-md-12">
-                        <a id="btnenlace"><button id="btnGuardarCambios" type="button" class="btn btn-primary disabled">Guardar Cambios</button></a>
-                        <span id="msg" class="label label-success" style="padding:8px;"></span>
-                      </div> 
+                <div class="col-md-9">
+                    <div id="progress" style="display:none;" class="progress progress-striped active">
+                    <div id="barra-estado" class="progress-bar" style="width: 0%"></div>
                     </div>
-                    <input type="hidden" id="editPage" value={{ datos.page.id_Page }}>
-                    <div class="summernote">
-                        {% autoescape %}
-                            {{ datos.page.html_Page|raw }} {# var won't be escaped #}
-                        {% endautoescape %}
-                    </div>
-                  {% elseif datos.page.id_AttributePage == 2 %}          
-                    <div id="divLink" class="col-md-12">
-                        <h3> Sin contenido , la página es un enlace </h3>
-                    </div>
-                    {% endif %}  
-                  </div>
-                  <div role="tabpanel" class="tab-pane fade" id="formpage" aria-labelledby="form-tab">
-                    <div class="col-md-9">
-                        <div id="progress" style="display:none;" class="progress progress-striped active">
-                        <div id="barra-estado" class="progress-bar" style="width: 0%"></div>
-                        </div>
-                        <div class="col-lg-12 col-xs-12" id="mensaje"></div>
-                        {% include 'panel/forms/page.twig' %}
-                    </div>                
-                  </div>              
-                </div>
-              </div>
-            </div> 
+                    <div class="col-lg-12 col-xs-12" id="mensaje"></div>
+                    {% include 'panel/forms/notice.twig' %}
+                </div>  
             </div>
             <!-- x content -->
           </div> 
@@ -147,11 +110,7 @@
                                     </div>
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="formpage" aria-labelledby="profile-tab">
-                                    <div id="progress" style="display:none;" class="progress progress-striped active">
-                                        <div id="barra-estado" class="progress-bar" style="width: 0%"></div>
-                                    </div>
-                                    <div class="col-lg-12 col-xs-12" id="mensaje"></div>
-                                    {% include 'panel/forms/page.twig' %}
+                                    {% include 'panel/forms/notice.twig' %}
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="ordenar" aria-labelledby="profile-tab">
                                     <div id="progress" style="display:none;" class="progress progress-striped active">
@@ -242,11 +201,17 @@
 {% endblock %}
 {% block scripts %}   
   {{parent()}}
-  <script src="./js/panel/page.js?id={{random()}}"></script>
+  <script src="./js/panel/notices.js?id={{random()}}"></script>
   <script type="text/javascript">
     $(document).ready(function() {
         $("#id_AttributePage").trigger('change');
     });
+
+    $("#input-id").fileinput({
+        language: "es",
+        showUpload: false
+    });
+
     $("#datatable-responsive").DataTable({
     "language": {"search": "Buscar _INPUT_",
                 "paginate": {"next": "Siguiente" , "previous" : "Anterior", "first": "Primera Página" , "last": "Última Página"},

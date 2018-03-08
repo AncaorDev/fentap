@@ -7,6 +7,8 @@ Clase que se encarga de recibir los datos según eso mostrar sus vistas correspo
 con la información adecuada.
 */
 use Carbon\Carbon;
+use model\pageModel;
+
 class Controller {
 /*  
 	Leyenda de las variables
@@ -18,11 +20,13 @@ private   $md;
 private   $det;
 private   $bd;
 protected $ld;
+private   $m_page;
 
 // Método constructor, la funcion se ejecutara al instanciarla.
 public function __construct($bd = true,$data = "page",$id="") {
 	$this -> bd = $bd;
 	if ($this -> bd) {
+		$this->m_page  = new pageModel();
 		$data = self::verificarData($data);
 		$this -> ld = self::obtnerLista($data,$id);
 	} 
@@ -113,6 +117,16 @@ function authenticate($acceso){
 
 function load($load){
 	include_once(realpath(__DIR__.'/../load/'.$load.'_load.php'));
+}
+
+function listaPaginas() {
+	$sql = $this->m_page->listaDetallesPage();
+	return $sql['datos'];
+}
+
+function listaPaginasbySlug($slug) {
+	$sql = $this->m_page->listaDetallesPage('', $slug);
+	return $sql['datos'][0];
 }
 //Fin clase
 }

@@ -8,6 +8,7 @@ class Model
 	private $count;
 	function __construct()
 	{
+		
 	}
 
 	public function status($status){

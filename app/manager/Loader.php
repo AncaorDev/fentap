@@ -34,7 +34,6 @@ class Loader
         	require(__DIR__.'/../../controllers/error/error404Controller.php');
         	$controller = 'controllers\error\error404Controller';  
       	}  
-      	unset($data['controller']);
 		$vista = new $controller($data);
 		if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' && $data['metodo'] != '') {
 			$metodo = $data['metodo'];

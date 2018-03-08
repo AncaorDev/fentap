@@ -1,8 +1,8 @@
 <?php namespace controllers\panel;
 /* ======================================================================
-$dp => Datos o Informacion desde la BD a la Página, si $bd esta descativada no enviara nada
-$ctr => Instancia de Controller 
-$bd => Si necesita usar la Base de datos true, caso contrario false
+$dp   => Datos o Informacion desde la BD a la Página, si $bd esta descativada no enviara nada
+$ctr  => Instancia de Controller 
+$bd   => Si necesita usar la Base de datos true, caso contrario false
 $auth => autenticación (booleano)
 ====================================================================== */
 use app\clases\View;
@@ -42,6 +42,5 @@ function index() { //Función que se jecuta al recibir una variable del tipo con
 		F::redirect('panel'); // Redirección en caso de autorización
 	}
 }
-
 // Fin class
 }

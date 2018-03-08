@@ -27,6 +27,9 @@
 <script src="{{DIR_LIBS2}}datatables.net-scroller/js/dataTables.scroller.min.js"></script>
 <!-- Bootstrap -->
 <script src="{{DIR_LIBS2}}bootstrap/js/bootstrap.min.js"></script>
+<!-- the main fileinput plugin file -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.5/js/fileinput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.5/js/locales/es.js"></script>
 <!-- Custom Theme Scripts -->{{DIR_LIBS2}}
 <script src="./js/panel/custom.min.js"></script>
 <!-- include codemirror (codemirror.css, codemirror.js, xml.js, formatting.js) -->
@@ -37,15 +40,15 @@
 <script type="text/javascript" src="{{DIR_LIBS2}}codemirror/xml.js"></script>
 <script type="text/javascript" src="{{DIR_LIBS2}}codemirror/formatting.js"></script>
 <!-- include summernote css/js-->
-<link href="{{DIR_LIBS2}}summernote/summernote.css" rel="stylesheet">
+
 <script src="{{DIR_LIBS2}}summernote/summernote.js"></script>
 <script src="{{DIR_LIBS2}}summernote/lang/summernote-es-ES.js"></script>
 <script src="{{DIR_LIBS2}}summernote/plugin/img/summernote-image-attributes.js"></script>
 <script src="{{DIR_LIBS2}}validator/validator.js"></script>
 <!-- ECharts -->
 <script src="{{DIR_LIBS2}}echarts/dist/echarts.min.js"></script>
-<script src="./js/panel/utils.js"></script>
-<script src="./js/panel/login.js"></script>
+<script src="./js/panel/utils.js?id={{random()}}"></script>
+<script src="./js/panel/login.js?id={{random()}}"></script>
 {# <script src="./js/funciones/summernoteconf.js"></script>
 <script src="./js/funciones/auth.js"></script> #}
 

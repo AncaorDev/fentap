@@ -1,0 +1,66 @@
+<!-- method="post" action="panel/pages" -->
+<form action="" id="form_page" method="POST" class="form-horizontal form-label-left" novalidate>
+
+<div class="row">
+	<div class="col-md-6">
+		  <!-- ITEM -->
+		  <div class="item form-group">
+		    <label class="control-label col-md-4 col-sm-4 col-xs-12" style="text-align:left;" for="name">
+		      Usuario: <span class="required">*</span>
+		    </label>
+		    <div class="col-md-8 col-sm-8 col-xs-12">
+		      <input id="user" name="name_User" class="form-control col-md-7 col-xs-12" disabled="" value="{{ session.name_User }}">
+		    </div>
+		  </div>
+		  <!-- /ITEM -->
+
+		  <!-- ITEM -->
+		  <div class="item form-group">
+		    <label class="control-label col-md-4 col-sm-4 col-xs-12" style="text-align:left;" for="name">
+		      Título de la noticia <span class="required">*</span>
+		    </label>
+		    <div class="col-md-8 col-sm-8 col-xs-12">
+		    <input id="title_notice" name="title_notice" class="form-control col-md-7 col-xs-12" data-validate-length-range="5,20" placeholder="Ingrese el título de la noticia" value="{{ datos.notice ? datos.notice['title_notice'] : ''}}" required="required" type="text">
+		    </div>
+		  </div> 
+		  <!-- /ITEM -->
+
+			<!-- ITEM -->
+		  <div class="item form-group">
+		    <label class="control-label col-md-4 col-sm-4 col-xs-12" style="text-align:left;" for="name">
+		      Descripción de la noticia<span class="required">*</span>
+		    </label>
+		    <div class="col-md-8 col-sm-8 col-xs-12">
+		    <input id="descrip_notice" name="descrip_notice" class="form-control col-md-7 col-xs-12" data-validate-length-range="5,20" placeholder="Ingrese la descripción de la noticia" value="{{ datos.notice ? datos.notice['descrip_notice'] : ''}}" required="required" type="text">
+		    </div>
+		  </div> 
+		  <!-- /ITEM -->
+		  <input name="img-portada" id="input-id" type="file" class="file" data-preview-file-type="text">
+	</div>
+	<div class="col-md-6">
+		<div class="summernote">
+	    {% autoescape %}
+	        {{ datos.page.html_Page|raw }} {# var won't be escaped #}
+	    {% endautoescape %}
+		</div>
+	</div>					
+</div>
+ 
+  <!-- /ITEM -->
+
+  <!-- USER -->
+  <input id="id_User" name="id_User" type="hidden" value="{{ session.id_user }}">
+  <!-- ACTION -->
+  <input id="action" name="action" type="hidden" value="{{ datos.notice ? 'actualizar' : 'registrar' }}">
+  <input id="id_notice" name="id_notice" type="hidden" value="{{ datos.notice ? datos.notice['id_noticia'] : '' }}">
+
+  <div class="ln_solid"></div>
+  <div class="form-group">
+    <div class="col-md-6 col-md-offset-3">
+      <button id="btnenviar" type="submit" class="btn btn-success" disabled><i class="fa fa-paper-plane"></i> Guardar </button>
+      <button type="reset" class="btn btn-danger">Limpiar</button>
+    </div>
+  </div>
+</form>
+<p>Atributo de la Página: </p>
+

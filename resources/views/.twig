@@ -1,0 +1,32 @@
+{% extends "base.twig" %}
+{% block title %}  {% endblock %}
+{% block head %}
+    {{parent()}}
+{% endblock %}
+{% block content %}
+    {# Slider #}
+    {% include 'includes/slider.twig' %}
+    {# Header #}
+    {% include 'includes/header.twig' %}
+{# Cuerpo General #}
+ <!--Main layout-->
+<main>
+<div class="container-fluid">
+    <div class="row pt-4">
+        {% include 'body/primera_columna.twig' %}
+        <!--columnn Central-->
+        <div class="col-sm-6 col-lg-6">
+            <!--Card-->
+            <div class="card wow fadeIn" data-wow-delay="0.4s">
+                {{datos.this_page.html_Page|raw}}
+            </div>
+        </div>
+        {% include 'body/segunda_columna.twig' %}
+    </div>
+</div>
+<!--/.Main layout-->
+</main>
+
+{% endblock %}
+{% block script %}
+{% endblock %}

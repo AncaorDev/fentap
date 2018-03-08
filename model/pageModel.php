@@ -3,13 +3,14 @@
 * extends Model
 */
 use app\clases\gestionBD;
+use app\clases\Log;
 use model\Model;
 
-class pageModel 
+class pageModel  extends Model
 {
 	private $table;
-	function __construct()
-	{
+	function __construct() {
+		parent::__construct();
 		//Instanciamos la BD
 		$this -> con = new gestionBD();
 		$this -> table = "page";
@@ -25,11 +26,12 @@ class pageModel
 			throw $e;
 		}
 	}
-	public function listaDetallesPage($id = ""){
+	public function listaDetallesPage($id = "", $slug = ""){
 		try {
 			$sql = "SELECT page.id_Page, 
 						   page.title_Page, 
 						   page.state_Page,
+						   page.html_Page,
 						   templatepage.code_TemplatePage,
 						   page.slug_Page, 
 						   attributepage.id_AttributePage,
@@ -46,9 +48,14 @@ class pageModel
 						ON page.id_TemplatePage=templatepage.id_TemplatePage";
 			$det = false; // 0
 			if ($id != "") {
-				$sql .= " WHERE page.slug_Page ='{$id}'"; 
+				$sql .= " WHERE page.id_Page ='{$id}'"; 
 				$det = true; // 1
 			} 
+			if ($slug != "") {
+				$sql .= " WHERE page.slug_Page ='{$slug}'"; 
+				$det = true; // 1
+			} 
+			Log::_log($sql);
 			$lista = $this -> con -> ejecutararray($sql);
 			$statusTable = $this -> statusTable();
 			$listaAttributePage = $this -> listaAttributePage();
@@ -60,33 +67,32 @@ class pageModel
 	}
 	public function registrarPage($datos){ 
 		try {	
-			foreach($datos as $nombre_campo => $valor){
-			  	$asignacion = "\$" . $nombre_campo . "='" . $valor . "';"; 
-			   	eval($asignacion); 
-			}
-			$slug_Page = preg_replace("/[0-9]+/", "", $slug_Page);
-			$title_Page = preg_replace("/\-/", " ", $title_Page);
-			$verificarSlug = $this -> verificarSlug($slug_Page);
-			if ($verificarSlug['exis']) {
-				$sql = "No ejecutada , Ya existe slug";
-			} else {
-				$VerificarOrden = $this -> verificarOrden();
-				$dateCreate_Page = getDateTime(false);
-				$order_Page = $VerificarOrden['max']+1;
-				$sql = "INSERT INTO page (title_Page, slug_Page, order_Page, html_Page, state_Page, dateCreate_Page, dateModificate_Page, id_TemplatePage, id_AttributePage, id_User, id_UserModificate) VALUES (";
-				$sql .= "{$title_Page},"; // title_Page 
-				$sql .= "{$slug_Page},"; // slug_Page
-				$sql .= $order_Page . ', '; // order_Page
-				$sql .= '" ", '; // html_Page
-				$sql .= '"Borrador", '; // state_Page
-				$sql .= '"' . $dateCreate_Page . '", '; // dateCreate_Page
-				$sql .= '"' . $dateCreate_Page . '", '; // dateModificate_Page
-				$sql .= ' 1 ,'; // id_TemplatePage
-				$sql .= $id_AttributePage . ','; // id_AttributePage
-				$sql .= $id_User . ','; // id_User
-				$sql .= $id_User . ')'; // id_UserModificate
-				$sql = $this -> con -> ejecutar($sql);	
-			}
+			extract($datos);
+			$VerificarOrden = $this -> verificarOrden();
+			$order_Page = $VerificarOrden['max']+1;
+			$sql = "INSERT INTO page (title_Page, 
+									  slug_Page, 
+									  order_Page, 
+									  html_Page,
+									  state_Page, 
+									  dateCreate_Page, 
+									  dateModificate_Page, 
+									  id_TemplatePage,
+									  id_AttributePage,
+									  id_User, 
+									  id_UserModificate) 
+						      VALUES ('{$title_Page}',
+						  			  '{$slug_Page}' ,
+						  			   {$order_Page},
+						  			  '',
+						  			  '{$state_page}',
+						  			  '{$dateCreate_Page}',
+						  			  '{$dateCreate_Page}',
+						  			  1,
+						  			  1,
+						  			  {$id_User},
+						  			  {$id_User})";
+			$sql = $this -> con -> ejecutar($sql);	
 			$compilated = $arrayName = array('sql' => $sql, 'upd' => $sql);
 			return $compilated;
 		} catch (Exception $e) {
@@ -124,6 +130,26 @@ class pageModel
 
 	}
 	
+	function updatePage($datos, $where ){
+			extract($datos);
+			$VerificarOrden = $this -> verificarOrden();
+			$order_Page = $VerificarOrden['max']+1;
+			$sql    = 'UPDATE page SET ';
+			$concat = '';
+			foreach ($datos as $key => $val) {
+				$sql .= "{$concat} {$key} = '{$val}' ";
+				$concat = ',';
+			}
+			$and = "WHERE ";
+			foreach ($where as $key => $val) {
+				$sql .= "{$and} {$key} = '{$val}' ";
+				$and = " AND ";
+			}
+			\__log($sql);
+			$sql = $this -> con -> ejecutar($sql);	
+			$compilated = $arrayName = array('sql' => $sql, 'upd' => $sql);
+			return $compilated;
+	}
 	public function listaAttributePage(){
 		try {
 			$sql = "SELECT * FROM attributepage";
@@ -139,5 +165,25 @@ class pageModel
 		} catch (Exception $e) {
 			throw $e;
 		}
+	}
+	
+	public function setAutoincrement($num){
+		try {
+				$sql = "ALTER TABLE {$this -> table} AUTO_INCREMENT =".$num;
+				$rows = $this -> con -> ejecutar($sql);
+			 	if ($rows) {
+			 		$rows = true;
+			 	} else {
+			 		$rows = false;
+			 	}
+			 	$data = array('sql' => $rows);
+			 	return $data;				
+			} catch (Exception $e) {
+				throw $e;
+			}
+		}
+
+	public function __destruct () {
+		$this -> con -> cerrar();
 	}
 }

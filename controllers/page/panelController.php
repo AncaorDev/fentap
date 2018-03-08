@@ -88,6 +88,7 @@ function login() {
 		S::init();  
 		S::setData(array('session'     => 'yes',
 						'id_user'      => $user['id_User'],
+						 'name_User'   => $user['name_User'],
 						'time_session' => $time_session ));	
 		$data['error'] = 0;
 		$data['url']   = 'login';
