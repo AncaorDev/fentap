@@ -42,7 +42,7 @@ class pageModel  extends Model
 					FROM page 
 					INNER JOIN attributepage 
 						ON page.id_AttributePage=attributepage.id_attributepage 
-					INNER JOIN USER 
+					INNER JOIN user 
 						ON page.id_User=user.id_User 
 					INNER JOIN templatepage 
 						ON page.id_TemplatePage=templatepage.id_TemplatePage";
