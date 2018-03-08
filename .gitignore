@@ -5,3 +5,6 @@ vendor/
 node_modules/
 public/libs
 *.zip
+public/images/upload/*.png
+public/images/upload/*.jpg
+store.sublime-project
