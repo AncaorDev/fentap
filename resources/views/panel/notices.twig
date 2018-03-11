@@ -73,39 +73,30 @@
                                                 <thead>
                                                     <tr>
                                                         <th> # (ID) </th>
-                                                        <th> Título de la Página</th>
-                                                        <th> Enlace Permanente <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Identificardor con la cual se pueda acceder a la sección o enlace"></i></th>
-                                                        <th> Estado </th>
-                                                        <th> Atributo<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Característica de la página (sección o enlace)"></i></th>
-                                                        <th> Usuario <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Usuario que creó o editó la página por última vez"></i></th>
-                                                        <th> Orden de Página</th>
+                                                        <th> Título de la Noticia</th>
+                                                        <th> Descripción <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Descripción de la noticia"></i></th>
+                                                        <th> Fecha de Creación </th>
+                                                        <th> Usuario <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Usuario que creó o editó la noticia por última vez"></i></th>
                                                         <th> Acciones</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {% for key, page in datos.datos %}
+                                                    {% for key, notice in datos.datos %}
                                                     <tr class="success" id="tdata{{key}}">
-                                                        <td> {{ page.id_Page }} </td>
-                                                        <td> {{ page.title_Page }} </td>
-                                                        <td> {{ page.slug_Page }} </td>
-                                                        <td> {{ page.state_Page }} </td>
-                                                        <td> {{ page.name_AttributePage }} </td>
-                                                        <td> {{ page.name_User }} </td>
-                                                        <td> {{ page.order_Page }} </td>
-                                                        <td id="data-{{page.slug_Page}}" data-id_page="{{page.id_Page}}">
-                                                            <a class="btn btn-primary btn-xs"><i class="fa fa-folder" disabled></i> Vista Previa </a>
-                                                            <a href="{{BASE_PANEL}}pages/edit/{{page.id_Page}}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Editar </a>
+                                                        <td> {{ notice.id_notice }} </td>
+                                                        <td> {{ notice.title_notice }} </td>
+                                                        <td> {{ notice.descrip_notice }} </td>
+                                                        <td> {{ notice.date_create }} </td>
+                                                        <td> {{ notice.name_User }} </td>
+                                                        <td id="data-{{notice.id_notice}}" data-id_notice="{{notice.id_notice}}">
+{#                                                             <a class="btn btn-primary btn-xs"><i class="fa fa-folder" disabled></i> Vista Previa </a> #}
+                                                            <a href="{{BASE_PANEL}}notices/edit/{{notice.id_notice}}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Editar </a>
                                                             <a onclick="confirmDeletePage($(this))" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Eliminar </a>
                                                         </td>
                                                     </tr>
                                                     {% endfor %}
                                                 </tbody>
                                             </table>
-                                            <p>
-                                                Atributo de la Página:
-                                                <li> Sección: Dirección interna hacia una sección de la web, esta se creará según una plantilla</li>
-                                                <li> Enlace: Dirección URL externa (ejemplo: un blog externo,etc) Tener en cuenta que esta no se creará si no solo será una hipervínculo hacia otra web</li>
-                                            </p>
                                         </div>
                                     </div>
                                 </div>

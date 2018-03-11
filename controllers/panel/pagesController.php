@@ -285,6 +285,7 @@ function subirImagen(){
 	$data['msj']   = 'ERROR';
 	$data['error'] = 1;
 	try {
+		\__log($_FILES['file']);
 		$handle = new upload($_FILES['file']);
 	    // then we check if the file has been uploaded properly
 	    // in its *temporary* location in the server (often, it is /tmp)

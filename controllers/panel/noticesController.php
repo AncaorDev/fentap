@@ -42,8 +42,8 @@ function index() { //Función que se jecuta al recibir una variable del tipo con
 		$data['accion'] = 'listar';
 		if ($this->url['metodo'] != null && $this->url['atributo'] != null) {
 			if ($this->url['metodo'] == 'edit') {
-				$page         = $this->m_notice->listaDetallesPage($this->url['atributo']);
-				$data['page'] = $page['datos'][0];
+				$page         = $this->m_notice->listaDetallesNotices($this->url['atributo']);
+				$data['notice'] = $page['datos'][0];
 			}
 		} 
 		$permisos = $this->m_panel->getPermisosByIdUser(S::getValue('id_user'));
@@ -51,10 +51,12 @@ function index() { //Función que se jecuta al recibir una variable del tipo con
 
 		$data['permisos'] = $permisos['data'];
 		$data['tabs']     = $tabs['data'];
-		// $data['title'] 	  = 'Páginas';
-		// $data['count']    = count($page['datos']);
-		// $data = array_merge($data,$page);
-		View::renderPage('panel/notices',$this->ctr->ld,$data);
+		$data['title'] 	  = 'Noticias';
+		
+		$notice           = $this->m_notice->listaDetallesNotices($this->url['atributo']);
+		$data['count']    = count($notice['datos']);
+		$data = array_merge($data,$notice);
+		View::renderPage('panel.notices',$this->ctr->ld,$data);
 	} else {
 		// View::renderPage("error.unautorized");
 		F::redirect('panel'); // Redirección en caso de autorización
@@ -65,40 +67,34 @@ function newNotice() {
 	$data['error'] = 1;
 	$data['msj']   = 'ERROR';
 	try {
-		\__log(print_r($_POST,true));
+		\__log($_FILES['file']);
+		\__log($_POST);
+
+		$image = $this->subirImagen($_FILES['file']);
+		\__log($image);
+		// url
+		// name
 		if($_POST) 	{ 
 		    $keys_post = array_keys($_POST); 
 		    foreach ($keys_post as $key_post) { 
 		      	$$key_post = $_POST[$key_post]; 
 		    } 
-		} 
-		// $slug_Page = preg_replace("/[0-9]+/", "", trim($slug_Page));
-		// $title_Page = preg_replace("/\-/", " ", $title_Page);
-		
-		// $slug = $this->m_utils->_getById('page', 'slug_Page' , array('slug_Page' => $slug_Page));
-		// if (count($slug) == 0) {
-		// 	throw new Exception('Ya existe Slug');
-		// }
-		// $name		= $this->generateNameCtr($slug_Page);
-		// $cont_ctr	= $this->generateDataCtr($slug_Page);
-		// $cont_view	= $this->generateDataView($title_Page);
-		// $file_ctr	= Files::createFile('controllers/page/', $name['ctr'] , $cont_ctr['data'] );
-		// $file_view	= Files::createFile('resources/views/', $name['view'] , $cont_view['data'] );
-
-		// if ($file_ctr['error'] != 0) {
-		// 	throw new Exception('Error desconocido');
-		// }
-		// if ($file_view['error'] != 0) {
-		// 	throw new Exception('Error desconocido');
-		// }
-		// $insert = array('slug_Page'		  => $slug_Page,
-		// 				'title_Page' 	  => $title_Page,
-		// 				'dateCreate_Page' => Carbon::now(),
-		// 				'state_page'      => 'publicado',
-		// 				'id_User'         => S::getValue('id_user')
-		// 			   );
-		// $page = $this->m_page->registrarPage($insert);
-		// \__log(print_r($page,true));
+		}
+		// title_notice
+		// descrip_notice
+		// flg_publicado
+		// html_notice
+		// img_portada
+		$html_notice = \encode_HTML($html_notice);
+		$insert = array('title_notice'	  => $title_notice,
+						'descrip_notice'  => $descrip_notice,
+						'flg_publicado'   => 1,
+						'html_notice'     => $html_notice,
+						'img_portada'     => $image['name'],
+						'id_User'         => S::getValue('id_user')
+					   );
+		$notice = $this->m_notice->newNoticia($insert);
+		\__log($notice);
 		$data['error'] = 0;
 		$data['msj']   = 'ERROR';
 	} catch (Exception $e) {
@@ -180,8 +176,40 @@ function guardarHtml() {
 	echo json_encode($data);
 }
 
-
-
+function subirImagen($file){
+	$data['error'] = 1;
+	$data['msj']   = '';
+	$data['url']   = null;
+	$data['name']  = null;
+	$handle = new upload($file);
+    if ($handle->uploaded) {
+    	\__log('upload?');
+        // yes, the file is on the server
+        // now, we start the upload 'process'. That is, to copy the uploaded file
+        // from its temporary location to the wanted location
+        // It could be something like $handle->Process('/home/www/my_uploads/');
+		$handle->image_convert		= 'png';
+		$handle->png_compression	= 9;
+        $handle->Process(__DIR__.'/../../public/images/upload');
+        \__log($handle->processed);
+        // we check if everything went OK
+        if ($handle->processed) {
+            // everything was fine !
+        	$data['url']  = 'images/upload/'.$handle->file_dst_name;
+            $data['name'] = $handle->file_dst_name;
+            round(filesize($handle->file_dst_pathname)/256)/4 . 'KB';
+			$data['error'] = 0;
+			$data['msj']   = 'success';
+        } else {
+           $handle->error;
+           \__log($handle->error);
+        }
+        // we delete the temporary files
+        
+        $handle-> Clean();
+	}
+	return $data;
+}
 // Fin class
 }
 

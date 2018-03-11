@@ -69,7 +69,25 @@ if (!function_exists('generateRandomString')) {
     	return $randomString;
 	}
 }
+
+if (!function_exists('encode_HTML')) {
+	function encode_HTML($string) {
+	    $html = htmlspecialchars($string, ENT_QUOTES);
+    	return $html;
+	}
+}
+
+if (!function_exists('decode_HTML')) {
+	function decode_HTML($string) {
+	    $html = htmlspecialchars_decode($string);
+    	return $html;
+	}
+}
  
+
+
+
+
 
 
 

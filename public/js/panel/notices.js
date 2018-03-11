@@ -43,27 +43,22 @@ $('#form_page').submit(function(e) {
     validatorResult = validator.checkAll(this);
     //Verificación de los datos del form
     submitForm(false);
+    console.log(validatorResult);
     if (!validatorResult) {
       submit = false;
       
     } else {
     	if (modified) {
-      var html = $('.summernote').summernote('code');  
-			var form = $(this).serializeArray(); 
-      var data = new FormData();
-			var object = arrayInObject(form);
-      data.append('file', $("#input-id")[0].files[0]);
-      data.append('name_User'      , $('#name_User').val());
-      data.append('title_notice'   , $('#title_notice').val());
-      data.append('descrip_notice' , $('#descrip_notice').val());
-      data.append('html_notice' , html);
+            var html = $('.summernote').summernote('code');  
+            var file = $("#input-id")[0].files[0];
 			var accion = showAction(); 
 			var accion_form = $('#action').val();
 			if (accion_form == accion) {
 				if (accion == 'actualizar') {
 					savePage(form);
 				} else {
-					newNotice(data);
+                    console.log('adasd');
+					newNotice(file,html);
 				}
 			}
     	}
@@ -72,11 +67,62 @@ $('#form_page').submit(function(e) {
       this.submit();
       return false;
 });
-function newNotice(data){
+
+function newNotice(file,html) {
+  if(file.type.includes('image')) {
+      var name = file.name.split(".");
+      name = name[0]; 
+      var data = new FormData();
+      console.log(file);
+      data.append('file', file);
+      data.append('name_User'      , $('#name_User').val());
+      data.append('title_notice'   , $('#title_notice').val());
+      data.append('descrip_notice' , $('#descrip_notice').val());
+      data.append('html_notice' , html);
+      console.log(data);
+      $.ajax({
+        url: 'panel/notices/newNotice',
+        type: 'POST',
+        contentType: false,
+        cache: false,
+        processData: false,
+        dataType: 'json',
+        data: data,
+        success: function (data){
+          console.log(data);
+            if (data.error == 0) {
+                alert('Acción realizada con éxito');
+                setTimeout(function(){ 
+                    var URLactual = window.location.href;
+                    window.location=URLactual;
+                },1000);
+            } else {
+                alert('ERROR');
+            }
+        }
+      })
+      .fail(function(e) {
+        console.log(e);
+      });
+    }
+    else {
+      alert("El tipo de archivo que intentaste subir no es una imagen");
+    }
+}
+
+function newNotaaice(file){
+  var data = new FormData();
+  console.log(file);
+  data.append('file', file);
+  console.log(data);
+      // data.append('name_User'      , $('#name_User').val());
+      // data.append('title_notice'   , $('#title_notice').val());
+      // data.append('descrip_notice' , $('#descrip_notice').val());
+      // data.append('html_notice' , html);
 	$.ajax({
 		url : 'panel/notices/newNotice',
 		type : 'POST',
-		dataType : 'json',
+		dataType : false,
 		cache : false,
     processData : false,
 		data : data,
@@ -171,7 +217,9 @@ function SubirImagen(file) {
       var name = file.name.split(".");
       name = name[0]; 
       var data = new FormData();
+      console.log(file);
       data.append('file', file);
+      console.log(data);
       $.ajax({
         url: 'panel/pages/subirImagen',
         type: 'POST',
@@ -200,6 +248,7 @@ function SubirImagen(file) {
       alert("El tipo de archivo que intentaste subir no es una imagen");
     }
 }
+
 function guardarHtml(html,editPage) {
    	$.ajax({
         url      : 'panel/pages/guardarHtml',
