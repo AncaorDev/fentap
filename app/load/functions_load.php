@@ -19,8 +19,15 @@ if (!function_exists('__log')) {
 if (!function_exists('error')) {
 	function error($texto,$numero = 'Error :: ') { 
 		try {
-			$path = __DIR__.'/../log/error-'.date('Y-m-d').'.log'; 
-			$ddf  = fopen($path,'a+'); 
+			$folder   = __DIR__.'/../log/';
+			$filename = 'error-'.date('Y-m-d').'.log';
+			$path     =  $folder.$filename; 
+			if (file_exists($path)) {
+				$ddf  = fopen($path,'a+'); 
+			} else {
+				mkdir($folder, 0777, true);
+				$ddf  = fopen($path,'w+'); 
+			}
 			$data = '['.date('Y-m-d H:m:s').']'."$numero - $texto\r\n";
 			if (!fwrite($ddf,$data)) {
 				throw new \Exception("No se creo archivo Log");	
