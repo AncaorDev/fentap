@@ -45,22 +45,20 @@ $('#form_page').submit(function(e) {
     submitForm(false);
     console.log(validatorResult);
     if (!validatorResult) {
-      submit = false;
-      
+      submit = false;  
     } else {
     	if (modified) {
             var html = $('.summernote').summernote('code');  
             var file = $("#input-id")[0].files[0];
-			var accion = showAction(); 
-			var accion_form = $('#action').val();
-			if (accion_form == accion) {
-				if (accion == 'actualizar') {
-					savePage(form);
-				} else {
-                    console.log('adasd');
-					newNotice(file,html);
-				}
-			}
+  			var accion = showAction(); 
+  			var accion_form = $('#action').val();
+  			if (accion_form == accion) {
+  				if (accion == 'actualizar') {
+  					saveNotice(file,html);
+  				} else {
+  					newNotice(file,html);
+  				}
+  			}
     	}
     }
     if (submit)
@@ -104,10 +102,53 @@ function newNotice(file,html) {
       .fail(function(e) {
         console.log(e);
       });
-    }
-    else {
+    } else {
       alert("El tipo de archivo que intentaste subir no es una imagen");
     }
+}
+
+function saveNotice(file,html) {
+    var data = new FormData();
+    console.log(file);
+    if (file !== undefined) {
+        if(!file.type.includes('image')) {
+            alert("El tipo de archivo que intentaste subir no es una imagen");
+            return;
+        } 
+        var name = file.name.split(".");
+        name = name[0]; 
+        data.append('file', file);
+    }
+    data.append('name_User'      , $('#name_User').val());
+    data.append('title_notice'   , $('#title_notice').val());
+    data.append('descrip_notice' , $('#descrip_notice').val());
+    data.append('id_User'        , $('#id_User').val());
+    data.append('id_notice'      , $('#id_notice').val());
+    data.append('html_notice'    , html);
+    console.log(data);
+    $.ajax({
+        url        : 'panel/notices/saveNotice',
+        type       : 'POST',
+        contentType: false,
+        cache      : false,
+        processData: false,
+        dataType   : 'json',
+        data       : data,
+        success  : function(data){
+            console.log(data);
+            if (data.error == 0) {
+                alert('Acción realizada con éxito');
+                setTimeout(function(){ 
+                    var URLactual = window.location.href;
+                    window.location=URLactual;
+                },1000);
+            } else {
+                alert('ERROR');
+            }
+        }
+    }).fail(function(e){
+        console.log(e)
+    });
 }
 
 function newNotaaice(file){
@@ -315,3 +356,10 @@ function resetAI(num = 0) {
     	console.log(e);
   	});
 }
+
+// summernote.keyup
+$('.summernote').on('summernote.keyup', function(we, e) {
+  // console.log('Key is released:', e.keyCode);
+  modified = true; 
+  submitForm(true);
+});

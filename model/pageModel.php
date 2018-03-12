@@ -150,6 +150,7 @@ class pageModel  extends Model
 			$compilated = $arrayName = array('sql' => $sql, 'upd' => $sql);
 			return $compilated;
 	}
+	
 	public function listaAttributePage(){
 		try {
 			$sql = "SELECT * FROM attributepage";

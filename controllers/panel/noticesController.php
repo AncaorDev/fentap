@@ -42,8 +42,9 @@ function index() { //Función que se jecuta al recibir una variable del tipo con
 		$data['accion'] = 'listar';
 		if ($this->url['metodo'] != null && $this->url['atributo'] != null) {
 			if ($this->url['metodo'] == 'edit') {
-				$page         = $this->m_notice->listaDetallesNotices($this->url['atributo']);
-				$data['notice'] = $page['datos'][0];
+				$notice         = $this->m_notice->listaDetallesNotices($this->url['atributo']);
+				$data['notice'] = $notice['datos'][0];
+				$data['notice']['html_notice'] = \decode_HTML($data['notice']['html_notice']);
 			}
 		} 
 		$permisos = $this->m_panel->getPermisosByIdUser(S::getValue('id_user'));
@@ -53,9 +54,9 @@ function index() { //Función que se jecuta al recibir una variable del tipo con
 		$data['tabs']     = $tabs['data'];
 		$data['title'] 	  = 'Noticias';
 		
-		$notice           = $this->m_notice->listaDetallesNotices($this->url['atributo']);
-		$data['count']    = count($notice['datos']);
-		$data = array_merge($data,$notice);
+		$notices           = $this->m_notice->listaDetallesNotices($this->url['atributo']);
+		$data['count']    = count($notices['datos']);
+		$data = array_merge($data,$notices);
 		View::renderPage('panel.notices',$this->ctr->ld,$data);
 	} else {
 		// View::renderPage("error.unautorized");
@@ -67,86 +68,66 @@ function newNotice() {
 	$data['error'] = 1;
 	$data['msj']   = 'ERROR';
 	try {
-		\__log($_FILES['file']);
-		\__log($_POST);
-
 		$image = $this->subirImagen($_FILES['file']);
-		\__log($image);
-		// url
-		// name
 		if($_POST) 	{ 
 		    $keys_post = array_keys($_POST); 
 		    foreach ($keys_post as $key_post) { 
 		      	$$key_post = $_POST[$key_post]; 
 		    } 
 		}
-		// title_notice
-		// descrip_notice
-		// flg_publicado
-		// html_notice
-		// img_portada
 		$html_notice = \encode_HTML($html_notice);
 		$insert = array('title_notice'	  => $title_notice,
 						'descrip_notice'  => $descrip_notice,
 						'flg_publicado'   => 1,
-						'html_notice'     => $html_notice,
+						'html_notice'     => trim($html_notice),
 						'img_portada'     => $image['name'],
 						'id_User'         => S::getValue('id_user')
 					   );
 		$notice = $this->m_notice->newNoticia($insert);
-		\__log($notice);
 		$data['error'] = 0;
-		$data['msj']   = 'ERROR';
+		$data['msj']   = 'SUCCESS';
 	} catch (Exception $e) {
 		$data['msj']  =  $e->getMessage();
 	}
 	echo json_encode(array_map('utf8_decode', $data));
 }
 
-function savePage() {
+function saveNotice() {
 	$data['error'] = 1;
 	$data['msj']   = 'ERROR';
 	try {
-		\__log(print_r($_POST,true));
+		$image = '';
+		\__log($_FILES);
+		if (count($_FILES) > 0) {
+			\__log($_FILES['file']);
+			$image = $this->subirImagen($_FILES['file']);
+		}
 		if($_POST) 	{ 
 		    $keys_post = array_keys($_POST); 
 		    foreach ($keys_post as $key_post) { 
 		      	$$key_post = $_POST[$key_post]; 
 		    } 
 		} 
-		$bool  = false;
-		$where = array('id_Page' => $id_Page);
-		$query = $this->m_utils->_getById('page','slug_Page,title_Page',$where);
-		$page  = $query['data'][0];
-		$name		= $this->generateNameCtr($slug_Page);
-		$cont_ctr	= $this->editDataCtr($page['slug_Page'], $slug_Page);
-		$cont_view	= $this->editDataView($page['title_Page'], $title_Page , $page['slug_Page']);
-		if ($page['slug_Page'] == $slug_Page) {
-			$bool = true;
-		} else {
-			Files::deleteFile("controllers/page/{$page['slug_Page']}Controller.php");
-			Files::deleteFile("resources/views/{$page['slug_Page']}.twig");
-		}
-		$file_ctr	= Files::createFile('controllers/page/', $name['ctr'] , $cont_ctr['data'] , $bool);
-		$file_view	= Files::createFile('resources/views/', $name['view'] , $cont_view['data'] , $bool);
-
-		$update = array('slug_Page'		      => $slug_Page,
-						'title_Page' 	      => $title_Page,
-						'id_AttributePage'    => $id_AttributePage,
-						'dateModificate_Page' => Carbon::now(),
-						'id_UserModificate'	  => S::getValue('id_user')
+		\__log($_POST);
+		$html_notice = \encode_HTML($html_notice);
+		$update = array('title_notice'	  => $title_notice,
+						'descrip_notice'  => $descrip_notice,
+						'flg_publicado'   => 1,
+						'html_notice'     => trim($html_notice),
+						'id_User'         => S::getValue('id_user')
 					   );
-		
-		$page = $this->m_page->updatePage($update, $where);
+		$where = array('id_notice' => $id_notice);
+		$notice = $this->m_utils->updateTable('notice',$update, $where);
+		\__log($notice);
 		$data['error'] = 0;
-		$data['msj']   = 'Modificación Correcta';
-		\__log(print_r($page,true));
+		$data['msj']   = 'SUCCESS';
 	} catch (Exception $e) {
 		$data['msj']  =  $e->getMessage();
 	}
 	\__log(print_r($data,true));
 	echo json_encode($data);
 }
+
 function guardarHtml() {
 	$data['error'] = 1;
 	$data['msj']   = 'ERROR';

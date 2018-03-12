@@ -151,6 +151,7 @@ function savePage() {
 	\__log(print_r($data,true));
 	echo json_encode($data);
 }
+
 function guardarHtml() {
 	$data['error'] = 1;
 	$data['msj']   = 'ERROR';
@@ -305,6 +306,7 @@ function subirImagen(){
 	            round(filesize($handle->file_dst_pathname)/256)/4 . 'KB';
 	        } else {
 	           $handle->error;
+	           \__log($handle->error);
 	        }
 	        // we delete the temporary files
 	        $handle-> Clean();

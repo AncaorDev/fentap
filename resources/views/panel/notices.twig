@@ -9,7 +9,7 @@
     <!-- Header Pages -->
     <div class="header-pages">   
         <div class="col-md-12 col-sm-12 col-xs-12">
-        {% if datos.notices %}
+        {% if datos.notice %}
           <div class="x_panel">
             <div class=" row x_title">
               <div class="col-md-8 col-xs-12">  
@@ -21,7 +21,7 @@
             </div>
             <!-- x content-->
             <div class="x_content"> 
-                <div class="col-md-9">
+                <div class="col-md-12">
                     <div id="progress" style="display:none;" class="progress progress-striped active">
                     <div id="barra-estado" class="progress-bar" style="width: 0%"></div>
                     </div>
@@ -89,7 +89,6 @@
                                                         <td> {{ notice.date_create }} </td>
                                                         <td> {{ notice.name_User }} </td>
                                                         <td id="data-{{notice.id_notice}}" data-id_notice="{{notice.id_notice}}">
-{#                                                             <a class="btn btn-primary btn-xs"><i class="fa fa-folder" disabled></i> Vista Previa </a> #}
                                                             <a href="{{BASE_PANEL}}notices/edit/{{notice.id_notice}}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Editar </a>
                                                             <a onclick="confirmDeletePage($(this))" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Eliminar </a>
                                                         </td>

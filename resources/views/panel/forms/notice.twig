@@ -9,7 +9,7 @@
 		      Usuario: <span class="required">*</span>
 		    </label>
 		    <div class="col-md-8 col-sm-8 col-xs-12">
-		      <input id="user" name="name_User" class="form-control col-md-7 col-xs-12" disabled="" value="{{ session.name_User }}">
+		      <input id="name_User" name="name_User" class="form-control col-md-7 col-xs-12" disabled="" value="{{ session.name_User }}">
 		    </div>
 		  </div>
 		  <!-- /ITEM -->
@@ -34,13 +34,20 @@
 		    <input id="descrip_notice" name="descrip_notice" class="form-control col-md-7 col-xs-12" data-validate-length-range="5,20" placeholder="Ingrese la descripción de la noticia" value="{{ datos.notice ? datos.notice['descrip_notice'] : ''}}" required="required" type="text">
 		    </div>
 		  </div> 
+		  {% if datos.notice %}
+			<div class="image_portada">
+				<img style="width:100%;" src="images/upload/{{ datos.notice.img_portada ? datos.notice.img_portada : 'default_notice.jpg' }}" alt="">
+			</div>
+		  {% endif %}
 		  <!-- /ITEM -->
-		  <input name="img-portada" id="input-id" type="file" class="file" data-preview-file-type="text" required="required">
+		  <div class="item form-group">
+		  	<input name="img-portada" id="input-id" type="file" class="file" data-preview-file-type="text">
+		  </div> 
 	</div>
 	<div class="col-md-6">
 		<div class="summernote">
 	    {% autoescape %}
-	        {{ datos.page.html_Page|raw }} {# var won't be escaped #}
+	        {{ datos.notice.html_notice|raw }} {# var won't be escaped #}
 	    {% endautoescape %}
 		</div>
 	</div>					
@@ -52,7 +59,7 @@
   <input id="id_User" name="id_User" type="hidden" value="{{ session.id_user }}">
   <!-- ACTION -->
   <input id="action" name="action" type="hidden" value="{{ datos.notice ? 'actualizar' : 'registrar' }}">
-  <input id="id_notice" name="id_notice" type="hidden" value="{{ datos.notice ? datos.notice['id_noticia'] : '' }}">
+  <input id="id_notice" name="id_notice" type="hidden" value="{{ datos.notice ? datos.notice.id_notice : '' }}">
 
   <div class="ln_solid"></div>
   <div class="form-group">
@@ -62,5 +69,5 @@
     </div>
   </div>
 </form>
-<p>Atributo de la Página: </p>
-
+{# <p>Atributo de la Página: </p>
+ #}

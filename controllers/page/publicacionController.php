@@ -11,7 +11,7 @@ use app\clases\Functions as F;
 use app\clases\Session as S;
 use model\utilsModel;
 
-class publicacionesController extends Controller {
+class publicacionController extends Controller {
 private $dp;
 private $ctr;
 private $bd; 
@@ -33,7 +33,7 @@ function index() { //Función que se jecuta al recibir una variable del tipo con
   // ---- En esta parte el programador es libre de manejarlo a su manera //
 	$datos['pages']     = $this->listaPaginas();
     $datos['this_page'] = $this->listaPaginasbySlug($this->url['controller']);
-    View::renderPage('publicaciones',$this -> ctr -> ld,$datos);
+    View::renderPage('publicacion',$this -> ctr -> ld,$datos);
   } else {
     // View::renderPage("error.unautorized");
     F::redirect('login'); // Redirección en caso de autorización

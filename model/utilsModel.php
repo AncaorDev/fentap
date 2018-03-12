@@ -41,6 +41,24 @@ class utilsModel extends Model{
 		return $data;
 	}
 
+	function updateTable($table, $datos, $where ){
+		$sql    = "UPDATE {$table} SET ";
+		$concat = '';
+		foreach ($datos as $key => $val) {
+			$sql .= "{$concat} {$key} = '{$val}' ";
+			$concat = ',';
+		}
+		$and = "WHERE ";
+		foreach ($where as $key => $val) {
+			$sql .= "{$and} {$key} = '{$val}' ";
+			$and = " AND ";
+		}
+		\__log($sql);
+		$sql = $this -> con -> ejecutar($sql);	
+		$compilated = $arrayName = array('sql' => $sql, 'upd' => $sql);
+		return $compilated;
+	}
+
 	public function _deleteRow($table , $where = null){
 		$data['error']  = 1;
 		$data['datos']	= null;
