@@ -26,9 +26,13 @@ class utilsModel extends Model{
 					}
 				}
 						
-			}	
-			\__log($sql);	  	 
+			}	  	
 			$eje = $this->con->ejecutar($sql);
+			if (count($eje) == 0) {
+				throw new Exception('Error al extraer información');
+			}
+			$data['error']  = 0;
+			$data['data']   = $eje->num_rows;
 			if ($eje->num_rows > 0) {
 				$data['error']  = 0;
 				$data['stdsql'] = 1;
@@ -41,19 +45,20 @@ class utilsModel extends Model{
 		return $data;
 	}
 
-	function updateTable($table, $datos, $where ){
+	function updateTable($table, $datos, $where = null){
 		$sql    = "UPDATE {$table} SET ";
 		$concat = '';
 		foreach ($datos as $key => $val) {
 			$sql .= "{$concat} {$key} = '{$val}' ";
 			$concat = ',';
 		}
-		$and = "WHERE ";
-		foreach ($where as $key => $val) {
-			$sql .= "{$and} {$key} = '{$val}' ";
-			$and = " AND ";
+		if ($where != null) {
+			$and = "WHERE ";
+			foreach ($where as $key => $val) {
+				$sql .= "{$and} {$key} = '{$val}' ";
+				$and = " AND ";
+			}
 		}
-		\__log($sql);
 		$sql = $this -> con -> ejecutar($sql);	
 		$compilated = $arrayName = array('sql' => $sql, 'upd' => $sql);
 		return $compilated;
@@ -75,7 +80,6 @@ class utilsModel extends Model{
 				}
 						
 			}	
-			\__log($sql);
 			$eje = $this->con->ejecutar($sql);
 			if ($eje == 0) {
 				$data['error']  = 0;

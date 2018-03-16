@@ -23,27 +23,26 @@ protected $ld;
 private   $m_page;
 
 // Método constructor, la funcion se ejecutara al instanciarla.
-public function __construct($bd = true,$data = "page",$id="") {
+public function __construct($bd = true,$data = "page",$id=null) {
 	$this -> bd = $bd;
 	if ($this -> bd) {
 		$this->m_page  = new pageModel();
 		$data = self::verificarData($data);
-		$this -> ld = self::obtnerLista($data,$id);
+		$this -> ld = self::obtnerLista($data,$id,null);
 	} 
-	$this -> load('functions');
 	// $this->ajaxPost();
 } 
 /* Función Mostrar Página con la lista general
  	Se requieren 4 datos : $p, $data y $id
 */
-public function extractData($data = "", $id = "") {
+public function extractData($data = "", $id = null , $sub_id = null) {
 	try {		
 		if ($this -> bd) {
 			$data = self::verificarData($data);
 			if ($data === "error") {
 				$this -> v -> render("error" , "500" , "modelo no definido");
 			} else {
-				return $lista = self::obtnerLista($data,$id);
+				return $lista = self::obtnerLista($data,$id,$sub_id);
 			}			
 		}	
 	} catch (Exception $e) {
@@ -81,14 +80,14 @@ static public function verificarData($data){
 	}
 }
 
-static public function obtnerLista($data,$id){
+static public function obtnerLista($data,$id,$sub_id){
 	try {
 		$model = 'model\\'.strtolower($data['model'])."Model";
 		$compilated = [];
 		if (class_exists($model)) {
 			$datamodel = new $model();
 			$actlistadetalles = "listaDetalles".ucfirst($data['model']);
-			$compilated[ strtolower($data['model']) ] = $datamodel -> $actlistadetalles($id);
+			$compilated[ strtolower($data['model']) ] = $datamodel -> $actlistadetalles($id,$sub_id);
 			isset($data['std']) ? $compilated['std'] = $datamodel -> statusTable() : '';
 			isset($data['count']) ? $compilated['count'] = count($compilated[strtolower($data['model'])]) : '';
 			// $compilated = ['lista' => $listadetallesdata, 'std' => ];	

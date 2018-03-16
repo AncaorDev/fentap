@@ -1,0 +1,65 @@
+<!-- method="post" action="panel/pages" -->
+<form action="" id="form_mapa" method="POST" class="form-horizontal form-label-left" novalidate>
+
+<div class="row">
+	<div class="col-md-4">
+		  <!-- ITEM -->
+		  <div class="item form-group">
+		    <label class="control-label col-md-4 col-sm-4 col-xs-12" style="text-align:left;" for="name">
+		      Usuario: <span class="required">*</span>
+		    </label>
+		    <div class="col-md-8 col-sm-8 col-xs-12">
+		      <input id="name_User" name="name_User" class="form-control col-md-7 col-xs-12" disabled="" value="{{ session.name_User }}">
+		    </div>
+		  </div>
+		  <!-- /ITEM -->
+		<!-- ITEM -->
+		<div class="item form-group">
+		    <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">
+		     Departamento:<span class="required">*</span>
+		    </label>
+		    <div class="col-md-8 col-sm-8 col-xs-12">
+		      <select id="id_departamento" name="id_departamento" class="form-control" data-validate-length="1" pattern="numeric" required>
+		        <option value="">Selec. Departamento..</option>
+		        {% for key,departamento in datos.departamentos %}
+		            {% if departamento.id_departamento == datos.mapa.id_departamento %}
+		              <option value="{{departamento.id_departamento}}" selected>{{departamento.departamento}}</option>
+		            {% else %}
+		              <option value="{{departamento.id_departamento}}">{{departamento.departamento}}</option>
+		            {% endif %}
+		        {% endfor %}
+		        ?>            
+		      </select>
+		    </div>
+		</div>
+		<!-- /ITEM -->
+	</div>
+	<div class="col-md-8">
+		<div class="summernote">
+	    {% autoescape %}
+	        {{ datos.mapa.html_mapa|raw }} {# var won't be escaped #}
+	    {% endautoescape %}
+		</div>
+	</div>					
+</div>
+ 
+  <!-- /ITEM -->
+
+  <!-- USER -->
+  <input id="id_User" name="id_User" type="hidden" value="{{ session.id_user }}">
+  <!-- ACTION -->
+  <input id="action" name="action" type="hidden" value="{{ datos.mapa ? 'actualizar' : 'registrar' }}">
+  <input id="id_mapa" name="id_mapa" type="hidden" value="{{ datos.mapa ? datos.mapa.id_mapa : '' }}">
+
+  <div class="ln_solid"></div>
+  <div class="form-group">
+    <div class="col-md-6 col-md-offset-3">
+      <button id="btnenviar" type="submit" class="btn btn-success" disabled><i class="fa fa-paper-plane"></i> Guardar </button>
+      <button type="reset" class="btn btn-danger">Limpiar</button>
+    </div>
+  </div>
+</form>
+{# <p>Atributo de la Página: </p>
+ #}
+
+

@@ -7,18 +7,27 @@
            <i class="icon icon-newspaper"></i> Hidroboletín 
         </div>
         <!--Card content-->
+{#         id_boletin
+        title_boletin
+        slug_boletin
+        descrip_boletin
+        date_create
+        date_modificate
+        html_boletin
+        img_portada 
+        name_User #}
         <div class="card-body pt-0">
             <!--Text-->
-            {% for key, hidro_notice in datos['hidro'] %}
+             {% for key, boletin in datos['boletines'] if key < 2 %}
                 <div class="content-notice">
-                    <p class="title text-left m-0 card-body-title pt-2">"{{ hidro_notice.title }}"</p>
+                    <p class="title text-left m-0 card-body-title pt-2">"{{ boletin.title_boletin }}"</p>
                     <div class="notice-info">
                         <div class="d-flex pb-2">
-                            <div class="mr-auto"> <span style="font-size:12px;" class="font-weight-light">Autor : {{ hidro_notice.autor }}</span></div>
-                            <div> <span class="font-weight-light" style="font-size:12px;">Fecha : {{ hidro_notice.fecha }} </span> </div>
+                            <div class="mr-auto"> <span style="font-size:12px;" class="font-weight-light">Autor : {{ boletin.name_User }}</span></div>
+                            <div> <span class="font-weight-light" style="font-size:12px;">Fecha :{{boletin.date_modificate == '' ? boletin.date_create :  boletin.date_modificate }}</span> </div>
                         </div>
                         <p class="card-text text-justify card-body-parrafo" style="line-height:15px;">
-                           {{ hidro_notice.content }}<a class="btn btn-primary btn-sm px-2" style="padding-bottom:2px;padding-top:2px;" href="{{ hidro_notice.enlace }}">Leer más</a>
+                           {{ boletin.descrip_boletin }}<a class="btn btn-primary btn-sm px-2" style="padding-bottom:2px;padding-top:2px;" href="hidro_boletin/read/{{ boletin.slug_boletin }}">Leer más</a>
                         </p>
                     </div>
                 </div> 
@@ -64,5 +73,6 @@
         </div>
     </div>
     <!--/.Card-->
+    <hr>
 </div>
 <!--Third columnn-->

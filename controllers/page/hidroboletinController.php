@@ -11,7 +11,7 @@ use app\clases\Functions as F;
 use app\clases\Session as S;
 use model\utilsModel;
 
-class noticiaController extends Controller {
+class hidroboletinController extends Controller {
 private $dp;
 private $ctr;
 private $bd; 
@@ -35,20 +35,15 @@ function index() { //Función que se jecuta al recibir una variable del tipo con
     // $datos['this_page'] = $this->listaPaginasbySlug($this->url['controller']);
 	if ($this->url['metodo'] != null && $this->url['atributo'] != null) {
 		if ($this->url['metodo'] == 'read') {
-			$querynotice	= $this -> ctr -> extractData('notices',null, $this->url['atributo']); 
-			$datos['notice'] = $querynotice['notices']['datos'][0]; // asignación de datos a la variable array    
-			$datos['notice']['html_notice'] = \decode_HTML($datos['notice']['html_notice']);
-			\__log($datos['notice']);
+			$querynotice	= $this -> ctr -> extractData('boletin',null, $this->url['atributo']); 
+			$datos['boletin'] = $querynotice['boletin']['datos'][0]; // asignación de datos a la variable array    
+			$datos['boletin']['html_boletin'] = \decode_HTML($datos['boletin']['html_boletin']);
 		}
 	} else {
 		\redirect('inicio');
 	}
-    
-    $querynotice        = $this -> ctr -> extractData('notices|count'); // asignación de datos a la variable array    
-    $datos['notices']   = $querynotice['notices']['datos'];
-    $queryboletin        = $this -> ctr -> extractData('boletin|count'); // asignación de datos a la variable array
-    $datos['boletines']  = $queryboletin['boletin']['datos'];
-	View::renderPage('noticia',$this -> ctr -> ld,$datos);
+
+	View::renderPage('boletin',$this -> ctr -> ld,$datos);
   } else {
     // View::renderPage("error.unautorized");
     F::redirect('login'); // Redirección en caso de autorización

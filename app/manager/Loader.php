@@ -1,8 +1,5 @@
 <?php namespace app\manager;
 
-use app\clases\Functions;
-use app\clases\Log;
-
 class Loader 
 {
 	private $data;
@@ -11,10 +8,8 @@ class Loader
 		$cant = count($data);
 	    if ($cant > 0) {
 	    	if ($data['controller'] == 'panel' && $data['subcontroller'] != '') {
-	    		Log::_log('runSubController');
 	    		self::runSubController($data,$view);
 	    	} else {
-	    		Log::_log('runController');
 	    		self::runController($data,$view);
 	    	}
 	      
@@ -29,7 +24,7 @@ class Loader
 	        // Asignamos nuestro controlador. 
         	$controller = 'controllers\page\\'.$data['controller'].'Controller';  
       	} else if ($data['controller'] == 'index' || $data['controller'] == 'index.php'){
-        	Functions::redirect('inicio');
+        	\redirect('inicio');
       	}else {
         	require(__DIR__.'/../../controllers/error/error404Controller.php');
         	$controller = 'controllers\error\error404Controller';  
@@ -37,7 +32,7 @@ class Loader
 		$vista = new $controller($data);
 		if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' && $data['metodo'] != '') {
 			$metodo = $data['metodo'];
-			Log::_log('Ejecutando metodo : ' . $metodo);
+			\__log('Ejecutando metodo : ' . $metodo);
 			$vista -> $metodo();
 		} else {
 			if ($view) {
@@ -56,7 +51,7 @@ class Loader
 	        // Asignamos nuestro controlador. 
         	$controller = 'controllers\panel\\'.$data['subcontroller'].'Controller';  
       	} else if ($data['subcontroller'] == 'index' || $data['subcontroller'] == 'index.php'){
-        	Functions::redirect('inicio');
+        	\redirect('inicio');
       	}else {
         	require(__DIR__.'/../../controllers/error/error404Controller.php');
         	$controller = 'controllers\error\error404Controller';  
@@ -64,7 +59,7 @@ class Loader
       	unset($data['subcontroller']);
       	$vista = new $controller($data);
 		if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' && $data['metodo'] != '' && $data['metodo'] != '') {
-			Log::_log('Ejecutando metodo : ' . $data['metodo']);
+			\__log('Ejecutando metodo : ' . $data['metodo']);
 			$vista -> $data['metodo']();
 		} else {
 			if ($view) {

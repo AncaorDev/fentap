@@ -3,44 +3,42 @@
 * extends Model
 */
 use app\clases\gestionBD;
-use app\clases\Log;
 use model\Model;
 
-class noticesModel extends Model{ 
+class mapaModel extends Model{ 
 	
 	private $table;
 
 	public function __construct() {
 		parent::__construct();
-		$this -> table = 'notice';
+		$this -> table = 'mapa';
 		$this -> con = new gestionBD();
 	}
 
-	function listaDetallesNotices($val = null, $slug_notice = null){
+	function listaDetallesMapa($val = null, $slug_boletin = null){
 		try{
 			$det = false;
 			$sql = "SELECT  u.name_User,
-							n.id_notice,
-							n.title_notice,
-							n.slug_notice,
-							n.descrip_notice,
-							n.date_create,
-							n.date_modificate,
-							n.html_notice,
-							n.img_portada,
-							n.flg_destacado
-					FROM notice n, user u
-					WHERE n.id_User=u.id_User";
+							t.id_mapa,
+							t.slug_mapa,
+							t.date_create,
+							t.date_modificate,
+							t.html_mapa,
+							d.id_departamento,
+							d.departamento
+					FROM {$this -> table} t, user u, ubdepartamento d
+					WHERE t.id_User=u.id_User 
+					AND   t.id_departamento=d.id_departamento";
 			if ($val != null ) {
 				$det = true;
-				$sql .= " AND n.id_notice={$val}";	
+				$sql .= " AND t.id_mapa={$val}";	
 			}
-			if ($slug_notice != null ) {
+			if ($slug_boletin != null ) {
 				$det = true;
-				$sql .= " AND n.slug_notice='{$slug_notice}'";	
+				$sql .= " AND t.slug_mapa='{$slug_boletin}'";	
 			}	
-			\__log($sql );	
 			$lista = $this -> con -> ejecutararray($sql);
+			\__log($lista);
 			$statusTable = $this -> statusTable();
 			$compilated = array('datos' => $lista, 'status' => $statusTable, 'det' => $det);
 			return  $compilated;
@@ -50,27 +48,19 @@ class noticesModel extends Model{
 		}
 	}
 
-	function newNoticia($datos) {
+	function newMapa($datos) {
 		try{
 			extract($datos);
-			$flg_destacado = isset($flg_destacado) ? $flg_destacado : ''; 
-			$sql = "INSERT INTO notice (title_notice, 
-									   descrip_notice, 
-									   flg_publicado, 
-									   html_notice,
-									   img_portada,
-									   slug_notice,
-									   flg_destacado, 
+			$sql = "INSERT INTO mapa ( flg_publicado, 
+									   html_mapa,
+									   slug_mapa,
 									   id_User) 
-						      VALUES ('{$title_notice}',
-						  			  '{$descrip_notice}' ,
-						  			   {$flg_publicado},
-						  			  '{$html_notice}',
-						  			  '{$img_portada}',
-						  			  '{$slug_notice}',
-						  			  '{$flg_destacado}',
+						      VALUES ( 1,
+						  			  '{$html_mapa}',
+						  			  '{$slug_mapa}',
 						  			  '{$id_User}')";
 			$sql = $this -> con -> ejecutar($sql);	
+			\__log($sql);
 			$compilated = $arrayName = array('sql' => $sql, 'upd' => $sql);
 		}
 		catch(Exception $ex){

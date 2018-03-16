@@ -1,5 +1,5 @@
 <!-- method="post" action="panel/pages" -->
-<form action="" id="form_page" method="POST" class="form-horizontal form-label-left" novalidate>
+<form action="" id="form_boletin" method="POST" class="form-horizontal form-label-left" novalidate>
 
 <div class="row">
 	<div class="col-md-12">
@@ -17,10 +17,10 @@
 		  <!-- ITEM -->
 		  <div class="item form-group">
 		    <label class="control-label col-md-4 col-sm-4 col-xs-12" style="text-align:left;" for="name">
-		      Título de la noticia <span class="required">*</span>
+		      Título del Hidro Boletín <span class="required">*</span>
 		    </label>
 		    <div class="col-md-8 col-sm-8 col-xs-12">
-		    <input id="title_notice" name="title_notice" class="form-control col-md-7 col-xs-12" data-validate-length-range="5,100" placeholder="Ingrese el título de la noticia" value="{{ datos.notice ? datos.notice['title_notice'] : ''}}" required="required" type="text">
+		    <input id="title_boletin" name="title_boletin" class="form-control col-md-7 col-xs-12" data-validate-length-range="5,100" placeholder="Ingrese el título de la noticia" value="{{ datos.boletin ? datos.boletin['title_boletin'] : ''}}" required="required" type="text">
 		    </div>
 		  </div> 
 		  <!-- /ITEM -->
@@ -31,7 +31,7 @@
 		      Descripción de la noticia<span class="required">*</span>
 		    </label>
 		    <div class="col-md-8 col-sm-8 col-xs-12">
-		    <input id="descrip_notice" name="descrip_notice" class="form-control col-md-7 col-xs-12" data-validate-length-range="5,200" placeholder="Ingrese la descripción de la noticia" value="{{ datos.notice ? datos.notice['descrip_notice'] : ''}}" required="required" type="text">
+		    <input id="descrip_boletin" name="descrip_boletin" class="form-control col-md-7 col-xs-12" data-validate-length-range="5,250" placeholder="Ingrese la descripción de la noticia" value="{{ datos.boletin ? datos.boletin['descrip_boletin'] : ''}}" required="required" type="text">
 		    </div>
 		  </div> 
 
@@ -39,20 +39,20 @@
 	<div class="col-md-4">
 			<div class="row" style="padding-bottom:20px;padding-left:10px;">
 				<label class="control-label col-md-8 col-sm-8 col-xs-8" style="text-align:left;" for="name">
-			      Marcar Como noticia del día:{{datos.notice.flg_destacado }}
+			      Marcar como destacado :{{datos.boletin.flg_destacado }}
 			    </label>
 			    <div class="col-md-4 col-sm-4 col-xs-4">
 			    	<span>
 					<label class="control control--checkbox" style="margin-top: -10px;">
-					 	<input id="flg_destacado" name="flg_destacado" type="checkbox" {{ datos.notice.flg_destacado == 0 ? '' : 'checked' }} onclick="active_destacado($(this))" /> 
+					 	<input id="flg_destacado" name="flg_destacado" type="checkbox" {{ datos.boletin.flg_destacado == 0 ? '' : 'checked' }} onclick="active_destacado($(this))" /> 
 	                	<div class="control__indicator  btn btn-primary"></div>
 					</label>
 					</span>
 				</div>	
 			</div>		
-		  	{% if datos.notice %}
+		  	{% if datos.boletin %}
 			<div class="image_portada">
-				<img style="width:100%;" src="images/upload/{{ datos.notice.img_portada ? datos.notice.img_portada : 'default_notice.jpg' }}" alt="">
+				<img style="width:100%;" src="images/upload/{{ datos.boletin.img_portada ? datos.boletin.img_portada : 'default_boletin.jpg' }}" alt="">
 			</div>
 			{% endif %}
 			<!-- /ITEM -->
@@ -63,7 +63,7 @@
 	<div class="col-md-8">
 		<div class="summernote">
 	    {% autoescape %}
-	        {{ datos.notice.html_notice|raw }} {# var won't be escaped #}
+	        {{ datos.boletin.html_boletin|raw }} {# var won't be escaped #}
 	    {% endautoescape %}
 		</div>
 	</div>					
@@ -74,8 +74,8 @@
   <!-- USER -->
   <input id="id_User" name="id_User" type="hidden" value="{{ session.id_user }}">
   <!-- ACTION -->
-  <input id="action" name="action" type="hidden" value="{{ datos.notice ? 'actualizar' : 'registrar' }}">
-  <input id="id_notice" name="id_notice" type="hidden" value="{{ datos.notice ? datos.notice.id_notice : '' }}">
+  <input id="action" name="action" type="hidden" value="{{ datos.boletin ? 'actualizar' : 'registrar' }}">
+  <input id="id_boletin" name="id_boletin" type="hidden" value="{{ datos.boletin ? datos.boletin.id_boletin : '' }}">
 
   <div class="ln_solid"></div>
   <div class="form-group">

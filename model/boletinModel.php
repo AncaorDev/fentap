@@ -3,41 +3,40 @@
 * extends Model
 */
 use app\clases\gestionBD;
-use app\clases\Log;
 use model\Model;
 
-class noticesModel extends Model{ 
+class boletinModel extends Model{ 
 	
 	private $table;
 
 	public function __construct() {
 		parent::__construct();
-		$this -> table = 'notice';
+		$this -> table = 'boletin';
 		$this -> con = new gestionBD();
 	}
 
-	function listaDetallesNotices($val = null, $slug_notice = null){
+	function listaDetallesBoletin($val = null, $slug_boletin = null){
 		try{
 			$det = false;
 			$sql = "SELECT  u.name_User,
-							n.id_notice,
-							n.title_notice,
-							n.slug_notice,
-							n.descrip_notice,
+							n.id_boletin,
+							n.title_boletin,
+							n.slug_boletin,
+							n.descrip_boletin,
 							n.date_create,
 							n.date_modificate,
-							n.html_notice,
+							n.html_boletin,
 							n.img_portada,
 							n.flg_destacado
-					FROM notice n, user u
+					FROM {$this -> table} n, user u
 					WHERE n.id_User=u.id_User";
 			if ($val != null ) {
 				$det = true;
-				$sql .= " AND n.id_notice={$val}";	
+				$sql .= " AND n.id_boletin={$val}";	
 			}
-			if ($slug_notice != null ) {
+			if ($slug_boletin != null ) {
 				$det = true;
-				$sql .= " AND n.slug_notice='{$slug_notice}'";	
+				$sql .= " AND n.slug_boletin='{$slug_boletin}'";	
 			}	
 			\__log($sql );	
 			$lista = $this -> con -> ejecutararray($sql);
@@ -50,24 +49,25 @@ class noticesModel extends Model{
 		}
 	}
 
-	function newNoticia($datos) {
+	function newBoletin($datos) {
 		try{
 			extract($datos);
 			$flg_destacado = isset($flg_destacado) ? $flg_destacado : ''; 
-			$sql = "INSERT INTO notice (title_notice, 
-									   descrip_notice, 
+			$img_portada   = isset($img_portada)   ? $flg_destacado : ''; 
+			$sql = "INSERT INTO boletin (title_boletin, 
+									   descrip_boletin, 
 									   flg_publicado, 
-									   html_notice,
+									   html_boletin,
 									   img_portada,
-									   slug_notice,
+									   slug_boletin,
 									   flg_destacado, 
 									   id_User) 
-						      VALUES ('{$title_notice}',
-						  			  '{$descrip_notice}' ,
+						      VALUES ('{$title_boletin}',
+						  			  '{$descrip_boletin}' ,
 						  			   {$flg_publicado},
-						  			  '{$html_notice}',
+						  			  '{$html_boletin}',
 						  			  '{$img_portada}',
-						  			  '{$slug_notice}',
+						  			  '{$slug_boletin}',
 						  			  '{$flg_destacado}',
 						  			  '{$id_User}')";
 			$sql = $this -> con -> ejecutar($sql);	

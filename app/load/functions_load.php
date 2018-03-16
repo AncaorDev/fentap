@@ -9,7 +9,7 @@ if (!function_exists('__log')) {
             $ruta = explode(DIRECTORY_SEPARATOR, $dbgt[0]['file']);
             $class = end($ruta);
         }
-        if (is_array($var)) {
+        if (is_array($var) || is_object($var)) {
         	$var = print_r($var,true);
         }
         error('( '.$class.' -> '.$dbgt[1]['function'].') (linea: '.$dbgt[0]['line'].') >> '.$var, 'error');
@@ -90,14 +90,78 @@ if (!function_exists('decode_HTML')) {
     	return $html;
 	}
 }
+
+if (!function_exists('leerDatos')) {
+	function leerDatos() {
+	    $datajson = file_get_contents(__DIR__."\\..\\..\\config\\.dataconfig");
+		// Decodificamos los datos
+		$infohost = json_decode($datajson);
+		// Asignamos a una array 
+		return $arr = get_object_vars($infohost);	
+	}
+}
+
+if (!function_exists('limpiarCadena')) {
+	function limpiarCadena($url){
+	    $url = strtolower($url);
+	    //Rememplazamos caracteres especiales latinos
+	    $find = array('á', 'é', 'í', 'ó', 'ú', 'ñ');
+	    $repl = array('a', 'e', 'i', 'o', 'u', 'n');
+	      $url = str_replace ($find, $repl, $url);
+	    return $url;
+	}
+}
+
+if (!function_exists('limpiarURL')) {
+	function limpiarURL($url,$lower = true){
+		if ($lower) {
+			// Tranformamos todo a minusculas
+	  		$url = strtolower($url);
+		}
+	  	//Rememplazamos caracteres especiales latinos
+	    $find = array('á', 'é', 'í', 'ó', 'ú', 'ñ');
+	    $repl = array('a', 'e', 'i', 'o', 'u', 'n');
+	    $url = str_replace ($find, $repl, $url);
+	    // Añadimos los guiones
+	    $find = array(' ', '&', '\r\n', '\n', '+');
+	    $url = str_replace ($find, '-', $url);
+	    // Eliminamos y Reemplazamos otros carácteres especiales
+	    $find = array('/[^a-z0-9\-<>]/', '/[\-]+/', '/<[^>]*>/','/\-+/');
+	    $repl = array('', '-', '' ,'_');
+	    $url = preg_replace($find, $repl, $url); 
+	    return $url;
+	}
+}
+
+if (!function_exists('limpiarAttr')) {
+	function limpiarAttr($url){
+	  	// Tranformamos todo a minusculas
+	  	$url = strtolower($url);
+	  	//Rememplazamos caracteres especiales latinos
+	    $find = array('á', 'é', 'í', 'ó', 'ú', 'ñ');
+	    $repl = array('a', 'e', 'i', 'o', 'u', 'n');
+	    $url = str_replace ($find, $repl, $url);
+	    // Añadimos los guiones
+	    $find = array(' ', '&', '\r\n', '\n', '+');
+	    $url = str_replace ($find, '-', $url);
+	    // Eliminamos y Reemplazamos otros carácteres especiales
+	    $find = array('/[^a-z0-9\_<>]/', '/[\-]+/', '/<[^>]*>/','/\-+/');
+	    $repl = array('', '-', '' ,'_');
+	    $url = preg_replace($find, $repl, $url); 
+	    return $url;
+	}
+}
+
+
+
+if (!function_exists('redirect')) {
+	function redirect($destino){
+		header('Location:'.HOME.$destino);
+	}
+}
+
  
 
-
-
-
-
-
-
-
+	
 
 

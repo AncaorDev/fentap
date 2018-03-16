@@ -1,17 +1,34 @@
-var check = 0;
-var modified = false;
+var check           = 0;
+var modified        = false;
+var id_departamento = null;
 
-function active_destacado() {
-    check = $("#flg_destacado").is(':checked');
-    check = check ? 1 : 0;
-    console.log(check);
-    modified = true;
+$('#id_departamento').on('change' , function(){
+    id_departamento = $(this).val();
+    $.ajax({
+    url: 'panel/mapa/verificarDepartamento',
+    type: 'POST',
+    dataType: 'json',
+    data: {'id_departamento' : id_departamento },
+    success: function(data) {
+        if (data.error == 0) {
+            if (data.exists == 1) {
+                editMapa(data.url);
+            }  
+            id_departamento  = id_departamento;         
+        } else {
+            alert('ERROR');
+        }
+    }
+    })
+    .fail(function(e) {
+        console.log(e);
+    });
+})
+$("input[type='date'],input[type='mail'],input[type='text'],textarea,select").change(function() {
     submitForm();
-}
-$("input[type='date'],input[type='mail'],input[type='text'],textarea").change(function() {
-    submitForm()
     modified = true;
 });
+
 $("input[type='text']").focus(function() {
     $(this).keydown(function() {
         if ($(this).val().length >= 2) {
@@ -21,7 +38,7 @@ $("input[type='text']").focus(function() {
 })
 
 function submitForm(bool = true) {
-    validatorResult = validator.checkAll($('#form_page'));
+    validatorResult = validator.checkAll($('#form_mapa'));
     if (validatorResult) {
         $("#btnenviar").removeAttr("disabled")
     } else {
@@ -45,7 +62,7 @@ function showAction() {
 }
 
 
-$('#form_page').submit(function(e) {
+$('#form_mapa').submit(function(e) {
     e.preventDefault();
     // evaluate the form using generic validaing
     validatorResult = validator.checkAll(this);
@@ -53,67 +70,54 @@ $('#form_page').submit(function(e) {
     if (!validatorResult) {
         $("#btnenviar").removeAttr("disabled");
     } else {
-        console.log('asdas');
         $("#btnenviar").removeAttr("disabled")
         if (modified) {
             var html = $('.summernote').summernote('code');
-            var file = $("#input-id")[0].files[0];
             var accion = showAction();
             var accion_form = $('#action').val();
             if (accion_form == accion) {
                 if (accion == 'actualizar') {
-                    saveNotice(file, html);
+                    saveMapa(html);
                 } else {
-                    newNotice(file, html);
+                    newMapa(html);
                 }
             }
         }
     }
 });
 
-function newNotice(file, html) {
-    if (file.type.includes('image')) {
-        var name = file.name.split(".");
-        name = name[0];
-        var data = new FormData();
-        console.log(file);
-        data.append('file', file);
-        data.append('name_User', $('#name_User').val());
-        data.append('title_notice', $('#title_notice').val());
-        data.append('descrip_notice', $('#descrip_notice').val());
-        data.append('flg_destacado', check);
-        data.append('html_notice', html);
-        console.log(data);
-        $.ajax({
-                url: 'panel/notices/newNotice',
-                type: 'POST',
-                contentType: false,
-                cache: false,
-                processData: false,
-                dataType: 'json',
-                data: data,
-                success: function(data) {
-                    console.log(data);
-                    if (data.error == 0) {
-                        alert('Acción realizada con éxito');
-                        setTimeout(function() {
-                            var URLactual = window.location.href;
-                            window.location = URLactual;
-                        }, 1000);
-                    } else {
-                        alert('ERROR');
-                    }
-                }
-            })
-            .fail(function(e) {
-                console.log(e);
-            });
-    } else {
-        alert("El tipo de archivo que intentaste subir no es una imagen");
-    }
+function newMapa(html) {
+    var data = new FormData();
+    data.append('name_User', $('#name_User').val());
+    data.append('id_departamento', id_departamento);
+    data.append('html_mapa', html);
+    $.ajax({
+        url: 'panel/mapa/newMapa',
+        type: 'POST',
+        dataType: 'json',
+        contentType: false,
+        // cache: false,
+        processData: false,
+        data: data,
+        success: function(data) {
+            console.log(data);
+            if (data.error == 0) {
+                alert('Acción realizada con éxito');
+                setTimeout(function() {
+                    var URLactual = window.location.href;
+                    window.location = URLactual;
+                }, 1000);
+            } else {
+                alert('ERROR');
+            }
+        }
+    })
+    .fail(function(e) {
+        console.log(e);
+    });
 }
 
-function saveNotice(file, html) {
+function saveBoletin(file, html) {
     var data = new FormData();
     console.log(file);
     if (file !== undefined) {
@@ -126,15 +130,15 @@ function saveNotice(file, html) {
         data.append('file', file);
     }
     data.append('name_User', $('#name_User').val());
-    data.append('title_notice', $('#title_notice').val());
-    data.append('descrip_notice', $('#descrip_notice').val());
+    data.append('title_boletin', $('#title_boletin').val());
+    data.append('descrip_boletin', $('#descrip_boletin').val());
     data.append('id_User', $('#id_User').val());
-    data.append('id_notice', $('#id_notice').val());
+    data.append('id_boletin', $('#id_boletin').val());
     data.append('flg_destacado', check);
-    data.append('html_notice', html);
+    data.append('html_boletin', html);
     console.log(data);
     $.ajax({
-        url: 'panel/notices/saveNotice',
+        url: 'panel/boletin/saveBoletin',
         type: 'POST',
         contentType: false,
         cache: false,
@@ -158,8 +162,8 @@ function saveNotice(file, html) {
     });
 }
 
-function confirmDeleteNotice(tag) {
-    id_notice = tag.parent().data('id_notice');
+function confirmDeleteBoletin(tag) {
+    id_boletin = tag.parent().data('id_boletin');
     $.confirm({
         title: 'Mensaje!',
         content: '¿Esta seguro que desea eliminar?',
@@ -173,7 +177,7 @@ function confirmDeleteNotice(tag) {
             aceptar: {
                 btnClass: 'btn-blue',
                 action: function() {
-                    deleteNotice(id_notice);
+                    deleteBoletin(id_boletin);
                 }
             },
             cancelar: {
@@ -186,13 +190,40 @@ function confirmDeleteNotice(tag) {
     });
 }
 
-function deleteNotice(id_notice) {
+function editMapa(url){
+    $.confirm({
+        title: 'Mensaje!',
+        content: '¿Esta seguro que desea eliminar?',
+        type: 'dark',
+        typeAnimated: true,
+        icon: 'fa fa-spinner fa-spin',
+        closeIcon: true,
+        closeIconClass: 'fa fa-close',
+        theme: 'supervan',
+        buttons: {
+            aceptar: {
+                btnClass: 'btn-blue',
+                action: function() {
+                    window.location = url;
+                }
+            },
+            cancelar: {
+                btnClass: 'btn-red',
+                action: function() {
+
+                }
+            }
+        }
+    });
+}
+
+function deleteBoletin(id_boletin) {
     $.ajax({
-        url: 'panel/notices/deleteNotice',
+        url: 'panel/boletin/deleteBoletin',
         type: 'POST',
         dataType: 'json',
         data: {
-            'id_notice': id_notice
+            'id_boletin': id_boletin
         },
         success: function(data) {
             if (data.error == 0) {
@@ -235,7 +266,7 @@ $(document).ready(function() {
             ['para', ['ul', 'ol', 'paragraph']],
             ['height', ['height']],
             ['table', ['table']],
-            ['insert', ['link', 'picture', 'hr']],
+            ['insert', ['link', 'picture', 'hr','video']],
             ['view', ['fullscreen', 'codeview']],
             ['color', ['color']],
             ['help', ['help']]
@@ -248,6 +279,19 @@ $(document).ready(function() {
                 }
             }
         },
+        codemirror: { // codemirror options
+        theme: 'blackboard',
+        mode: "text/html",
+        extraKeys: {"Ctrl-Space": "autocomplete"},
+        lineWrapping: true, // Tam
+        lineNumbers: true,
+        textWrapping: true,
+        tabMode: 'indent',
+        // firstLineNumber: 'lineNum',
+        styleActiveLine: true,
+        indentwrap     : 'renderLine',
+        matchBrackets: true
+      },
         popover: {
             image: [
                 ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
@@ -317,26 +361,6 @@ function SubirImagen(file) {
     }
 }
 
-function guardarHtml(html, editPage) {
-    $.ajax({
-        url: 'panel/pages/guardarHtml',
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            "html_Page": html,
-            "id_Page": editPage
-        },
-        success: function(data) {
-            if (data.error == 0) {
-                $("#msg").html(data.msj);
-            } else {
-                console.log(data.error);
-            }
-        }
-    }).fail(function(e) {
-        console.log(e);
-    });
-}
 $("#btnincauto").click(function() {
     event.preventDefault();
     $.confirm({
@@ -367,7 +391,7 @@ $("#btnincauto").click(function() {
 
 function resetAI(num = 0) {
     $.ajax({
-        url: 'panel/notices/resetAutoIncrement',
+        url: 'panel/boletin/resetAutoIncrement',
         type: 'POST',
         dataType: 'json',
         data: {

@@ -21,7 +21,7 @@ $("input[type='text']").focus(function() {
 })
 
 function submitForm(bool = true) {
-    validatorResult = validator.checkAll($('#form_page'));
+    validatorResult = validator.checkAll($('#form_boletin'));
     if (validatorResult) {
         $("#btnenviar").removeAttr("disabled")
     } else {
@@ -45,7 +45,7 @@ function showAction() {
 }
 
 
-$('#form_page').submit(function(e) {
+$('#form_boletin').submit(function(e) {
     e.preventDefault();
     // evaluate the form using generic validaing
     validatorResult = validator.checkAll(this);
@@ -62,58 +62,61 @@ $('#form_page').submit(function(e) {
             var accion_form = $('#action').val();
             if (accion_form == accion) {
                 if (accion == 'actualizar') {
-                    saveNotice(file, html);
+                    saveBoletin(file, html);
                 } else {
-                    newNotice(file, html);
+                    newBoletin(file, html);
                 }
             }
         }
     }
 });
 
-function newNotice(file, html) {
-    if (file.type.includes('image')) {
+function newBoletin(file, html) {
+    console.log(file);
+    var data = new FormData();
+    if (file !== undefined) {
+        if (!file.type.includes('image')) {
+            alert("El tipo de archivo que intentaste subir no es una imagen");
+            return;
+        }
         var name = file.name.split(".");
         name = name[0];
-        var data = new FormData();
-        console.log(file);
         data.append('file', file);
-        data.append('name_User', $('#name_User').val());
-        data.append('title_notice', $('#title_notice').val());
-        data.append('descrip_notice', $('#descrip_notice').val());
-        data.append('flg_destacado', check);
-        data.append('html_notice', html);
-        console.log(data);
-        $.ajax({
-                url: 'panel/notices/newNotice',
-                type: 'POST',
-                contentType: false,
-                cache: false,
-                processData: false,
-                dataType: 'json',
-                data: data,
-                success: function(data) {
-                    console.log(data);
-                    if (data.error == 0) {
-                        alert('Acción realizada con éxito');
-                        setTimeout(function() {
-                            var URLactual = window.location.href;
-                            window.location = URLactual;
-                        }, 1000);
-                    } else {
-                        alert('ERROR');
-                    }
-                }
-            })
-            .fail(function(e) {
-                console.log(e);
-            });
-    } else {
-        alert("El tipo de archivo que intentaste subir no es una imagen");
     }
+    data.append('file', file);
+    data.append('name_User', $('#name_User').val());
+    data.append('title_boletin', $('#title_boletin').val());
+    data.append('descrip_boletin', $('#descrip_boletin').val());
+    data.append('flg_destacado', check);
+    data.append('html_boletin', html);
+    console.log(data);
+    $.ajax({
+            url: 'panel/boletin/newBoletin',
+            type: 'POST',
+            contentType: false,
+            cache: false,
+            processData: false,
+            dataType: 'json',
+            data: data,
+            success: function(data) {
+                console.log(data);
+                if (data.error == 0) {
+                    alert('Acción realizada con éxito');
+                    setTimeout(function() {
+                        var URLactual = window.location.href;
+                        window.location = URLactual;
+                    }, 1000);
+                } else {
+                    alert('ERROR');
+                }
+            }
+        })
+        .fail(function(e) {
+            console.log(e);
+        });
 }
 
-function saveNotice(file, html) {
+function saveBoletin(file, html) {
     var data = new FormData();
     console.log(file);
     if (file !== undefined) {
@@ -126,15 +129,15 @@ function saveNotice(file, html) {
         data.append('file', file);
     }
     data.append('name_User', $('#name_User').val());
-    data.append('title_notice', $('#title_notice').val());
-    data.append('descrip_notice', $('#descrip_notice').val());
+    data.append('title_boletin', $('#title_boletin').val());
+    data.append('descrip_boletin', $('#descrip_boletin').val());
     data.append('id_User', $('#id_User').val());
-    data.append('id_notice', $('#id_notice').val());
+    data.append('id_boletin', $('#id_boletin').val());
     data.append('flg_destacado', check);
-    data.append('html_notice', html);
+    data.append('html_boletin', html);
     console.log(data);
     $.ajax({
-        url: 'panel/notices/saveNotice',
+        url: 'panel/boletin/saveBoletin',
         type: 'POST',
         contentType: false,
         cache: false,
@@ -158,8 +161,8 @@ function saveNotice(file, html) {
     });
 }
 
-function confirmDeleteNotice(tag) {
-    id_notice = tag.parent().data('id_notice');
+function confirmDeleteBoletin(tag) {
+    id_boletin = tag.parent().data('id_boletin');
     $.confirm({
         title: 'Mensaje!',
         content: '¿Esta seguro que desea eliminar?',
@@ -173,7 +176,7 @@ function confirmDeleteNotice(tag) {
             aceptar: {
                 btnClass: 'btn-blue',
                 action: function() {
-                    deleteNotice(id_notice);
+                    deleteBoletin(id_boletin);
                 }
             },
             cancelar: {
@@ -186,13 +189,13 @@ function confirmDeleteNotice(tag) {
     });
 }
 
-function deleteNotice(id_notice) {
+function deleteBoletin(id_boletin) {
     $.ajax({
-        url: 'panel/notices/deleteNotice',
+        url: 'panel/boletin/deleteBoletin',
         type: 'POST',
         dataType: 'json',
         data: {
-            'id_notice': id_notice
+            'id_boletin': id_boletin
         },
         success: function(data) {
             if (data.error == 0) {
@@ -235,7 +238,7 @@ $(document).ready(function() {
             ['para', ['ul', 'ol', 'paragraph']],
             ['height', ['height']],
             ['table', ['table']],
-            ['insert', ['link', 'picture', 'hr']],
+            ['insert', ['link', 'picture', 'hr','video']],
             ['view', ['fullscreen', 'codeview']],
             ['color', ['color']],
             ['help', ['help']]
@@ -248,6 +251,19 @@ $(document).ready(function() {
                 }
             }
         },
+        codemirror: { // codemirror options
+        theme: 'blackboard',
+        mode: "text/html",
+        extraKeys: {"Ctrl-Space": "autocomplete"},
+        lineWrapping: true, // Tam
+        lineNumbers: true,
+        textWrapping: true,
+        tabMode: 'indent',
+        // firstLineNumber: 'lineNum',
+        styleActiveLine: true,
+        indentwrap     : 'renderLine',
+        matchBrackets: true
+      },
         popover: {
             image: [
                 ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
@@ -317,26 +333,6 @@ function SubirImagen(file) {
     }
 }
 
-function guardarHtml(html, editPage) {
-    $.ajax({
-        url: 'panel/pages/guardarHtml',
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            "html_Page": html,
-            "id_Page": editPage
-        },
-        success: function(data) {
-            if (data.error == 0) {
-                $("#msg").html(data.msj);
-            } else {
-                console.log(data.error);
-            }
-        }
-    }).fail(function(e) {
-        console.log(e);
-    });
-}
 $("#btnincauto").click(function() {
     event.preventDefault();
     $.confirm({
@@ -367,7 +363,7 @@ $("#btnincauto").click(function() {
 
 function resetAI(num = 0) {
     $.ajax({
-        url: 'panel/notices/resetAutoIncrement',
+        url: 'panel/boletin/resetAutoIncrement',
         type: 'POST',
         dataType: 'json',
         data: {

@@ -9,20 +9,29 @@
         <!--Card content-->
         <div class="card-body py-1" style="background-color:rgb(22, 141, 171);">
             <!--Text-->
-            {% for key, hidro_notice in datos['hidro'] %}
+{#             name_User
+            id_notice
+            title_notice
+            descrip_notice
+            date_create
+            date_modificate
+            html_notice
+            img_portada #}
+            {% for key, notice in datos['notices'] if key < 2 and notice.flg_destacado == 0 %}
                 <div class="content-notice row pt-1">                            
                     <div class="col-sm-4 p-0">
-                        <img class="w-100" src="{{IMAGE}}fentap/noticias/defensoria_constata.jpg" alt="">
+                        {# {{loop.length}} #}
+                        <img class="w-100" src="{{IMAGE}}upload/{{notice.img_portada}}" alt="">
                     </div>
                     <div class="col-sm-8"> 
-                        <a href="{{hidro_notice.enlace}}">
-                            <span class="font-weight-bold text-white p-0" style="font-size:11px;">Defensoría pide urgente intervención de Fiscalía y EPS Grau por colapso de desagües en 9 de Octubre de Sullana </span> 
+                        <a href="noticia/read/{{notice.slug_notice}}">
+                            <span class="font-weight-bold text-white p-0" style="font-size:11px;"> {{notice.title_notice}} </span> 
                         </a>
                     </div>
                     <div class="col-sm-12">
                         <div class="d-flex pb-0 text-white">
-                            <div class="mr-auto"> <span style="font-size:12px;" class="font-weight-light">Publicado en: EMPRESAS DE AGUA</span></div>
-                            <div> <span class="font-weight-light" style="font-size:12px;">ENE 19, 2018</span> </div>
+                            <div class="mr-auto"> <span style="font-size:12px;" class="font-weight-light"> Autor: {{notice.name_User}}</span></div>
+                            <div> <span class="font-weight-light" style="font-size:12px;">{{notice.date_modificate == '' ? notice.date_create :  notice.date_modificate }}</span> </div>
                         </div>                                 
                     </div>
                 </div> 

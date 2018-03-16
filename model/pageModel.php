@@ -55,7 +55,6 @@ class pageModel  extends Model
 				$sql .= " WHERE page.slug_Page ='{$slug}'"; 
 				$det = true; // 1
 			} 
-			Log::_log($sql);
 			$lista = $this -> con -> ejecutararray($sql);
 			$statusTable = $this -> statusTable();
 			$listaAttributePage = $this -> listaAttributePage();

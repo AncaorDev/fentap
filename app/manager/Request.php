@@ -1,8 +1,6 @@
 <?php namespace app\manager;
 
-use app\clases\Functions;
 use app\manager\Loader;
-use app\clases\Log;
 
 class Request{
 	private $request;
@@ -14,29 +12,27 @@ class Request{
 		$atributo      = null;
 
 		if (isset($_GET['url'])) {
-			$lurl       = Functions::limpiarCadena($_GET['url']);
+			$lurl       = \limpiarCadena($_GET['url']);
 			$url        = explode('/',$lurl);
-			$controller = Functions::limpiarURL($url[0]);
+			$controller = \limpiarURL($url[0]);
 			$n_url      = count($url);
-			Log::_log($lurl);
-			Log::_log($n_url);
 			if ($n_url>=1) {
 				if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'){
 				   if ($n_url == 2) {
 						$subcontroller = '' ;
-						$metodo        = isset($url[1]) ?  Functions::limpiarURL($url[1]) : '' ;
+						$metodo        = isset($url[1]) ? \limpiarURL($url[1],false) : '' ;
 					} else if ($n_url == 3) {
-						$subcontroller = isset($url[1]) ?  Functions::limpiarURL($url[1]) : '' ;
-						$metodo        = isset($url[2]) ?  Functions::limpiarURL($url[2]) : '' ;
+						$subcontroller = isset($url[1]) ? \limpiarURL($url[1]) : '' ;
+						$metodo   	   = isset($url[2]) ? \limpiarURL($url[2],false) : '' ;
 					}
 				} else {
 					if ($controller == 'panel') {
-						$subcontroller = isset($url[1]) ?  Functions::limpiarURL($url[1]) : '' ;
-						$metodo        = isset($url[2]) ?  Functions::limpiarURL($url[2]) : '' ;
-						$atributo      = isset($url[3]) ?  Functions::limpiarURL($url[3]) : '';
+						$subcontroller = isset($url[1]) ? \limpiarURL($url[1]) : '' ;
+						$metodo        = isset($url[2]) ? \limpiarURL($url[2],false) : '' ;
+						$atributo      = isset($url[3]) ? \limpiarAttr($url[3]) : '';
 					} else {
-						$metodo   = isset($url[1])   ?  Functions::limpiarURL($url[1]) : '' ;
-						$atributo = isset($url[2])   ? Functions::limpiarURL($url[2]): '';
+						$metodo   = isset($url[1])   ? \limpiarURL($url[1]) : '' ;
+						$atributo = isset($url[2])   ?\limpiarAttr($url[2]): '';
 					}
 				}
 				$this->request = array( 'controller'    => $controller,
@@ -52,7 +48,7 @@ class Request{
 		$this->Procesar();	
 	}
 	 private function Procesar(){
-	 	Log::_log(print_r($this->request,true));
+	 	\__log(print_r($this->request,true));
 	  	Loader::filterController($this->request);
 	 }
 	

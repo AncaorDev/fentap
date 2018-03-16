@@ -14,11 +14,11 @@
     <!-- Header Pages -->
     <div class="header-pages">   
         <div class="col-md-12 col-sm-12 col-xs-12">
-        {% if datos.notice %}
+        {% if datos.mapa %}
           <div class="x_panel">
             <div class=" row x_title">
               <div class="col-md-8 col-xs-12">  
-              <h2 class="h2-none" style="width:100%;"><span class="glyphicon glyphicon-book"></span> Editar Noticia ({{ datos.page.title_Page }})  </h2>
+              <h2 class="h2-none" style="width:100%;"><span class="glyphicon glyphicon-book"></span> Editar Mapa ({{ datos.mapa.provincia }})  </h2>
               </div>
               <div class="col-md-4" style="text-align:right;">
                 <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -31,7 +31,7 @@
                     <div id="barra-estado" class="progress-bar" style="width: 0%"></div>
                     </div>
                     <div class="col-lg-12 col-xs-12" id="mensaje"></div>
-                    {% include 'panel/forms/notice.twig' %}
+                    {% include 'panel/forms/mapa.twig' %}
                 </div>  
             </div>
             <!-- x content -->
@@ -78,24 +78,22 @@
                                                 <thead>
                                                     <tr>
                                                         <th> # (ID) </th>
-                                                        <th> Título de la Noticia</th>
-                                                        <th> Descripción <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Descripción de la noticia"></i></th>
+                                                        <th> Provincia </th>
                                                         <th> Fecha de Creación </th>
                                                         <th> Usuario <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Usuario que creó o editó la noticia por última vez"></i></th>
                                                         <th> Acciones</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {% for key, notice in datos.datos %}
+                                                    {% for key, mapa in datos.datos %}
                                                     <tr class="success" id="tdata{{key}}">
-                                                        <td> {{ notice.id_notice }} </td>
-                                                        <td> {{ notice.title_notice }} </td>
-                                                        <td> {{ notice.descrip_notice }} </td>
-                                                        <td> {{ notice.date_create }} </td>
-                                                        <td> {{ notice.name_User }} </td>
-                                                        <td id="data-{{notice.id_notice}}" data-id_notice="{{notice.id_notice}}">
-                                                            <a href="{{BASE_PANEL}}notices/edit/{{notice.id_notice}}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Editar </a>
-                                                            <a onclick="confirmDeleteNotice($(this))" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Eliminar </a>
+                                                        <td> {{ mapa.id_mapa }} </td>
+                                                        <td> {{ mapa.departamento }} </td>
+                                                        <td> {{ mapa.date_create }} </td>
+                                                        <td> {{ mapa.name_User }} </td>
+                                                        <td id="data-{{mapa.id_mapa}}" data-id_mapa="{{mapa.id_mapa}}">
+                                                            <a href="{{BASE_PANEL}}mapa/edit/{{mapa.id_mapa}}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Editar </a>
+                                                            <a onclick="confirmDeleteBoletin($(this))" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Eliminar </a>
                                                         </td>
                                                     </tr>
                                                     {% endfor %}
@@ -105,7 +103,7 @@
                                     </div>
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="formpage" aria-labelledby="profile-tab">
-                                    {% include 'panel/forms/notice.twig' %}
+                                    {% include 'panel/forms/mapa.twig' %}
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="ordenar" aria-labelledby="profile-tab">
                                     <div id="progress" style="display:none;" class="progress progress-striped active">
@@ -196,17 +194,12 @@
 {% endblock %}
 {% block scripts %}   
   {{parent()}}
-  <script src="./js/panel/notices.js?id={{random()}}"></script>
+  <script src="./js/panel/mapas.js?id={{random()}}"></script>
   <script type="text/javascript">
-    $(document).ready(function() {
-        $("#id_AttributePage").trigger('change');
-    });
-
     $("#input-id").fileinput({
         language: "es",
         showUpload: false
     });
-
     $("#datatable-responsive").DataTable({
     "language": {"search": "Buscar _INPUT_",
                 "paginate": {"next": "Siguiente" , "previous" : "Anterior", "first": "Primera Página" , "last": "Última Página"},

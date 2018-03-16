@@ -15,7 +15,7 @@
     <div class="row pt-4 h-100">
         {# {% include 'body/primera_columna.twig' %} #}
 {#         name_User
-        id_notice
+        id_boletin
         title_notice
         slug_notice
         descrip_notice
@@ -29,28 +29,28 @@
               <ol class="breadcrumb">
                 <li class="breadcrumb-item color-fentap2"><a href="{{HOME}}">Inicio</a></li>
                 <li class="breadcrumb-item color-fentap2">Noticia</li>
-                <li class="breadcrumb-item color-fentap2 active" aria-current="page"> {{ datos.notice.title_notice }} </li>
+                <li class="breadcrumb-item color-fentap2 active" aria-current="page"> {{ datos.boletin.title_notice }} </li>
               </ol>
             </nav>
             <div class="card wow fadeIn" data-wow-delay="0.4s">
                 <div class="card-header card-header-title text-center text-white text-uppercase">
                     <!--Title-->
-                    {{ datos.notice.title_notice }}
+                    {{ datos.boletin.title_boletin }}
                 </div>
                 <!--Card content-->
                 <div class="card-body pt-0">
                     <!--Text-->
                     <div class="content-notice" style="">
                         <p class="card-text text-justify card-body-title pt-3 color-fentap1"  style="font-size:19px;line-height:21px;">
-                                {{ datos.notice.descrip_notice }} 
+                                {{ datos.boletin.descrip_boletin }} 
                         </p>
                         <div class="w-100 text-center">
-                            <img src="{{IMAGE}}/upload/{{datos.notice.img_portada}}" alt="">
+                            <img src="{{IMAGE}}/upload/{{datos.boletin.img_portada}}" alt="">
                         </div>
                         <br>
                         <div style="width:100%;overflow:hidden;">
                             {% autoescape %}
-                                {{ datos.notice.html_notice|raw }} {# var won't be escaped #}
+                                {{ datos.boletin.html_boletin|raw }} {# var won't be escaped #}
                             {% endautoescape %}
                         </div>
                         <hr>

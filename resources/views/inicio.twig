@@ -1,3 +1,4 @@
+
 {% extends "base.twig" %}
 {% block title %} Inicio {% endblock %}
 {% block head %}
@@ -25,10 +26,13 @@
                 <!--Card content-->
                 <div class="card-body">
                     <!--Text-->
-                    <p class="card-text card-body-title color-fentap1 font-weight-bold">En 30% sube desperdicio de agua en verano por jardines y uso de piscinas.</p>
+                    {% for key, notice in datos['notices'] if notice.flg_destacado == 1 %}
+                    <p class="card-text card-body-title color-fentap1 font-weight-bold">
+                        {{notice.title_notice}} 
+                    </p>
                     <div class="row">
                         <div class="col-sm-5">
-                            <img class="w-100" src="{{IMAGE}}fentap/inicio/noticia.jpg" alt="">
+                            <img class="w-100" src="{{IMAGE}}upload/{{notice.img_portada}}" alt="">
                         </div>
                         <div class="col-sm-7">
                             <div class="d-flex pb-2">
@@ -36,10 +40,11 @@
                                 <div> <span class="font-weight-light" style="font-size:12px;">Fecha : 19/02/2018 </span> </div>
                             </div>
                             <p>
-                                La EPS Grau distribuye cerca de 6 millones de litros cúbicos de agua potable por día, pero durante el verano, un 30% de esta se desperdicia, lo que impide que otras personas la utilicen.  <a class="btn btn-primary btn-sm px-2" style="padding-bottom:2px;padding-top:2px;" href="{{ hidro_notice.enlace }}">Leer noticia completa</a>
+                                {{notice.descrip_notice}}  <a class="btn btn-primary btn-sm px-2" style="padding-bottom:2px;padding-top:2px;" href="noticia/read/{{notice.slug_notice}}">Leer noticia completa</a>
                             </p>
                         </div>
                     </div>
+                    {% endfor %}     
                 </div>
             </div>
             <!--/.Card-->
@@ -53,4 +58,97 @@
 
 {% endblock %}
 {% block script %}
+    <script>
+    $(document).ready(function(e){
+        var regiones = {{datos.regiones|raw}};
+        var projects = {{datos.projects|raw}};
+        $('#world-map').vectorMap({
+            map: 'peru',
+            onRegionOver: function (e, code) {
+              $(this).on('click', function () {
+                var map = $('#world-map').vectorMap('get', 'mapObject');
+                var name = map.getRegionName(code);
+                var objregion = map.regions[code];
+                // alert(code, name, objregion.config['id']); 
+              });
+            },
+            onRegionClick: function(e, code){
+                var base_url = window.location.href;
+                    $.ajax({
+                        url: 'inicio/goToDepartamento',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            'code': code
+                        },
+                        success: function(data) {
+                            if (data.error == 0) {
+                                var URLactual = window.location.href;
+                                window.location = URLactual+data.url;
+                            } else {
+                                alert('ERROR');
+                            }
+                        }
+                    }).fail(function(e) {
+                        console.log(e)
+                    });
+
+            },
+            onRegionOut: function (e, code) {
+              $(this).unbind('click');
+            },
+            zoomButtons : false,
+            zoomOnScroll : false,
+            backgroundColor: '#b3d1ff',
+            series: {
+            regions: [{
+              values: regiones,
+              scale: ['#E0E0E0', '#b3d1ff',"#1A3984"],
+              normalizeFunction: 'polynomial',
+            }]
+            },
+            regionStyle:{
+              initial:{
+                fill:"#f4f3f0",
+                stroke:"#666666",
+                "stroke-width":1,
+                "stroke-opacity":1
+              },
+              hover:{
+                // "fill":"#1B2B34",
+                // "fill-opacity": 0.1,
+                cursor: 'pointer'
+              }
+            },
+            regionLabelStyle:{
+              initial: {
+              'font-family': 'Verdana',
+              'font-size': '18',
+              'font-weight': 'bold',
+              cursor: 'default',
+              fill: 'black'
+              },
+              hover: {
+                cursor: 'pointer'
+              }
+            },
+            onMarkerLabelShow: function(event, label, code) {
+             label.html("<img src=\"img/logo.png\"><br>"+ label.html());                
+            },
+            onRegionLabelShow: function(event, label, code){
+              var map = $('#world-map').vectorMap('get', 'mapObject');
+              var name = map.getRegionName(code);
+              var objregion = map.regions[code];
+              var data = objregion.config;
+              if(typeof(projects[data.id]) != "undefined"){
+                var proyecto = projects[data.id];
+              } else {
+                var proyecto = "";
+              }
+              label.html('<strong>'+name+'</strong><br>'+'<p>'+proyecto+'</p>');
+              // label.html(names[currentLang][code]);
+            }  
+        })
+    });
+    </script>
 {% endblock %}
