@@ -5,38 +5,37 @@
 use app\clases\gestionBD;
 use model\Model;
 
-class boletinModel extends Model{ 
+class publishModel extends Model{ 
 	
 	private $table;
 
 	public function __construct() {
 		parent::__construct();
-		$this -> table = 'boletin';
+		$this -> table = 'publish';
 		$this -> con = new gestionBD();
 	}
 
-	function listaDetallesBoletin($val = null, $slug_boletin = null){
+	function listaDetallesPublish($val = null, $slug_publish = null){
 		try{
 			$det = false;
 			$sql = "SELECT  u.name_User,
-							n.id_boletin,
-							n.title_boletin,
-							n.slug_boletin,
-							n.descrip_boletin,
+							n.id_publish,
+							n.title_publish,
+							n.slug_publish,
+							n.descrip_publish,
 							n.date_create,
 							n.date_modificate,
-							n.html_boletin,
-							n.img_portada,
-							n.flg_destacado
+							n.html_publish,
+							n.img_portada
 					FROM {$this -> table} n, user u
 					WHERE n.id_User=u.id_User";
 			if ($val != null ) {
 				$det = true;
-				$sql .= " AND n.id_boletin={$val}";	
+				$sql .= " AND n.id_publish={$val}";	
 			}
-			if ($slug_boletin != null ) {
+			if ($slug_publish != null ) {
 				$det = true;
-				$sql .= " AND n.slug_boletin='{$slug_boletin}'";	
+				$sql .= " AND n.slug_publish='{$slug_publish}'";	
 			}	
 			\__log($sql );	
 			$lista = $this -> con -> ejecutararray($sql);
@@ -49,26 +48,23 @@ class boletinModel extends Model{
 		}
 	}
 
-	function newBoletin($datos) {
+	function newPublish($datos) {
 		try{
-			extract($datos);
-			$flg_destacado = isset($flg_destacado) ? $flg_destacado : ''; 
+			extract($datos);			
 			$img_portada   = isset($img_portada)   ? $img_portada : ''; 
-			$sql = "INSERT INTO boletin (title_boletin, 
-									   descrip_boletin, 
+			$sql = "INSERT INTO publish (title_publish, 
+									   descrip_publish, 
 									   flg_publicado, 
-									   html_boletin,
+									   html_publish,
 									   img_portada,
-									   slug_boletin,
-									   flg_destacado, 
+									   slug_publish,
 									   id_User) 
-						      VALUES ('{$title_boletin}',
-						  			  '{$descrip_boletin}' ,
+						      VALUES ('{$title_publish}',
+						  			  '{$descrip_publish}' ,
 						  			   {$flg_publicado},
-						  			  '{$html_boletin}',
+						  			  '{$html_publish}',
 						  			  '{$img_portada}',
-						  			  '{$slug_boletin}',
-						  			  '{$flg_destacado}',
+						  			  '{$slug_publish}',
 						  			  '{$id_User}')";
 			$sql = $this -> con -> ejecutar($sql);	
 			$compilated = $arrayName = array('sql' => $sql, 'upd' => $sql);

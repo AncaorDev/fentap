@@ -47,7 +47,7 @@
 							$ruta .= '/'.$arrayData[$i+1];
 						}
 					} 
-				return $ruta.'.';
+					return $ruta.'.';
 				}
 			} catch (Exception $e) {
 				echo $e->getMessage(); 

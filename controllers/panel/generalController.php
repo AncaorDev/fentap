@@ -10,20 +10,20 @@ use app\clases\Controller;
 use app\clases\Functions as F;
 use app\clases\Session as S;
 use model\panelModel;
-use model\mapaModel;
+use model\publishModel;
 use model\utilsModel;
 use Carbon\Carbon;
 use app\utils\Files;
 use app\utils\upload;
 use Exception;
 
-class mapaController extends Controller {
+class generalController extends Controller {
 private $dp;
 private $ctr;
 private $bd; 
 private $auth;
 private $m_panel;
-private $m_mapa;
+private $m_publish;
 private $m_utils;
 private $url;
 
@@ -32,7 +32,7 @@ function __construct($url){
 	$this -> bd      = true; // Si se usara la conexión a la base de Datos
 	$this -> ctr     = new Controller($bd = $this -> bd); // Ejecutamos una instancia hacia el controlador general
 	$this->m_panel   = new panelModel();
-	$this->m_mapa    = new mapaModel();
+	$this->m_publish = new publishModel();
 	$this->m_utils   = new utilsModel();
 	$this->url       = $url;
 }
@@ -41,11 +41,11 @@ function index() { //Función que se jecuta al recibir una variable del tipo con
 	if (parent::authenticate($this -> auth)) { // Aquí la vista en caso de que el acceso necesite autenticación
 		$data['accion'] = 'listar';
 		if ($this->url['metodo'] != null && $this->url['atributo'] != null) {
-			if ($this->url['metodo'] == 'edit') {	
-				$mapa         = $this->m_mapa->listaDetallesMapa($this->url['atributo']);
-				$data['mapa'] = $mapa['datos'][0];
-				$data['mapa']['html_mapa'] = \decode_HTML($data['mapa']['html_mapa']);
-				\__log($data['mapa']);
+			if ($this->url['metodo'] == 'edit') {
+				$publish         = $this->m_publish->listaDetallesPublish($this->url['atributo']);
+				$data['publish'] = $publish['datos'][0];
+				$data['publish']['html_publish'] = \decode_HTML($data['publish']['html_publish']);
+				\__log($data['publish']);
 			}
 		} 
 		$permisos = $this->m_panel->getPermisosByIdUser(S::getValue('id_user'));
@@ -53,38 +53,51 @@ function index() { //Función que se jecuta al recibir una variable del tipo con
 
 		$data['permisos'] = $permisos['data'];
 		$data['tabs']     = $tabs['data'];
-		$data['title'] 	  = 'Mapa ';
-		$mapas   		  = $this->m_mapa->listaDetallesMapa();
-		$data['count']    = count($mapas['datos']);
-		$data = array_merge($data,$mapas);
-		$sql_departamentos = $this->m_utils->_getById('ubdepartamento');
-		$data['departamentos'] = $sql_departamentos['data'];
-		View::renderPage('panel.mapas',$this->ctr->ld,$data);
+		$data['title'] 	  = 'Publicaciones';
+		$publishes		  = $this->m_publish->listaDetallesPublish();
+		$data['count']    = count($publishes['datos']);
+		$data = array_merge($data,$publishes);
+		View::renderPage('panel.publishes',$this->ctr->ld,$data);
 	} else {
 		// View::renderPage("error.unautorized");
 		F::redirect('panel'); // Redirección en caso de autorización
 	}
 }
 
-function newMapa() {
+
+function newPublish() {
 	$data['error'] = 1;
 	$data['msj']   = 'ERROR';
 	try {
+		$image = '';
+		if (count($_FILES) > 0) {
+			$image = $this->subirImagen($_FILES['file']);
+		}
+
 		if($_POST) 	{ 
 		    $keys_post = array_keys($_POST); 
 		    foreach ($keys_post as $key_post) { 
 		      	$$key_post = $_POST[$key_post]; 
 		    } 
 		}
-		$departamento = $this->m_utils->_getById('ubdepartamento' , '*' , array(' ' => $id_departamento));
-		$slug_mapa = strtolower($departamento['data'][0]['departamento']);
-		$html_mapa = \encode_HTML($html_mapa);
-		$insert = array('id_departamento'	=> $id_departamento,
-						'html_mapa'     	=> trim($html_mapa),
-						'slug_mapa'     	=> trim($slug_mapa),
-						'id_User'			=> S::getValue('id_user')
+
+		$slug_publish = \limpiarURL($title_publish);
+		$slug_publish = substr($slug_publish, 0, 40);
+		$html_publish = \encode_HTML($html_publish);
+
+		$insert = array('title_publish'	  => $title_publish,
+						'descrip_publish'  => $descrip_publish,
+						'flg_publicado'   => 1,
+						'html_publish'     => trim($html_publish),
+						'slug_publish'     => trim($slug_publish),
+						'id_User'         => S::getValue('id_user')
 					   );
-		$mapa = $this->m_mapa->newMapa($insert);
+
+		if ($image != '') {
+			$insert['img_portada']   = $image['name'];
+		}
+
+		$publish = $this->m_publish->newPublish($insert);
 		$data['error'] = 0;
 		$data['msj']   = 'SUCCESS';
 	} catch (Exception $e) {
@@ -93,55 +106,35 @@ function newMapa() {
 	echo json_encode(array_map('utf8_decode', $data));
 }
 
-function verificarDepartamento() {
+function savePublish() {
 	$data['error'] = 1;
 	$data['msj']   = 'ERROR';
 	try {
-		$data['exists'] = 0;
-		$data['url']    = null;
-		if($_POST) 	{ 
-		    $keys_post = array_keys($_POST); 
-		    foreach ($keys_post as $key_post) { 
-		      	$$key_post = $_POST[$key_post]; 
-		    } 
+		$image = '';
+		if (count($_FILES) > 0) {
+			$image = $this->subirImagen($_FILES['file']);
 		}
-		$departamento = $this->m_utils->_getById('mapa' , '*' , array('id_departamento' => $id_departamento));
-		if ($departamento['data'] != 0) {
-			$data['exists'] = 1;
-			$data['url']    =  "panel/mapa/edit/{$departamento['data'][0]['id_mapa']}";
-		}
-		$data['error'] = 0;
-		$data['msj']   = 'SUCCESS';
-	} catch (Exception $e) {
-		$data['msj']  =  $e->getMessage();
-	}
-	echo json_encode($data);
-}
-
-function saveMapa() {
-	$data['error'] = 1;
-	$data['msj']   = 'ERROR';
-	try {
 		if($_POST) 	{ 
 		    $keys_post = array_keys($_POST); 
 		    foreach ($keys_post as $key_post) { 
 		      	$$key_post = $_POST[$key_post]; 
 		    } 
 		} 
-		// id_departamento
-		// html_mapa
-		// slug_mapa
-		// id_User
 		\__log($_POST);
-		$html_mapa = \encode_HTML($html_mapa);
+		$html_publish = \encode_HTML($html_publish);
 
-		$update = array('html_mapa'	       => $html_mapa,
-						'id_departamento'  => $id_departamento,
+		$update = array('title_publish'	  => $title_publish,
+						'descrip_publish'  => $descrip_publish,
 						'flg_publicado'   => 1,
+						'html_publish'     => trim($html_publish),
 						'id_User'         => S::getValue('id_user')
 					   );
-		$where = array('id_mapa' => $id_mapa);
-		$boletin = $this->m_utils->updateTable('mapa',$update, $where);
+
+		if ($image != '') {
+			$update['img_portada']   = $image['name'];
+		}
+		$where = array('id_publish' => $id_publish);
+		$publish = $this->m_utils->updateTable('publish',$update, $where);
 		$data['error'] = 0;
 		$data['msj']   = 'SUCCESS';
 	} catch (Exception $e) {
@@ -150,7 +143,7 @@ function saveMapa() {
 	echo json_encode($data);
 }
 
-function deleteBoletin() {
+function deletePublish() {
 	$data['error'] = 1;
 	$data['msj']   = 'ERROR';
 	try {
@@ -160,8 +153,8 @@ function deleteBoletin() {
 		      	$$key_post = $_POST[$key_post]; 
 		    } 
 		}
-		$where = array('id_boletin' => $id_boletin);
-		$data  = $this->m_utils->_deleteRow('boletin', $where);
+		$where = array('id_publish' => $id_publish);
+		$data  = $this->m_utils->_deleteRow('publish', $where);
 		$data['error'] = 0;
 		$data['msj']   = 'Eliminado';
 	} catch (Exception $e) {
@@ -213,7 +206,7 @@ function resetAutoIncrement(){
 		      	$$key_post = $_POST[$key_post]; 
 		    } 
 		}
-		$this->m_boletin->setAutoincrement($num);
+		$this->m_publish->setAutoincrement($num);
 		$data['msj']   = 'RESET';
 		$data['error'] = 0;
 	} catch (Exception $e) {

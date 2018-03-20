@@ -37,6 +37,10 @@ function index() { //Función que se jecuta al recibir una variable del tipo con
     $queryboletin        = $this -> ctr -> extractData('boletin|count'); // asignación de datos a la variable array
     $datos['boletines']  = $queryboletin['boletin']['datos'];
 
+    $querypublish        = $this -> ctr -> extractData('publish|count'); // asignación de datos a la variable array
+    $datos['publishes']  = $querypublish['publish']['datos'];
+    \__log($datos['publishes']);
+
     $querymapa           = $this -> ctr -> extractData('mapa'); // asignación de datos a la variable array
     $mapas               = $querymapa['mapa']['datos'];
     $regiones            = array('d200' => '1',
@@ -56,14 +60,31 @@ function index() { //Función que se jecuta al recibir una variable del tipo con
 }
 
 function goToDepartamento() {
-    $code = $_POST['code'];
-    $conservar = '0-9'; // juego de caracteres a conservar
-    $regex = sprintf('~[^%s]++~i', $conservar); // case insensitive
-    \__log($regex);
-    $id_departamento = preg_replace($regex, '', $code);
-    \__log($id_departamento);
-    $query_departamento = $this->m_utils->_getById('mapa','*',array('id_departamento' => $id_departamento));
-    \__log($query_departamento);
+    $data['msj']   = 'ERROR';
+    $data['error'] = 1;
+    $data['url']   = 0;
+    try {
+        if($_POST)  { 
+            $keys_post = array_keys($_POST); 
+            foreach ($keys_post as $key_post) { 
+                $$key_post = $_POST[$key_post]; 
+            } 
+        }
+        // $code = $_POST['code'];
+        $conservar = '0-9'; // juego de caracteres a conservar
+        $regex = sprintf('~[^%s]++~i', $conservar); // case insensitive
+        $id_departamento = preg_replace($regex, '', $code);
+        $query_departamento = $this->m_utils->_getById('mapa','*',array('id_departamento' => $id_departamento));
+        if (count($query_departamento['data'][0]) != 0) {
+            $data['url']   = HOME.'mapa/read/'.$query_departamento['data'][0]['slug_mapa'];
+        }
+        $data['msj']   = 'SUCCESS';
+        $data['error'] = 0;
+        \__log($query_departamento);
+    } catch (Exception $e) {
+        $file['msj'] = $e->getMessage();
+    }
+    echo json_encode($data);
 }
 // Fin class
 }

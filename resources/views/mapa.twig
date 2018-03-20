@@ -1,0 +1,70 @@
+{% extends "base.twig" %}
+{% block title %} Inicio {% endblock %}
+{% block head %}
+    {{parent()}}
+{% endblock %}
+{% block content %}
+    {# Slider #}
+    {% include 'includes/slider.twig' %}
+    {# Header #}
+    {% include 'includes/header.twig' %}
+{# Cuerpo General #}
+ <!--Main layout-->
+<main>
+<div class="container">
+    <div class="row pt-4 h-100">
+        {# {% include 'body/primera_columna.twig' %} #}
+{#         id_mapa
+        slug_mapa
+        html_mapa
+        departamento #}
+        <!--columnn Central-->
+        <div class="col-sm-9 col-lg-9">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item color-fentap2"><a href="{{HOME}}">Inicio</a></li>
+                <li class="breadcrumb-item color-fentap2">Ubicación</li>
+                <li class="breadcrumb-item color-fentap2 active" aria-current="page"> {{ datos.mapa.slug_mapa }} </li>
+              </ol>
+            </nav>
+            <div class="card wow fadeIn" data-wow-delay="0.4s">
+                <div class="card-header card-header-title text-center text-white text-uppercase">
+                    <!--Title-->
+                    {{ datos.mapa.slug_mapa }}
+                </div>
+                <!--Card content-->
+                <div class="card-body pt-0">
+                    <!--Text-->
+                    <div class="content-notice" style="">
+{#                         <p class="card-text text-justify card-body-title pt-3 color-fentap1"  style="font-size:19px;line-height:21px;">
+                                {{ datos.boletin.descrip_boletin }} 
+                        </p> #}
+                        <div class="w-100 text-center">
+                           
+                        </div>
+                        <br>
+                        <div style="width:100%;overflow:hidden;">
+                            {% autoescape %}
+                                {{ datos.mapa.html_mapa|raw }} {# var won't be escaped #}
+                            {% endautoescape %}
+                        </div>
+                        <hr>
+{#                         <div class="d-flex pb-2">
+                            <div class="mr-auto"> <span style="font-size:14px;" class="font-weight-light">Autor : Ancaor</span></div>
+                            <div> <span class="font-weight-light" style="font-size:14px;">Fecha : 19/02/2018 </span> </div>
+                        </div> #}
+                    </div>                
+                </div>
+            </div>
+        </div>
+        {% include 'body/segunda_columna.twig' %}
+    </div>
+</div>
+<!--/.Main layout-->
+</main>
+
+{% endblock %}
+{% block script %}
+{% endblock %}
+
+

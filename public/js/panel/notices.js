@@ -125,13 +125,13 @@ function saveNotice(file, html) {
         name = name[0];
         data.append('file', file);
     }
-    data.append('name_User', $('#name_User').val());
-    data.append('title_notice', $('#title_notice').val());
+    data.append('name_User'     , $('#name_User').val());
+    data.append('title_notice'  , $('#title_notice').val());
     data.append('descrip_notice', $('#descrip_notice').val());
-    data.append('id_User', $('#id_User').val());
-    data.append('id_notice', $('#id_notice').val());
-    data.append('flg_destacado', check);
-    data.append('html_notice', html);
+    data.append('id_User'       , $('#id_User').val());
+    data.append('id_notice'     , $('#id_notice').val());
+    data.append('flg_destacado' , check);
+    data.append('html_notice'   , html);
     console.log(data);
     $.ajax({
         url: 'panel/notices/saveNotice',

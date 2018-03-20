@@ -1,39 +1,10 @@
-var check           = 0;
-var modified        = false;
-var id_departamento = null;
+var check = 0;
+var modified = false;
 
-id_depa = $('#id_departamento').val();
-if (id_depa != null) {
-   id_departamento = id_depa;
-}
-
-$('#id_departamento').on('change' , function(){
-    id_departamento = $(this).val();
-    $.ajax({
-    url: 'panel/mapa/verificarDepartamento',
-    type: 'POST',
-    dataType: 'json',
-    data: {'id_departamento' : id_departamento },
-    success: function(data) {
-        if (data.error == 0) {
-            if (data.exists == 1) {
-                editMapa(data.url);
-            }  
-            id_departamento = id_departamento;         
-        } else {
-            alert('ERROR');
-        }
-    }
-    })
-    .fail(function(e) {
-        console.log(e);
-    });
-})
-$("input[type='date'],input[type='mail'],input[type='text'],textarea,select").change(function() {
-    submitForm();
+$("input[type='date'],input[type='mail'],input[type='text'],textarea").change(function() {
+    submitForm()
     modified = true;
 });
-
 $("input[type='text']").focus(function() {
     $(this).keydown(function() {
         if ($(this).val().length >= 2) {
@@ -43,7 +14,7 @@ $("input[type='text']").focus(function() {
 })
 
 function submitForm(bool = true) {
-    validatorResult = validator.checkAll($('#form_mapa'));
+    validatorResult = validator.checkAll($('#form_publish'));
     if (validatorResult) {
         $("#btnenviar").removeAttr("disabled")
     } else {
@@ -67,7 +38,7 @@ function showAction() {
 }
 
 
-$('#form_mapa').submit(function(e) {
+$('#form_publish').submit(function(e) {
     e.preventDefault();
     // evaluate the form using generic validaing
     validatorResult = validator.checkAll(this);
@@ -75,62 +46,89 @@ $('#form_mapa').submit(function(e) {
     if (!validatorResult) {
         $("#btnenviar").removeAttr("disabled");
     } else {
+        console.log('asdas');
         $("#btnenviar").removeAttr("disabled")
         if (modified) {
             var html = $('.summernote').summernote('code');
+            var file = $("#input-id")[0].files[0];
             var accion = showAction();
             var accion_form = $('#action').val();
+            console.log(accion);
+            console.log(accion_form);
             if (accion_form == accion) {
                 if (accion == 'actualizar') {
-                    saveMapa(html);
+                    savePublish(file, html);
                 } else {
-                    newMapa(html);
+                    newPublish(file, html);
                 }
             }
         }
     }
 });
 
-function newMapa(html) {
+function newPublish(file, html) {
     var data = new FormData();
-    data.append('name_User', $('#name_User').val());
-    data.append('id_departamento', id_departamento);
-    data.append('html_mapa', html);
-    $.ajax({
-        url: 'panel/mapa/newMapa',
-        type: 'POST',
-        dataType: 'json',
-        contentType: false,
-        // cache: false,
-        processData: false,
-        data: data,
-        success: function(data) {
-            console.log(data);
-            if (data.error == 0) {
-                alert('Acción realizada con éxito');
-                setTimeout(function() {
-                    var URLactual = window.location.href;
-                    window.location = URLactual;
-                }, 1000);
-            } else {
-                alert('ERROR');
-            }
+    if (file !== undefined) {
+        if (!file.type.includes('image')) {
+            alert("El tipo de archivo que intentaste subir no es una imagen");
+            return;
         }
-    })
-    .fail(function(e) {
-        console.log(e);
-    });
-}
-
-function saveMapa(html) {
-    var data = new FormData();
+        var name = file.name.split(".");
+        name = name[0];
+        data.append('file', file);
+    }
     data.append('name_User'         , $('#name_User').val());
-    data.append('id_departamento'   , id_departamento);
-    data.append('html_mapa'         , html);
-    data.append('id_mapa'           , $('#id_mapa').val());
+    data.append('title_publish'     , $('#title_publish').val());
+    data.append('descrip_publish'   , $('#descrip_publish').val());
+    data.append('html_publish'      , html);
     console.log(data);
     $.ajax({
-        url: 'panel/mapa/saveMapa',
+            url: 'panel/publish/newPublish',
+            type: 'POST',
+            contentType: false,
+            cache: false,
+            processData: false,
+            dataType: 'json',
+            data: data,
+            success: function(data) {
+                console.log(data);
+                if (data.error == 0) {
+                    alert('Acción realizada con éxito');
+                    setTimeout(function() {
+                        var URLactual = window.location.href;
+                        window.location = URLactual;
+                    }, 1000);
+                } else {
+                    alert('ERROR');
+                }
+            }
+        })
+        .fail(function(e) {
+            console.log(e);
+        });
+}
+
+function savePublish(file, html) {
+    var data = new FormData();
+    console.log(file);
+    if (file !== undefined) {
+        if (!file.type.includes('image')) {
+            alert("El tipo de archivo que intentaste subir no es una imagen");
+            return;
+        }
+        var name = file.name.split(".");
+        name = name[0];
+        data.append('file', file);
+    }
+    data.append('name_User'         , $('#name_User').val());
+    data.append('title_publish'     , $('#title_publish').val());
+    data.append('descrip_publish'   , $('#descrip_publish').val());
+    data.append('html_publish'      , html);
+    data.append('id_User'           , $('#id_User').val());
+    data.append('id_publish'        , $('#id_publish').val());
+    console.log(data);
+    $.ajax({
+        url: 'panel/publish/savePublish',
         type: 'POST',
         contentType: false,
         cache: false,
@@ -170,33 +168,6 @@ function confirmDeleteBoletin(tag) {
                 btnClass: 'btn-blue',
                 action: function() {
                     deleteBoletin(id_boletin);
-                }
-            },
-            cancelar: {
-                btnClass: 'btn-red',
-                action: function() {
-
-                }
-            }
-        }
-    });
-}
-
-function editMapa(url){
-    $.confirm({
-        title: 'Mensaje!',
-        content: 'Se ha encontrado información con el departameto, ¿desea editarlo?',
-        type: 'dark',
-        typeAnimated: true,
-        icon: 'fa fa-spinner fa-spin',
-        closeIcon: true,
-        closeIconClass: 'fa fa-close',
-        theme: 'supervan',
-        buttons: {
-            aceptar: {
-                btnClass: 'btn-blue',
-                action: function() {
-                    window.location = url;
                 }
             },
             cancelar: {

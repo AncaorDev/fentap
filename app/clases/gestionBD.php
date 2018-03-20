@@ -7,7 +7,7 @@ class gestionBD extends \mysqli {
   private $password=PASS;
   private $base_datos=DBNAME;
   private $debug=DEBUG;
-  public $state;
+  public  $state;
 
   /*La función construct para ejecutar automaticamente la conexion al instanciarla*/
   public function __construct(){

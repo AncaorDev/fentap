@@ -48,18 +48,23 @@
         <!--Card content-->
         <div class="card-body pt-0">
             <!--Text-->
-            {% for key, hidro_notice in datos['hidro'] %}
-                <div class="d-flex pb-2">
-                    <div class="mr-auto"> <span style="font-size:12px;" class="font-weight-light">Autor : {{ hidro_notice.autor }}</span></div>
-                    <div> <span class="font-weight-light" style="font-size:12px;">Fecha : {{ hidro_notice.fecha }} </span> </div>
-                </div>
-                <div class="content-notice">
-                    <p class="title text-uppercase p-0 m-0">"{{ hidro_notice.title }}"</p>
-                    <p class="card-text text-justify" style="line-height:19px;">
-                       {{ hidro_notice.content }}<a class="btn btn-primary btn-sm px-2" style="padding-bottom:2px;padding-top:2px;" href="{{ hidro_notice.enlace }}">Leer más</a>
-                    </p>
+             {% for key, publish in datos['publishes'] if key < 2 %}
+                <div class="publish-notice">
+                    <p class="title text-left m-0 card-body-title pt-2">"{{ publish.title_publish }}"</p>
+                    <div class="notice-info">
+                        <div class="d-flex pb-2">
+                            <div class="mr-auto"> <span style="font-size:12px;" class="font-weight-light">Autor : {{ publish.name_User }}</span></div>
+                            <div> <span class="font-weight-light" style="font-size:12px;">Fecha :{{publish.date_modificate == '' ? publish.date_create :  publish.date_modificate }}</span> </div>
+                        </div>
+                        <p class="card-text text-justify card-body-parrafo" style="line-height:15px;">
+                           {{ publish.descrip_publish }}<a class="btn btn-primary btn-sm px-2" style="padding-bottom:2px;padding-top:2px;" href="publicaciones/read/{{ publish.slug_publish }}">Leer más</a>
+                        </p>
+                    </div>
                 </div> 
-                <hr>
+                {% if key < 1 %}
+                     <hr>
+                {% endif %}
+               
             {% endfor %}                   
         </div>
     </div>
@@ -69,7 +74,7 @@
     <div class="card wow fadeIn bg-fentap1 text-white text-center" data-wow-delay="0.4s">
         <!--Card content-->
         <div class="card-body pt-4">
-            <a class="text-white" href="construccion"><h2>NORMAS LEGALES</h2>   </a>               
+            <a class="text-white" href="construccion"><h5>NORMAS LEGALES</h5>   </a>               
         </div>
     </div>
     <!--/.Card-->

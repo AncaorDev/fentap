@@ -65,12 +65,12 @@
         $('#world-map').vectorMap({
             map: 'peru',
             onRegionOver: function (e, code) {
-              $(this).on('click', function () {
-                var map = $('#world-map').vectorMap('get', 'mapObject');
-                var name = map.getRegionName(code);
-                var objregion = map.regions[code];
+                $(this).on('click', function () {
+                    var map = $('#world-map').vectorMap('get', 'mapObject');
+                    var name = map.getRegionName(code);
+                    var objregion = map.regions[code];
                 // alert(code, name, objregion.config['id']); 
-              });
+                });
             },
             onRegionClick: function(e, code){
                 var base_url = window.location.href;
@@ -83,8 +83,11 @@
                         },
                         success: function(data) {
                             if (data.error == 0) {
-                                var URLactual = window.location.href;
-                                window.location = URLactual+data.url;
+                                if(data.url == 0) {
+                                    return;
+                                }
+                                // var URLactual = window.location.href;
+                                window.location = data.url;
                             } else {
                                 alert('ERROR');
                             }
@@ -97,7 +100,7 @@
             onRegionOut: function (e, code) {
               $(this).unbind('click');
             },
-            zoomButtons : false,
+            zoomButtons : true,
             zoomOnScroll : false,
             backgroundColor: '#b3d1ff',
             series: {
@@ -132,22 +135,35 @@
                 cursor: 'pointer'
               }
             },
+            //  markers: [
+            // {
+            // attribute: 'image',
+            //   coords: [320, 86],
+            //   name: 'Gdańsk',
+            //   style: {fill: '#b3b2b2', stroke: false}
+            // }],
             onMarkerLabelShow: function(event, label, code) {
-             label.html("<img src=\"img/logo.png\"><br>"+ label.html());                
+                // console.log(event);
+                // label.html("<img src=\"img/logo.png\"><br>"+ label.html());  
+                // label.css({'background': '#fff', 'color': '#66696d', 'z-index': '99999'})             
             },
             onRegionLabelShow: function(event, label, code){
-              var map = $('#world-map').vectorMap('get', 'mapObject');
-              var name = map.getRegionName(code);
-              var objregion = map.regions[code];
-              var data = objregion.config;
-              if(typeof(projects[data.id]) != "undefined"){
-                var proyecto = projects[data.id];
-              } else {
-                var proyecto = "";
-              }
-              label.html('<strong>'+name+'</strong><br>'+'<p>'+proyecto+'</p>');
-              // label.html(names[currentLang][code]);
-            }  
+                var map = $('#world-map').vectorMap('get', 'mapObject');
+                var name = map.getRegionName(code);
+                var objregion = map.regions[code];
+                var data = objregion.config;
+                if(typeof(projects[data.id]) != "undefined"){
+                    var proyecto = projects[data.id];
+                } else {
+                    var proyecto = "";
+                }
+                if(proyecto != "") {
+                    label.html('<strong>'+name+'</strong><br>'+'<p>'+proyecto+'</p>');
+                }
+                
+                // label.html(label.html()+'<br><img src="" height="20">');
+                // label.html(names[currentLang][code]);
+            } 
         })
     });
     </script>
