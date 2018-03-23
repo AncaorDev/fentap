@@ -103,7 +103,6 @@ class userModel
 			$stdsql	= 0;
 			$error  = 1;
 		}
-		\__log(print_r($datos,true));
 		return array('stdsql' => $stdsql, 'error' => $error , 'data' => $datos);
 	}
 

@@ -38,7 +38,6 @@ class boletinModel extends Model{
 				$det = true;
 				$sql .= " AND n.slug_boletin='{$slug_boletin}'";	
 			}	
-			\__log($sql );	
 			$lista = $this -> con -> ejecutararray($sql);
 			$statusTable = $this -> statusTable();
 			$compilated = array('datos' => $lista, 'status' => $statusTable, 'det' => $det);

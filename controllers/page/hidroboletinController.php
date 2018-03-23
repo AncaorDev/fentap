@@ -10,6 +10,7 @@ use app\clases\Controller;
 use app\clases\Functions as F;
 use app\clases\Session as S;
 use model\utilsModel;
+use controllers\page\utilsController as utils;
 
 class hidroboletinController extends Controller {
 private $dp;
@@ -18,6 +19,7 @@ private $bd;
 private $auth;
 private $m_utils;
 private $url;
+private $c_utils;
 
 function __construct($url){
     parent::__construct();
@@ -26,12 +28,12 @@ function __construct($url){
     $this->ctr     = new Controller($bd = $this -> bd); // Ejecutamos una instancia hacia el controlador general
     $this->m_utils = new utilsModel();
     $this->url     = $url;
+    $this->c_utils = new utils($url);
 }
 
 function index() { //Función que se jecuta al recibir una variable del tipo controlador
   if (parent::authenticate($this -> auth)) { // Aquí la vista en caso de que el acceso necesite autenticación
-  	// ---- En esta parte el programador es libre de manejarlo a su manera //
-	$datos['pages']     = $this->listaPaginas();
+    $datos = $this->c_utils->datosVista(); 
     // $datos['this_page'] = $this->listaPaginasbySlug($this->url['controller']);
 	if ($this->url['metodo'] != null && $this->url['atributo'] != null) {
 		if ($this->url['metodo'] == 'read') {

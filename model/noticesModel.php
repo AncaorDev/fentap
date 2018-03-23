@@ -38,8 +38,7 @@ class noticesModel extends Model{
 			if ($slug_notice != null ) {
 				$det = true;
 				$sql .= " AND n.slug_notice='{$slug_notice}'";	
-			}	
-			\__log($sql );	
+			}		
 			$lista = $this -> con -> ejecutararray($sql);
 			$statusTable = $this -> statusTable();
 			$compilated = array('datos' => $lista, 'status' => $statusTable, 'det' => $det);

@@ -7,3 +7,5 @@ public/libs
 *.zip
 public/images/upload/*.png
 public/images/upload/*.jpg
+*.sublime-workspace
+*.sublime-project

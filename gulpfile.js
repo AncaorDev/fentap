@@ -144,7 +144,7 @@ gulp.task('sw_css', function() {
 
 // Copiando los archivos Js
 gulp.task('sw_js', function() {
-    return gulp.src(['node_modules/swiper/dist/js/*.min.js','node_modules/swiper/dist/js/*.esm.js'])
+    return gulp.src(['node_modules/swiper/dist/js/*.min.js','node_modules/swiper/dist/js/*.min.js.map','node_modules/swiper/dist/js/*.esm.js'])
         .pipe(gulp.dest(sw_js))
 });
 

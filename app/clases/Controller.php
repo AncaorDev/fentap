@@ -125,7 +125,12 @@ function listaPaginas() {
 
 function listaPaginasbySlug($slug) {
 	$sql = $this->m_page->listaDetallesPage('', $slug);
-	return $sql['datos'][0];
+	if (isset($sql['datos'][0])) {
+		return $sql['datos'][0];
+	} else {
+		return $sql['datos'];
+	}
+	
 }
 //Fin clase
 }

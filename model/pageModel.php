@@ -144,7 +144,6 @@ class pageModel  extends Model
 				$sql .= "{$and} {$key} = '{$val}' ";
 				$and = " AND ";
 			}
-			\__log($sql);
 			$sql = $this -> con -> ejecutar($sql);	
 			$compilated = $arrayName = array('sql' => $sql, 'upd' => $sql);
 			return $compilated;

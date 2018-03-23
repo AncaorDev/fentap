@@ -1,6 +1,6 @@
 <!--First columnn-->
 <div class="d-sm-none d-md-block col-lg-3">
-    <!-- Card -->
+    <!-- Card Notices -->
     <div class="card wow fadeIn" data-wow-delay="0.4s">
         <!--Card header-->
         <div class="card-header bg-fentap3 text-center text-white">
@@ -9,14 +9,14 @@
         <!--Card content-->
         <div class="card-body py-1" style="background-color:rgb(22, 141, 171);">
             <!--Text-->
-{#             name_User
-            id_notice
-            title_notice
-            descrip_notice
-            date_create
-            date_modificate
-            html_notice
-            img_portada #}
+            {#  name_User
+                id_notice
+                title_notice
+                descrip_notice
+                date_create
+                date_modificate
+                html_notice
+                img_portada #}
             {% for key, notice in datos['notices'] if key < 2 and notice.flg_destacado == 0 %}
                 <div class="content-notice row pt-1">                            
                     <div class="col-sm-4 p-0">

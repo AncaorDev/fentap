@@ -9,6 +9,7 @@ use app\clases\View;
 use app\clases\Controller;
 use app\clases\Functions as F;
 use model\utilsModel;
+use controllers\page\utilsController as utils;
 
 class inicioController extends Controller {
 private $dp;
@@ -17,6 +18,7 @@ private $bd;
 private $auth;
 private $url;
 private $m_utils;
+private $c_utils;
 
 function __construct($url){
     parent::__construct();
@@ -24,23 +26,13 @@ function __construct($url){
     $this->bd      = true; // Si se usara la conexión a la base de Datos
     $this->ctr     = new Controller($bd = $this -> bd); // Ejecutamos una instancia hacia el controlador general
     $this->m_utils = new utilsModel();
+    $this->c_utils = new utils($url);
     $this->url     = $url;
 }
 
 function index() { //Función que se jecuta al recibir una variable del tipo controlador
   if (parent::authenticate($this -> auth)) { // Aquí la vista en caso de que el acceso necesite autenticación
-    $datos['pages']     = $this->listaPaginas();
-    $datos['this_page'] = $this->listaPaginasbySlug($this->url['controller']);
-    $querynotice        = $this -> ctr -> extractData('notices|count'); // asignación de datos a la variable array    
-    $datos['notices']   = $querynotice['notices']['datos'];
-
-    $queryboletin        = $this -> ctr -> extractData('boletin|count'); // asignación de datos a la variable array
-    $datos['boletines']  = $queryboletin['boletin']['datos'];
-
-    $querypublish        = $this -> ctr -> extractData('publish|count'); // asignación de datos a la variable array
-    $datos['publishes']  = $querypublish['publish']['datos'];
-    \__log($datos['publishes']);
-
+    $datos = $this->c_utils->datosVista();
     $querymapa           = $this -> ctr -> extractData('mapa'); // asignación de datos a la variable array
     $mapas               = $querymapa['mapa']['datos'];
     $regiones            = array('d200' => '1',
@@ -50,6 +42,7 @@ function index() { //Función que se jecuta al recibir una variable del tipo con
         $regiones[$index] = '3';
         $projects[$mapa['id_departamento']] = 'Ver Información';
     }
+    \__log($datos['this_baseURL']);
     $datos['regiones']   = json_encode($regiones);
     $datos['projects']   = json_encode($projects);
     View::renderPage('inicio',$this -> ctr -> ld,$datos);
@@ -80,7 +73,6 @@ function goToDepartamento() {
         }
         $data['msj']   = 'SUCCESS';
         $data['error'] = 0;
-        \__log($query_departamento);
     } catch (Exception $e) {
         $file['msj'] = $e->getMessage();
     }

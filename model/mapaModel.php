@@ -38,7 +38,6 @@ class mapaModel extends Model{
 				$sql .= " AND t.slug_mapa='{$slug_boletin}'";	
 			}	
 			$lista = $this -> con -> ejecutararray($sql);
-			\__log($lista);
 			$statusTable = $this -> statusTable();
 			$compilated = array('datos' => $lista, 'status' => $statusTable, 'det' => $det);
 			return  $compilated;
@@ -60,7 +59,6 @@ class mapaModel extends Model{
 						  			  '{$slug_mapa}',
 						  			  '{$id_User}')";
 			$sql = $this -> con -> ejecutar($sql);	
-			\__log($sql);
 			$compilated = $arrayName = array('sql' => $sql, 'upd' => $sql);
 		}
 		catch(Exception $ex){
