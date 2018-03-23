@@ -93,7 +93,7 @@ if (!function_exists('decode_HTML')) {
 
 if (!function_exists('leerDatos')) {
 	function leerDatos() {
-	    $datajson = file_get_contents(__DIR__."\\..\\..\\config\\.dataconfig");
+	    $datajson = file_get_contents(__DIR__."../../config/.dataconfig");
 		// Decodificamos los datos
 		$infohost = json_decode($datajson);
 		// Asignamos a una array 
