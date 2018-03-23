@@ -66,14 +66,7 @@
             map: 'peru',
             onRegionOver: function (e, code) {
                 $(this).on('click', function () {
-                    var map = $('#world-map').vectorMap('get', 'mapObject');
-                    var name = map.getRegionName(code);
-                    var objregion = map.regions[code];
-                // alert(code, name, objregion.config['id']); 
-                });
-            },
-            onRegionClick: function(e, code){
-                var base_url = window.location.href;
+                    var base_url = window.location.href;
                     $.ajax({
                         url: 'inicio/goToDepartamento',
                         type: 'POST',
@@ -94,7 +87,9 @@
                         }
                     }).fail(function(e) {
                         console.log(e)
-                    });
+                    });                });
+            },
+            onRegionClick: function(e, code){
 
             },
             onRegionOut: function (e, code) {
