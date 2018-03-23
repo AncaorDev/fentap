@@ -44,10 +44,10 @@ class Core {
 		$load = explode(',', $load);
 		if (count($load) > 1) {
 			foreach ($load as $key) {
-				include(realpath(__DIR__.'\\load\\'.$key.'_load.php'));
+				include(realpath(__DIR__.'/load/'.$key.'_load.php'));
 			}
 		} else {
-			include(realpath(__DIR__.'\\load\\'.$load[0].'_load.php'));
+			include(realpath(__DIR__.'/load/'.$load[0].'_load.php'));
 		}
 	}
 
