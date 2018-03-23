@@ -1,7 +1,7 @@
 <?php 
 
 if (!function_exists('__log')) {
-	function __log($var) {
+	function __log($var) { 
 		$dbgt = debug_backtrace();
         if(isset($dbgt[1]['class'])) {
             $class = $dbgt[1]['class'];

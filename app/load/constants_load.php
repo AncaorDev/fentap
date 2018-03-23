@@ -4,6 +4,7 @@
 	--------------------------------------------------- */
 	try {
 		$data = \leerDatos();
+		\__log($data);
 	} catch (Exception $e) {
 		throw $e->getMessage(); 
 	}
