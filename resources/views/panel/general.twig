@@ -1,0 +1,80 @@
+{% extends "panel/base.twig" %}
+{% block title %} Inicio {% endblock %}
+{% block head %}
+    {{parent()}}
+    <style>
+        .control--checkbox .control__indicator:after {
+        left: 11px !important;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+
+<div class="right_col" role="main">
+    <!-- Header Pages -->
+    <div class="header-pages">   
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <!-- x panel -->
+            <div class="x_panel">
+                <!-- x_title -->
+                <div class=" row x_title">
+                    <div class="col-md-8 col-xs-6">
+                        <h2 class="h2-none" style="width:100%;"><span class="glyphicon glyphicon-book"></span>Configuración ({{ datos.title }}) </h2>
+                    </div>
+                    <div class="col-md-4 col-xs-6" style="text-align:right;">
+                        <a class="well well-sm"> {{ datos.title }} <span class="badge" style="background-color:rgb(46, 109, 164);color:white;"> {{ datos.count }} </span></a>
+                        </a>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </div>
+                </div>
+                <!-- x_title -->
+                <!-- x content-->
+                <div class="x_content">
+                    <div class="data-page-panel">
+                        <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                            <ul id="tabPages" class="nav nav-tabs bar_tabs" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a class="a-tab" href="#lpages" id="lpages-tab" role="tab" data-toggle="tab" aria-expanded="false">Datos Generales</a></li>
+                                <!-- data-toggle="modal" data-target="#FormPage" -->
+                            </ul>
+                            <div id="myTabContent" class="tab-content">
+                                <div role="tabpanel" class="tab-pane fade active in" id="lpages" aria-labelledby="home-tab">
+                                    {% include 'panel/forms/general.twig' %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- x content -->
+            </div>
+            <!-- x panel -->   
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+{% endblock %}
+{% block scripts %}   
+  {{parent()}}
+  <script src="./js/panel/mapas.js?id={{random()}}"></script>
+  <script type="text/javascript">
+    $("#input-id").fileinput({
+        language: "es",
+        showUpload: false
+    });
+    $("#datatable-responsive").DataTable({
+    "language": {"search": "Buscar _INPUT_",
+                "paginate": {"next": "Siguiente" , "previous" : "Anterior", "first": "Primera Página" , "last": "Última Página"},
+                "emptyTable": "No existen datos",
+                "info": "Mostrando página _PAGE_ de _PAGES_",
+                "infoEmpty": "Sin resultados",
+                "lengthMenu": "Mostrando resultados",
+                "zeroRecords": "No exiten coincidencias",
+                "infoFiltered": " - filtrado de _MAX_ ",
+                "processing": "DataTables is currently busy",
+                "zeroRecords": "No se encontraron datos para mostrar"
+                }
+                //  lengthMenu => _MENU_ 
+  });
+  </script>
+{% endblock %}

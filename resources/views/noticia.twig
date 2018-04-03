@@ -55,8 +55,8 @@
                         </div>
                         <hr>
                         <div class="d-flex pb-2">
-                            <div class="mr-auto"> <span style="font-size:14px;" class="font-weight-light">Autor : Ancaor</span></div>
-                            <div> <span class="font-weight-light" style="font-size:14px;">Fecha : 19/02/2018 </span> </div>
+                            <div class="mr-auto"> <span style="font-size:14px;" class="font-weight-light">Autor : {{datos.notice.name_User}}</span></div>
+                            <div> <span class="font-weight-light" style="font-size:14px;">Fecha : {{datos.notice.date_modificate == '' ? datos.notice.date_create :  datos.notice.date_modificate }} </span> </div>
                         </div>
                     </div>                
                 </div>

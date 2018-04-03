@@ -42,10 +42,7 @@ function index() { //Función que se jecuta al recibir una variable del tipo con
 		$data['accion'] = 'listar';
 		if ($this->url['metodo'] != null && $this->url['atributo'] != null) {
 			if ($this->url['metodo'] == 'edit') {
-				$publish         = $this->m_publish->listaDetallesPublish($this->url['atributo']);
-				$data['publish'] = $publish['datos'][0];
-				$data['publish']['html_publish'] = \decode_HTML($data['publish']['html_publish']);
-				\__log($data['publish']);
+
 			}
 		} 
 		$permisos = $this->m_panel->getPermisosByIdUser(S::getValue('id_user'));
@@ -53,11 +50,11 @@ function index() { //Función que se jecuta al recibir una variable del tipo con
 
 		$data['permisos'] = $permisos['data'];
 		$data['tabs']     = $tabs['data'];
-		$data['title'] 	  = 'Publicaciones';
+		$data['title'] 	  = 'General';
 		$publishes		  = $this->m_publish->listaDetallesPublish();
 		$data['count']    = count($publishes['datos']);
 		$data = array_merge($data,$publishes);
-		View::renderPage('panel.publishes',$this->ctr->ld,$data);
+		View::renderPage('panel.general',$this->ctr->ld,$data);
 	} else {
 		// View::renderPage("error.unautorized");
 		F::redirect('panel'); // Redirección en caso de autorización
