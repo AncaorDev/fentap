@@ -45,7 +45,6 @@ function index() { //Función que se jecuta al recibir una variable del tipo con
 				$publish         = $this->m_publish->listaDetallesPublish($this->url['atributo']);
 				$data['publish'] = $publish['datos'][0];
 				$data['publish']['html_publish'] = \decode_HTML($data['publish']['html_publish']);
-				\__log($data['publish']);
 			}
 		} 
 		$permisos = $this->m_panel->getPermisosByIdUser(S::getValue('id_user'));
@@ -170,10 +169,6 @@ function subirImagen($file){
 	$data['name']  = null;
 	$handle = new upload($file);
     if ($handle->uploaded) {
-        // yes, the file is on the server
-        // now, we start the upload 'process'. That is, to copy the uploaded file
-        // from its temporary location to the wanted location
-        // It could be something like $handle->Process('/home/www/my_uploads/');
 		$handle->image_convert		= 'png';
 		$handle->png_compression	= 9;
         $handle->Process(__DIR__.'/../../public/images/upload');
@@ -188,9 +183,7 @@ function subirImagen($file){
         } else {
            $handle->error;
            \__log($handle->error);
-        }
-        // we delete the temporary files
-        
+        }       
         $handle-> Clean();
 	}
 	return $data;
