@@ -36,7 +36,7 @@ class Core {
 		}
 		// var_dump(debug_backtrace());
 		if (DEBUG) {
-			error_reporting(-1);	
+			error_reporting(-1);
 		}
 	}
 

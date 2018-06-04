@@ -18,8 +18,8 @@ $('#id_departamento').on('change' , function(){
         if (data.error == 0) {
             if (data.exists == 1) {
                 editMapa(data.url);
-            }  
-            id_departamento = id_departamento;         
+            }
+            id_departamento = id_departamento;
         } else {
             alert('ERROR');
         }
@@ -92,6 +92,7 @@ $('#form_mapa').submit(function(e) {
 });
 
 function newMapa(html) {
+    console.log('new mapa');
     var data = new FormData();
     data.append('name_User', $('#name_User').val());
     data.append('id_departamento', id_departamento);

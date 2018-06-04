@@ -64,7 +64,7 @@ gulp.task('jq', function() {
 var  bmd_css = lbs+'bootstrap-material-design/css/';
 var  bmd_js  = lbs+'bootstrap-material-design/js/';
 
-// Copiando 
+// Copiando
 gulp.task('bmd_sass', function() {
     return gulp.src(['node_modules/bootstrap-material-design/dist/css/*.min.css'])
         .pipe(gulp.dest(bmd_css))
@@ -117,7 +117,7 @@ gulp.task('mdb_fonts', function() {
 var  tt_css = lbs+'tether/css';
 var  tt_js  = lbs+'tether/js';
 
-// Copiando 
+// Copiando
 gulp.task('tt_css', function() {
     return gulp.src(['node_modules/tether/dist/css/*.min.css'])
         .pipe(gulp.dest(tt_css))
@@ -136,7 +136,7 @@ gulp.task('tt_js', function() {
 var  sw_css = lbs+'swiper/css';
 var  sw_js  = lbs+'swiper/js';
 
-// Copiando 
+// Copiando
 gulp.task('sw_css', function() {
     return gulp.src(['node_modules/swiper/dist/css/*.min.css'])
         .pipe(gulp.dest(sw_css))

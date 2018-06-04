@@ -95,12 +95,12 @@ if (!function_exists('leerDatos')) {
 	function leerDatos() {
 	    $datajson = file_get_contents(__DIR__."/../../config/.dataconfig");
 		// Decodificamos los datos
-		\__log(realpath(__DIR__."../../config/.dataconfig"));
-		\__log($datajson);
+		// \__log(realpath(__DIR__."../../config/.dataconfig"));
+		// \__log($datajson);
 
 		$infohost = json_decode($datajson);
-		// Asignamos a una array 
-		return $arr = get_object_vars($infohost);	
+		// Asignamos a una array
+		return $arr = get_object_vars($infohost);
 	}
 }
 

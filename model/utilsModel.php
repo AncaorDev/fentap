@@ -25,8 +25,7 @@ class utilsModel extends Model{
 						$and = ' AND '; 
 					}
 				}
-						
-			}	  	
+			}
 			$eje = $this->con->ejecutar($sql);
 			if (count($eje) == 0) {
 				throw new Exception('Error al extraer información');
@@ -37,8 +36,8 @@ class utilsModel extends Model{
 				$data['error']  = 0;
 				$data['stdsql'] = 1;
 				$data['data']  = $this->con->ejecutararray($sql);
-				$this -> con -> liberar($eje);	
-			} 
+				$this -> con -> liberar($eje);
+			}
 		} catch(Exception $e){
 			$data['error'] = $e->getMessage();
 		}

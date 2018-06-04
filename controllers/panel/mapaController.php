@@ -20,7 +20,7 @@ use Exception;
 class mapaController extends Controller {
 private $dp;
 private $ctr;
-private $bd; 
+private $bd;
 private $auth;
 private $m_panel;
 private $m_mapa;
@@ -41,13 +41,13 @@ function index() { //Función que se jecuta al recibir una variable del tipo con
 	if (parent::authenticate($this -> auth)) { // Aquí la vista en caso de que el acceso necesite autenticación
 		$data['accion'] = 'listar';
 		if ($this->url['metodo'] != null && $this->url['atributo'] != null) {
-			if ($this->url['metodo'] == 'edit') {	
+			if ($this->url['metodo'] == 'edit') {
 				$mapa         = $this->m_mapa->listaDetallesMapa($this->url['atributo']);
 				$data['mapa'] = $mapa['datos'][0];
 				$data['mapa']['html_mapa'] = \decode_HTML($data['mapa']['html_mapa']);
 				\__log($data['mapa']);
 			}
-		} 
+		}
 		$permisos = $this->m_panel->getPermisosByIdUser(S::getValue('id_user'));
 		$tabs = $this->m_utils->_getById('tabs');
 
@@ -70,19 +70,24 @@ function newMapa() {
 	$data['error'] = 1;
 	$data['msj']   = 'ERROR';
 	try {
-		if($_POST) 	{ 
-		    $keys_post = array_keys($_POST); 
-		    foreach ($keys_post as $key_post) { 
-		      	$$key_post = $_POST[$key_post]; 
-		    } 
+
+		if($_POST) 	{
+		    $keys_post = array_keys($_POST);
+		    foreach ($keys_post as $key_post) {
+		      	$$key_post = $_POST[$key_post];
+		    }
 		}
-		$departamento = $this->m_utils->_getById('ubdepartamento' , '*' , array(' ' => $id_departamento));
+		\__log('-----------------');
+		$departamento = $this->m_utils->_getById('ubdepartamento' , '*' , array('id_departamento' => $id_departamento));
+		\__log($departamento);
+		\__log('-----------------');
 		$slug_mapa = strtolower($departamento['data'][0]['departamento']);
 		$html_mapa = \encode_HTML($html_mapa);
 		$insert = array('id_departamento'	=> $id_departamento,
 						'html_mapa'     	=> trim($html_mapa),
 						'slug_mapa'     	=> trim($slug_mapa),
-						'id_User'			=> S::getValue('id_user')
+						'id_User'			=> S::getValue('id_user'),
+						'id_departamento'   => $id_departamento
 					   );
 		$mapa = $this->m_mapa->newMapa($insert);
 		$data['error'] = 0;
@@ -99,11 +104,11 @@ function verificarDepartamento() {
 	try {
 		$data['exists'] = 0;
 		$data['url']    = null;
-		if($_POST) 	{ 
-		    $keys_post = array_keys($_POST); 
-		    foreach ($keys_post as $key_post) { 
-		      	$$key_post = $_POST[$key_post]; 
-		    } 
+		if($_POST) 	{
+		    $keys_post = array_keys($_POST);
+		    foreach ($keys_post as $key_post) {
+		      	$$key_post = $_POST[$key_post];
+		    }
 		}
 		$departamento = $this->m_utils->_getById('mapa' , '*' , array('id_departamento' => $id_departamento));
 		if ($departamento['data'] != 0) {

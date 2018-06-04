@@ -50,15 +50,18 @@ class mapaModel extends Model{
 	function newMapa($datos) {
 		try{
 			extract($datos);
-			$sql = "INSERT INTO mapa ( flg_publicado, 
+			$sql = "INSERT INTO mapa ( flg_publicado,
 									   html_mapa,
 									   slug_mapa,
-									   id_User) 
+									   id_User,
+									   id_departamento)
 						      VALUES ( 1,
 						  			  '{$html_mapa}',
 						  			  '{$slug_mapa}',
-						  			  '{$id_User}')";
-			$sql = $this -> con -> ejecutar($sql);	
+									  '{$id_User}',
+									  '{$id_departamento}')";
+			\__log($sql);
+			$sql = $this -> con -> ejecutar($sql);
 			$compilated = $arrayName = array('sql' => $sql, 'upd' => $sql);
 		}
 		catch(Exception $ex){
