@@ -6,13 +6,26 @@
         .control--checkbox .control__indicator:after {
         left: 11px !important;
         }
+        .item .alert{float:left;
+                    margin-left: 0;
+                    padding:3px 10px;
+                    color:#FFF;
+                    border-radius:3px 4px 4px 3px;
+                    background-color:#CE5454;
+                    max-width:170px;
+                    white-space:pre;
+                    position:relative !important;
+                    left:-15px;
+                    opacity:0;
+                    z-index:1;
+                    transition:0.15s ease-out}
     </style>
 {% endblock %}
 {% block content %}
 
 <div class="right_col" role="main">
     <!-- Header Pages -->
-    <div class="header-pages">   
+    <div class="header-pages">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <!-- x panel -->
             <div class="x_panel">
@@ -34,47 +47,34 @@
                         <div class="" role="tabpanel" data-example-id="togglable-tabs">
                             <ul id="tabPages" class="nav nav-tabs bar_tabs" role="tablist">
                                 <li role="presentation" class="active">
-                                    <a class="a-tab" href="#lpages" id="lpages-tab" role="tab" data-toggle="tab" aria-expanded="false">Datos Generales</a></li>
+                                    <a class="a-tab" href="#lpages" id="lpages-tab" role="tab" data-toggle="tab" aria-expanded="false">Datos Generales</a>
+                                </li>
+                                <li role="presentation">
+                                    <a class="a-tab" href="#lenlaces" id="lenlaces-tab" role="tab" data-toggle="tab" aria-expanded="false">Enlaces</a>
+                                </li>
                                 <!-- data-toggle="modal" data-target="#FormPage" -->
                             </ul>
-                            <div id="myTabContent" class="tab-content">
+                            <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane fade active in" id="lpages" aria-labelledby="home-tab">
                                     {% include 'panel/forms/general.twig' %}
                                 </div>
+                                {# <div role="tabpanel" class="tab-pane fade" id="lenlaces" aria-labelledby="enlaces-tab">
+                                    {% include 'panel/forms/enlaces.twig' %}
+                                </div> #}
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- x content -->
             </div>
-            <!-- x panel -->   
+            <!-- x panel -->
         </div>
     </div>
     <div class="clearfix"></div>
 </div>
 
 {% endblock %}
-{% block scripts %}   
+{% block scripts %}
   {{parent()}}
-  <script src="./js/panel/mapas.js?id={{random()}}"></script>
-  <script type="text/javascript">
-    $("#input-id").fileinput({
-        language: "es",
-        showUpload: false
-    });
-    $("#datatable-responsive").DataTable({
-    "language": {"search": "Buscar _INPUT_",
-                "paginate": {"next": "Siguiente" , "previous" : "Anterior", "first": "Primera Página" , "last": "Última Página"},
-                "emptyTable": "No existen datos",
-                "info": "Mostrando página _PAGE_ de _PAGES_",
-                "infoEmpty": "Sin resultados",
-                "lengthMenu": "Mostrando resultados",
-                "zeroRecords": "No exiten coincidencias",
-                "infoFiltered": " - filtrado de _MAX_ ",
-                "processing": "DataTables is currently busy",
-                "zeroRecords": "No se encontraron datos para mostrar"
-                }
-                //  lengthMenu => _MENU_ 
-  });
-  </script>
+  <script src="./js/panel/general.js?id={{random()}}"></script>
 {% endblock %}

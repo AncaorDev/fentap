@@ -20,7 +20,7 @@ use Exception;
 class pagesController extends Controller {
 private $dp;
 private $ctr;
-private $bd; 
+private $bd;
 private $auth;
 private $m_panel;
 private $m_page;
@@ -45,7 +45,7 @@ function index() { //Función que se jecuta al recibir una variable del tipo con
 				$page         = $this->m_page->listaDetallesPage($this->url['atributo']);
 				$data['page'] = $page['datos'][0];
 			}
-		} 
+		}
 		$permisos = $this->m_panel->getPermisosByIdUser(S::getValue('id_user'));
 		$tabs = $this->m_utils->_getById('tabs');
 		$page = $this->m_page->listaDetallesPage();
@@ -57,7 +57,7 @@ function index() { //Función que se jecuta al recibir una variable del tipo con
 		View::renderPage('panel/pages',$this->ctr->ld,$data);
 	} else {
 		// View::renderPage("error.unautorized");
-		F::redirect('panel'); // Redirección en caso de autorización
+		\redirect('login'); // Redirección en caso de autorización
 	}
 }
 
@@ -66,15 +66,15 @@ function newPage() {
 	$data['msj']   = 'ERROR';
 	try {
 		\__log(print_r($_POST,true));
-		if($_POST) 	{ 
-		    $keys_post = array_keys($_POST); 
-		    foreach ($keys_post as $key_post) { 
-		      	$$key_post = $_POST[$key_post]; 
-		    } 
-		} 
+		if($_POST) 	{
+		    $keys_post = array_keys($_POST);
+		    foreach ($keys_post as $key_post) {
+		      	$$key_post = $_POST[$key_post];
+		    }
+		}
 		$slug_Page = preg_replace("/[0-9]+/", "", trim($slug_Page));
 		$title_Page = preg_replace("/\-/", " ", $title_Page);
-		
+
 		$slug = $this->m_utils->_getById('page', 'slug_Page' , array('slug_Page' => $slug_Page));
 		if (count($slug) == 0) {
 			throw new Exception('Ya existe Slug');

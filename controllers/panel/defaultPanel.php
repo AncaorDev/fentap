@@ -15,7 +15,7 @@ use model\utilsModel;
 class usersController extends Controller {
 private $dp;
 private $ctr;
-private $bd; 
+private $bd;
 private $auth;
 private $m_panel;
 private $m_utils;
@@ -39,7 +39,7 @@ function index() { //Función que se jecuta al recibir una variable del tipo con
 		View::renderPage('panel/users',$this->ctr->ld,$data);
 	} else {
 		// View::renderPage("error.unautorized");
-		F::redirect('panel'); // Redirección en caso de autorización
+		\redirect('panel'); // Redirección en caso de autorización
 	}
 }
 // Fin class

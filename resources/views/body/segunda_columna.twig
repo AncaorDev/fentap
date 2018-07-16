@@ -1,11 +1,11 @@
 <!--Third columnn-->
 <div class="col-lg-3">
      <!--Card Hidro-->
-    {% if  datos.this_baseURL != 'hidroboletin' %}     
+    {% if  datos.this_baseURL != 'hidroboletin' %}
     <div class="card wow fadeIn" data-wow-delay="0.4s">
         <div class="card-header card-header-title text-left text-white text-uppercase">
             <!--Title-->
-           <i class="icon icon-newspaper"></i> Hidroboletín 
+           <i class="icon icon-newspaper"></i> Hidroboletín
         </div>
         <!--Card content-->
         {#      id_boletin
@@ -15,7 +15,7 @@
                 date_create
                 date_modificate
                 html_boletin
-                img_portada 
+                img_portada
                 name_User      #}
         <div class="card-body pt-0">
             <!--Text-->
@@ -31,18 +31,17 @@
                            {{ boletin.descrip_boletin }}<a class="btn btn-primary btn-sm px-2" style="padding-bottom:2px;padding-top:2px;" href="hidro_boletin/read/{{ boletin.slug_boletin }}">Leer más</a>
                         </p>
                     </div>
-                </div> 
+                </div>
                 {% if key < 1 %}
                      <hr>
                 {% endif %}
-               
-            {% endfor %}                   
+            {% endfor %}
         </div>
     </div>
     {% endif %}
     <!--/.Card-->
     <hr>
-
+    {% if  (datos.this_baseURL != 'publicacion') %}
     <!--Card Publish-->
     <div class="card wow fadeIn" data-wow-delay="0.4s">
         <div class="card-header text-center text-white">
@@ -63,14 +62,14 @@
                            {{ publish.descrip_publish }}<a class="btn btn-primary btn-sm px-2" style="padding-bottom:2px;padding-top:2px;" href="publicacion/read/{{ publish.slug_publish }}">Leer más</a>
                         </p>
                     </div>
-                </div> 
+                </div>
                 {% if key < 1 %}
                      <hr>
                 {% endif %}
-               
-            {% endfor %}                   
+            {% endfor %}
         </div>
     </div>
+    {% endif %}
     <!--/.Card-->
     <hr>
     <!-- Card Notices -->
@@ -92,12 +91,12 @@
                 html_notice
                 img_portada #}
             {% for key, notice in datos['notices'] if key < 2 and notice.flg_destacado == 0 %}
-                <div class="content-notice row pt-1">                            
+                <div class="content-notice row pt-1">
                     <div class="col-sm-4 p-0">
                         {# {{loop.length}} #}
                         <img class="w-100" src="{{IMAGE}}upload/{{notice.img_portada}}" alt="">
                     </div>
-                    <div class="col-sm-8"> 
+                    <div class="col-sm-8">
                         <a href="noticia/read/{{notice.slug_notice}}">
                             <span class="font-weight-bold text-white p-0" style="font-size:11px;"> {{notice.title_notice}} </span> 
                         </a>
@@ -106,13 +105,13 @@
                         <div class="d-flex pb-0 text-white">
                             <div class="mr-auto"> <span style="font-size:12px;" class="font-weight-light"> Autor: {{notice.name_User}}</span></div>
                             <div> <span class="font-weight-light" style="font-size:12px;">{{notice.date_modificate == '' ? notice.date_create :  notice.date_modificate }}</span> </div>
-                        </div>                                 
+                        </div>
                     </div>
-                </div> 
+                </div>
                 {% if key < 2 %}
                      <hr>
                 {% endif %}
-            {% endfor %}                   
+            {% endfor %}
         </div>
     </div>
     {% endif %}
@@ -122,7 +121,7 @@
     <div class="card wow fadeIn bg-fentap1 text-white text-center" data-wow-delay="0.4s">
         <!--Card content-->
         <div class="card-body pt-4">
-            <a class="text-white" href="construccion"><h5>NORMAS LEGALES</h5>   </a>               
+            <a class="text-white" href="construccion"><h5>NORMAS LEGALES</h5>   </a>
         </div>
     </div>
     <!--/.Card-->

@@ -2,15 +2,15 @@
 /*===========================================
              Controller
 ===========================================*/
-/* 
-Clase que se encarga de recibir los datos según eso mostrar sus vistas correspondientes 
+/*
+Clase que se encarga de recibir los datos según eso mostrar sus vistas correspondientes
 con la información adecuada.
 */
 use Carbon\Carbon;
 use model\pageModel;
 
 class Controller {
-/*  
+/*
 	Leyenda de las variables
 	$mp => Modelo pordefecto.
 	$rsp => Respuesta de los Funciones Modelo.
@@ -29,22 +29,22 @@ public function __construct($bd = true,$data = "page",$id=null) {
 		$this->m_page  = new pageModel();
 		$data = self::verificarData($data);
 		$this -> ld = self::obtnerLista($data,$id,null);
-	} 
+	}
 	// $this->ajaxPost();
-} 
+}
 /* Función Mostrar Página con la lista general
  	Se requieren 4 datos : $p, $data y $id
 */
 public function extractData($data = "", $id = null , $sub_id = null) {
-	try {		
+	try {
 		if ($this -> bd) {
 			$data = self::verificarData($data);
 			if ($data === "error") {
 				$this -> v -> render("error" , "500" , "modelo no definido");
 			} else {
 				return $lista = self::obtnerLista($data,$id,$sub_id);
-			}			
-		}	
+			}
+		}
 	} catch (Exception $e) {
 		throw $e;
 	}
@@ -58,25 +58,25 @@ static public function verificarData($data){
 			$arrayData = explode("|", $data);
 			$arrayCant = count($arrayData);
 			$newArrayData = [];
-			if (is_array($arrayData)) {			
+			if (is_array($arrayData)) {
 				$newArrayData['model'] = $arrayData[0];
 			} else {
 				$newArrayData['model'] = $arrayData;
 			}
 			if ($arrayCant>1) {
-				for ($i=0; $i < $arrayCant; $i++) { 
+				for ($i=0; $i < $arrayCant; $i++) {
 					if ($arrayData[$i] == "std") {
 						$newArrayData['std'] = true;
 					} if ($arrayData[$i] == "count") {
 						$newArrayData['count'] = true;
 					}
 				}
-			} 			
+			}
 		}
 		// $newArrayData = array('model' => $arrayData[0],'num' => $arrayCant);
 		return $newArrayData;
 	} catch (Exception $e) {
-		throw $e;	
+		throw $e;
 	}
 }
 
@@ -90,11 +90,11 @@ static public function obtnerLista($data,$id,$sub_id){
 			$compilated[ strtolower($data['model']) ] = $datamodel -> $actlistadetalles($id,$sub_id);
 			isset($data['std']) ? $compilated['std'] = $datamodel -> statusTable() : '';
 			isset($data['count']) ? $compilated['count'] = count($compilated[strtolower($data['model'])]) : '';
-			// $compilated = ['lista' => $listadetallesdata, 'std' => ];	
-			return $compilated;	
+			// $compilated = ['lista' => $listadetallesdata, 'std' => ];
+			return $compilated;
 		} else {
 			echo "Not defined name class in the model </br>";
-		}		
+		}
 	} catch (Exception $e) {
 		throw $e;
 	}
@@ -106,9 +106,9 @@ function authenticate($acceso){
 			if (isset($_SESSION['session'])) {
 				if (($_SESSION['session'] == "yes")) {
 					return true;
-				} 
+				}
 			}
-		} 
+		}
 	} else {
 		return true;
 	}
@@ -130,7 +130,6 @@ function listaPaginasbySlug($slug) {
 	} else {
 		return $sql['datos'];
 	}
-	
 }
 //Fin clase
 }

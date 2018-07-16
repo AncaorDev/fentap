@@ -1,6 +1,6 @@
 <?php namespace app;
 /**
-* 
+*
 */
 class Core {
 	private $host;
@@ -16,13 +16,15 @@ class Core {
 		Autoregistro de los modelos
 		--------------------------------------------------- */
 		spl_autoload_register( function( $NombreClase ) {
-			$NombreClase = str_replace('\\', '/' , $NombreClase);
-			if (file_exists(__DIR__.'/../model/' . $NombreClase . '.php')) {
-				require __DIR__.'/../model/' . $NombreClase . '.php';
-			}  else if (file_exists(realpath(__DIR__.'/../'.$NombreClase.'.php'))){
-				require realpath(__DIR__.'/../'.$NombreClase.'.php');
-			} else {
-				echo "Not found class archive $NombreClase " . " Error en core.php línea : " . __LINE__ . "</br>";
+			if($NombreClase != "finfo") {
+				$NombreClase = str_replace('\\', '/' , $NombreClase);
+				if (file_exists(__DIR__.'/../model/' . $NombreClase . '.php')) {
+					require __DIR__.'/../model/' . $NombreClase . '.php';
+				}  else if (file_exists(realpath(__DIR__.'/../'.$NombreClase.'.php'))){
+					require realpath(__DIR__.'/../'.$NombreClase.'.php');
+				} else {
+					echo "Not found class archive $NombreClase " . " Error en core.php línea : " . __LINE__ . "</br>";
+				}
 			}
 		});
 		/* ---------------------------------------------------
@@ -51,8 +53,5 @@ class Core {
 		}
 	}
 
-	public function __destruct(){
-		
-	}	
-
+	public function __destruct(){}
 }

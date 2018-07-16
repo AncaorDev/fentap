@@ -1,196 +1,197 @@
 {% extends "panel/base.twig" %}
 {% block title %} Inicio {% endblock %}
 {% block head %}
-    {{parent()}}
-    <style>
-        .control--checkbox .control__indicator:after {
-        left: 11px !important;
-        }
-    </style>
+	{{parent()}}
+	<style>
+		.control--checkbox .control__indicator:after {
+		left: 11px !important;
+		}
+	</style>
 {% endblock %}
 {% block content %}
 
 <div class="right_col" role="main">
-    <!-- Header Pages -->
-    <div class="header-pages">   
-        <div class="col-md-12 col-sm-12 col-xs-12">
-        {% if datos.publish %}
-          <div class="x_panel">
-            <div class=" row x_title">
-              <div class="col-md-8 col-xs-12">  
-              <h2 class="h2-none" style="width:100%;"><span class="glyphicon glyphicon-book"></span> Editar Publicación ({{ datos.publish.title_publish }})  </h2>
-              </div>
-              <div class="col-md-4" style="text-align:right;">
-                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-              </div>        
-            </div>
-            <!-- x content-->
-            <div class="x_content"> 
-                <div class="col-md-12">
-                    <div id="progress" style="display:none;" class="progress progress-striped active">
-                    <div id="barra-estado" class="progress-bar" style="width: 0%"></div>
-                    </div>
-                    <div class="col-lg-12 col-xs-12" id="mensaje"></div>
-                    {% include 'panel/forms/publish.twig' %}
-                </div>  
-            </div>
-            <!-- x content -->
-          </div> 
-          <!-- x panel -->
-          </div>    
-        {% else %}
-            <!-- x panel -->
-            <div class="x_panel">
-                <!-- x_title -->
-                <div class=" row x_title">
-                    <div class="col-md-8 col-xs-6">
-                        <h2 class="h2-none" style="width:100%;"><span class="glyphicon glyphicon-book"></span>Configuración ({{ datos.title }}) </h2>
-                    </div>
-                    <div class="col-md-4 col-xs-6" style="text-align:right;">
-                        <a class="well well-sm"> {{ datos.title }} <span class="badge" style="background-color:rgb(46, 109, 164);color:white;"> {{ datos.count }} </span></a>
-                        </a>
-                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </div>
-                </div>
-                <!-- x_title -->
-                <!-- x content-->
-                <div class="x_content">
-                    <div class="data-page-panel">
-                        <div class="" role="tabpanel" data-example-id="togglable-tabs">
-                            <ul id="tabPages" class="nav nav-tabs bar_tabs" role="tablist">
-                                <li role="presentation" class="active">
-                                    <a class="a-tab" href="#lpages" id="lpages-tab" role="tab" data-toggle="tab" aria-expanded="false">Listado</a></li>
-                                <!-- data-toggle="modal" data-target="#FormPage" -->
-                                <li role="presentation" class=""><a class="a-tab" href="#formpage" role="tab" id="formpage-tab" data-toggle="tab" aria-expanded="false"> 
-                           Agregar </a></li>
-                                <li role="presentation" class=""><a class="a-tab" href="#ordenar" role="tab" id="ordenar-tab" data-toggle="tab" aria-expanded="false"> 
-                           Ordenar </a></li>
-                                <li role="presentation" class="">
-                                    <a class="a-tab" href="#conf" role="tab" id="conf-tab" data-toggle="tab" aria-expanded="false">
-                                        <i class="fa fa-cog"></i> Otros </a>
-                                </li>
-                            </ul>
-                            <div id="myTabContent" class="tab-content">
-                                <div role="tabpanel" class="tab-pane fade active in" id="lpages" aria-labelledby="home-tab">
-                                    <div class="row">
-                                        <div class="col-md-12 table-responsive">
-                                            <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-                                                <thead>
-                                                    <tr>
-                                                        <th> # (ID) </th>
-                                                        <th> Título de la Publicación</th>
-                                                        <th> Descripción <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Descripción de la publicación"></i></th>
-                                                        <th> Fecha de Creación </th>
-                                                        <th> Usuario <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Usuario que creó o editó la publicación por última vez"></i></th>
-                                                        <th> Acciones</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {% for key, publish in datos.datos %}
-                                                    <tr class="success" id="tdata{{key}}">
-                                                        <td> {{ publish.id_publish }} </td>
-                                                        <td> {{ publish.title_publish }} </td>
-                                                        <td> {{ publish.descrip_publish }} </td>
-                                                        <td> {{ publish.date_create }} </td>
-                                                        <td> {{ publish.name_User }} </td>
-                                                        <td id="data-{{publish.id_publish}}" data-id_publish="{{publish.id_publish}}">
-                                                            <a href="{{BASE_PANEL}}publish/edit/{{publish.id_publish}}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Editar </a>
-                                                            <a onclick="confirmDeletePublish($(this))" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Eliminar </a>
-                                                        </td>
-                                                    </tr>
-                                                    {% endfor %}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div role="tabpanel" class="tab-pane fade" id="formpage" aria-labelledby="profile-tab">
-                                    {% include 'panel/forms/publish.twig' %}
-                                </div>
-                                <div role="tabpanel" class="tab-pane fade" id="ordenar" aria-labelledby="profile-tab">
-                                    <div id="progress" style="display:none;" class="progress progress-striped active">
-                                        <div id="barra-estado" class="progress-bar" style="width: 0%"></div>
-                                    </div>
-                                    <div class="col-lg-12 col-xs-12" id="mensaje"></div>
-                                </div>
-                                <div role="tabpanel" class="tab-pane fade" id="conf" aria-labelledby="profile-tab">
-                                    <div id="progress" style="display:none;" class="progress progress-striped active">
-                                        <div id="barra-estado" class="progress-bar" style="width: 0%"></div>
-                                    </div>
-                                    <div class="col-lg-12 col-xs-12" id="mensajeDP"></div>
-                                    <div class="row">
-                                        <div class="col-md-7">
-                                            <form action="" id="formdata" method="POST" class="form-horizontal form-label-left" novalidate>
-                                                <!-- ITEM -->
-                                                <h2>Opciones de la tabla</h2>
-                                                <div class="item form-group">
-                                                    <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">AUTO_INCREMENT:
-                                                    </label>
-                                                    <div class="col-md-3 col-sm-3 col-xs-12">
-                                                        <input type="number" id="aicr" class="form-control col-md-12 col-xs-12" min="1" max="100" value="{{datos['status'][0].Auto_increment}}">
-                                                    </div>
-                                                    <div class="col-md-5">
+	<!-- Header Pages -->
+	<div class="header-pages">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+		{% if datos.publish %}
+		  <div class="x_panel">
+			<div class=" row x_title">
+			  <div class="col-md-8 col-xs-12">
+			  <h2 class="h2-none" style="width:100%;"><span class="glyphicon glyphicon-book"></span> Editar Publicación ({{ datos.publish.title_publish }})  </h2>
+			  </div>
+			  <div class="col-md-4" style="text-align:right;">
+				<a class="btn btn-success" href="{{BASE_PANEL}}publish">Volver a publicaciones</a>
+				<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+			  </div>
+			</div>
+			<!-- x content-->
+			<div class="x_content">
+				<div class="col-md-12">
+					<div id="progress" style="display:none;" class="progress progress-striped active">
+					<div id="barra-estado" class="progress-bar" style="width: 0%"></div>
+					</div>
+					<div class="col-lg-12 col-xs-12" id="mensaje"></div>
+					{% include 'panel/forms/publish.twig' %}
+				</div>
+			</div>
+			<!-- x content -->
+		  </div>
+		  <!-- x panel -->
+		  </div>
+		{% else %}
+			<!-- x panel -->
+			<div class="x_panel">
+				<!-- x_title -->
+				<div class=" row x_title">
+					<div class="col-md-8 col-xs-6">
+						<h2 class="h2-none" style="width:100%;"><span class="glyphicon glyphicon-book"></span>Configuración ({{ datos.title }}) </h2>
+					</div>
+					<div class="col-md-4 col-xs-6" style="text-align:right;">
+						<a class="well well-sm"> {{ datos.title }} <span class="badge" style="background-color:rgb(46, 109, 164);color:white;"> {{ datos.count }} </span></a>
+						</a>
+						<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</div>
+				</div>
+				<!-- x_title -->
+				<!-- x content-->
+				<div class="x_content">
+					<div class="data-page-panel">
+						<div class="" role="tabpanel" data-example-id="togglable-tabs">
+							<ul id="tabPages" class="nav nav-tabs bar_tabs" role="tablist">
+								<li role="presentation" class="active">
+									<a class="a-tab" href="#lpages" id="lpages-tab" role="tab" data-toggle="tab" aria-expanded="false">Listado</a></li>
+								<!-- data-toggle="modal" data-target="#FormPage" -->
+								<li role="presentation" class=""><a class="a-tab" href="#formpage" role="tab" id="formpage-tab" data-toggle="tab" aria-expanded="false"> 
+						   Agregar </a></li>
+								<li role="presentation" class=""><a class="a-tab" href="#ordenar" role="tab" id="ordenar-tab" data-toggle="tab" aria-expanded="false"> 
+						   Ordenar </a></li>
+								<li role="presentation" class="">
+									<a class="a-tab" href="#conf" role="tab" id="conf-tab" data-toggle="tab" aria-expanded="false">
+										<i class="fa fa-cog"></i> Otros </a>
+								</li>
+							</ul>
+							<div id="myTabContent" class="tab-content">
+								<div role="tabpanel" class="tab-pane fade active in" id="lpages" aria-labelledby="home-tab">
+									<div class="row">
+										<div class="col-md-12 table-responsive">
+											<table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+												<thead>
+													<tr>
+														<th> # (ID) </th>
+														<th> Título de la Publicación</th>
+														<th> Descripción <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Descripción de la publicación"></i></th>
+														<th> Fecha de Creación </th>
+														<th> Usuario <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Usuario que creó o editó la publicación por última vez"></i></th>
+														<th> Acciones</th>
+													</tr>
+												</thead>
+												<tbody>
+													{% for key, publish in datos.datos %}
+													<tr class="success" id="tdata{{key}}">
+														<td> {{ publish.id_publish }} </td>
+														<td> {{ publish.title_publish }} </td>
+														<td> {{ publish.descrip_publish }} </td>
+														<td> {{ publish.date_create }} </td>
+														<td> {{ publish.name_User }} </td>
+														<td id="data-{{publish.id_publish}}" data-id_publish="{{publish.id_publish}}">
+															<a href="{{BASE_PANEL}}publish/edit/{{publish.id_publish}}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Editar </a>
+															<a onclick="confirmDeletePublish($(this))" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Eliminar </a>
+														</td>
+													</tr>
+													{% endfor %}
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<div role="tabpanel" class="tab-pane fade" id="formpage" aria-labelledby="profile-tab">
+									{% include 'panel/forms/publish.twig' %}
+								</div>
+								<div role="tabpanel" class="tab-pane fade" id="ordenar" aria-labelledby="profile-tab">
+									<div id="progress" style="display:none;" class="progress progress-striped active">
+										<div id="barra-estado" class="progress-bar" style="width: 0%"></div>
+									</div>
+									<div class="col-lg-12 col-xs-12" id="mensaje"></div>
+								</div>
+								<div role="tabpanel" class="tab-pane fade" id="conf" aria-labelledby="profile-tab">
+									<div id="progress" style="display:none;" class="progress progress-striped active">
+										<div id="barra-estado" class="progress-bar" style="width: 0%"></div>
+									</div>
+									<div class="col-lg-12 col-xs-12" id="mensajeDP"></div>
+									<div class="row">
+										<div class="col-md-7">
+											<form action="" id="formdata" method="POST" class="form-horizontal form-label-left" novalidate>
+												<!-- ITEM -->
+												<h2>Opciones de la tabla</h2>
+												<div class="item form-group">
+													<label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">AUTO_INCREMENT:
+													</label>
+													<div class="col-md-3 col-sm-3 col-xs-12">
+														<input type="number" id="aicr" class="form-control col-md-12 col-xs-12" min="1" max="100" value="{{datos['status'][0].Auto_increment}}">
+													</div>
+													<div class="col-md-5">
 
-                                                        <button id="btnincnum" class="btn btn-success"> Aplicar </button><i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Se definirá el número elegido"></i>
+														<button id="btnincnum" class="btn btn-success"> Aplicar </button><i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Se definirá el número elegido"></i>
 
-                                                        <button id="btnincauto" class="btn btn-success"> Automático </button><i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Se definirá como 1, lo cual sl siguiente en ser insertado tomara el número que falte"></i>
-                                                    </div>
-                                                </div>
-                                                <!-- /ITEM -->
-                                                <div class="ln_solid"></div>
-                                                <div class="form-group">
-                                                    <div class="col-md-6 col-md-offset-3">
-                                                        <!-- <button type="reset" class="btn btn-primary">Cancel</button> -->
+														<button id="btnincauto" class="btn btn-success"> Automático </button><i class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="Se definirá como 1, lo cual sl siguiente en ser insertado tomara el número que falte"></i>
+													</div>
+												</div>
+												<!-- /ITEM -->
+												<div class="ln_solid"></div>
+												<div class="form-group">
+													<div class="col-md-6 col-md-offset-3">
+														<!-- <button type="reset" class="btn btn-primary">Cancel</button> -->
 
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12 table-responsive">
-                                            <table class="table table-striped table-hover ">
-                                                <thead>
-                                                    <tr>
-                                                        <th> Nombre </th>
-                                                        <th> Filas </th>
-                                                        <th> Tamaño </th>
-                                                        <th> Autoincrement </th>
-                                                        <th> Motor </th>
-                                                        <th> Tamaño de Datos </th>
-                                                        <th> Creado el: </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {% for key, table in datos.status %}
-                                                    <tr class="success" id="tdata">
-                                                        <td> {{ table.Name }} </td>
-                                                        <td> {{ table.Rows }} </td>
-                                                        <td> {{ table.Data_length }} </td>
-                                                        <td> {{ table.Auto_increment }} </td>
-                                                        <td> {{ table.Engine }} </td>
-                                                        <td> {{ table.Data_length }} kbs </td>
-                                                        <td> {{ table.Create_time }} </td>
-                                                        <td> </td>
-                                                    </tr>
-                                                    {% endfor %}
-                                                </tbody>
-                                            </table>
-                                            <p></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- x content -->
-            </div>
-            <!-- x panel -->   
-        {% endif %}
-        </div>
-    </div>
-    <div class="clearfix"></div>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12 table-responsive">
+											<table class="table table-striped table-hover ">
+												<thead>
+													<tr>
+														<th> Nombre </th>
+														<th> Filas </th>
+														<th> Tamaño </th>
+														<th> Autoincrement </th>
+														<th> Motor </th>
+														<th> Tamaño de Datos </th>
+														<th> Creado el: </th>
+													</tr>
+												</thead>
+												<tbody>
+													{% for key, table in datos.status %}
+													<tr class="success" id="tdata">
+														<td> {{ table.Name }} </td>
+														<td> {{ table.Rows }} </td>
+														<td> {{ table.Data_length }} </td>
+														<td> {{ table.Auto_increment }} </td>
+														<td> {{ table.Engine }} </td>
+														<td> {{ table.Data_length }} kbs </td>
+														<td> {{ table.Create_time }} </td>
+														<td> </td>
+													</tr>
+													{% endfor %}
+												</tbody>
+											</table>
+											<p></p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- x content -->
+			</div>
+			<!-- x panel -->   
+		{% endif %}
+		</div>
+	</div>
+	<div class="clearfix"></div>
 </div>
 
 {% endblock %}
@@ -198,28 +199,28 @@
   {{parent()}}
   <script src="./js/panel/publishes.js?id={{random()}}"></script>
   <script type="text/javascript">
-    $(document).ready(function() {
-        $("#id_AttributePage").trigger('change');
-    });
+	$(document).ready(function() {
+		$("#id_AttributePage").trigger('change');
+	});
 
-    $("#input-id").fileinput({
-        language: "es",
-        showUpload: false
-    });
+	$("#input-id").fileinput({
+		language: "es",
+		showUpload: false
+	});
 
-    $("#datatable-responsive").DataTable({
-    "language": {"search": "Buscar _INPUT_",
-                "paginate": {"next": "Siguiente" , "previous" : "Anterior", "first": "Primera Página" , "last": "Última Página"},
-                "emptyTable": "No existen datos",
-                "info": "Mostrando página _PAGE_ de _PAGES_",
-                "infoEmpty": "Sin resultados",
-                "lengthMenu": "Mostrando resultados",
-                "zeroRecords": "No exiten coincidencias",
-                "infoFiltered": " - filtrado de _MAX_ ",
-                "processing": "DataTables is currently busy",
-                "zeroRecords": "No se encontraron datos para mostrar"
-                }
-                //  lengthMenu => _MENU_ 
+	$("#datatable-responsive").DataTable({
+	"language": {"search": "Buscar _INPUT_",
+				"paginate": {"next": "Siguiente" , "previous" : "Anterior", "first": "Primera Página" , "last": "Última Página"},
+				"emptyTable": "No existen datos",
+				"info": "Mostrando página _PAGE_ de _PAGES_",
+				"infoEmpty": "Sin resultados",
+				"lengthMenu": "Mostrando resultados",
+				"zeroRecords": "No exiten coincidencias",
+				"infoFiltered": " - filtrado de _MAX_ ",
+				"processing": "DataTables is currently busy",
+				"zeroRecords": "No se encontraron datos para mostrar"
+				}
+				//  lengthMenu => _MENU_ 
   });
   </script>
 {% endblock %}

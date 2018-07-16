@@ -58,7 +58,8 @@ class utilsModel extends Model{
 				$and = " AND ";
 			}
 		}
-		$sql = $this -> con -> ejecutar($sql);	
+		__log($sql);
+		$sql = $this -> con -> ejecutar($sql);
 		$compilated = $arrayName = array('sql' => $sql, 'upd' => $sql);
 		return $compilated;
 	}

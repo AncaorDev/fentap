@@ -1,11 +1,12 @@
-<!-- method="post" action="panel/pages" -->
-<form action="" id="form_user" method="POST" class="form-horizontal form-label-left" novalidate>
+
+
+<form action="" id="form_gen1" method="POST" class="form-horizontal form-label-left" novalidate>
     <!-- ITEM -->
     <div class="item form-group">
         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Mail: <span class="required">*</span>
         </label>
         <div class="col-md-5 col-sm-5 col-xs-12">
-            <input id="name_User" name="name_User" class="form-control col-md-7 col-xs-12" data-validate-length-range="5,20" required="required" type="text">
+            <input value="{{datos.general[0]['value_general']}}" id="mail" name="mail" class="form-control col-md-7 col-xs-12" data-validate-length-range="5,60" required="required" type="text">
         </div>
     </div>
     <!-- /ITEM -->
@@ -14,7 +15,7 @@
         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name"> Telefax <span class="required">*</span>
         </label>
         <div class="col-md-5 col-sm-5 col-xs-12">
-            <input id="pass_User" name="pass_User" class="form-control col-md-7 col-xs-12" data-validate-length-range="5,20" required="required" type="text">
+            <input value="{{datos.general[1]['value_general']}}" id="telefax" name="telefax" class="form-control col-md-7 col-xs-12" data-validate-length-range="5,60" required="required" type="text">
         </div>
     </div>
     <!-- /ITEM -->
@@ -23,7 +24,7 @@
         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name"> Dirección <span class="required">*</span>
         </label>
         <div class="col-md-5 col-sm-5 col-xs-12">
-            <input id="pass_User" name="pass_User" class="form-control col-md-7 col-xs-12" data-validate-length-range="5,20" required="required" type="text">
+            <input value="{{datos.general[2]['value_general']}}" id="direccion" name="direccion" class="form-control col-md-7 col-xs-12" data-validate-length-range="5,60" required="required" type="text">
         </div>
     </div>
     <!-- /ITEM -->
@@ -31,7 +32,8 @@
     <div class="form-group">
         <div class="col-md-6 col-md-offset-3">
             <!-- <button type="reset" class="btn btn-primary">Cancel</button> -->
-            <button id="btnenviar" type="submit" class="btn btn-success"><i class="fa fa-paper-plane"></i> Aceptar </button>
+            <button id="btnenviar1" type="submit" class="btn btn-success"><i class="fa fa-paper-plane"></i> Aceptar </button>
+            <button type="reset" class="btn btn-danger">Limpiar</button>
         </div>
     </div>
 </form>

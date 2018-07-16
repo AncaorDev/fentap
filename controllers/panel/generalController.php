@@ -7,10 +7,10 @@ $auth => autenticación (booleano)
 ====================================================================== */
 use app\clases\View;
 use app\clases\Controller;
-use app\clases\Functions as F;
 use app\clases\Session as S;
 use model\panelModel;
-use model\publishModel;
+use model\generalModel;
+use model\linksModel;
 use model\utilsModel;
 use Carbon\Carbon;
 use app\utils\Files;
@@ -20,10 +20,11 @@ use Exception;
 class generalController extends Controller {
 private $dp;
 private $ctr;
-private $bd; 
+private $bd;
 private $auth;
 private $m_panel;
-private $m_publish;
+private $m_general;
+private $m_link;
 private $m_utils;
 private $url;
 
@@ -32,7 +33,8 @@ function __construct($url){
 	$this -> bd      = true; // Si se usara la conexión a la base de Datos
 	$this -> ctr     = new Controller($bd = $this -> bd); // Ejecutamos una instancia hacia el controlador general
 	$this->m_panel   = new panelModel();
-	$this->m_publish = new publishModel();
+	$this->m_general = new generalModel();
+	$this->m_link    = new linksModel();
 	$this->m_utils   = new utilsModel();
 	$this->url       = $url;
 }
@@ -44,25 +46,24 @@ function index() { //Función que se jecuta al recibir una variable del tipo con
 			if ($this->url['metodo'] == 'edit') {
 
 			}
-		} 
+		}
 		$permisos = $this->m_panel->getPermisosByIdUser(S::getValue('id_user'));
 		$tabs = $this->m_utils->_getById('tabs');
-
+		$general = $this->m_utils->_getById('general');
 		$data['permisos'] = $permisos['data'];
 		$data['tabs']     = $tabs['data'];
 		$data['title'] 	  = 'General';
-		$publishes		  = $this->m_publish->listaDetallesPublish();
-		$data['count']    = count($publishes['datos']);
-		$data = array_merge($data,$publishes);
+		$data['general']  = $general['data'];
+		$users = $this->m_utils->_getById('user');
 		View::renderPage('panel.general',$this->ctr->ld,$data);
 	} else {
 		// View::renderPage("error.unautorized");
-		F::redirect('panel'); // Redirección en caso de autorización
+		\redirect('panel'); // Redirección en caso de autorización
 	}
 }
 
 
-function newPublish() {
+function saveGeneral() {
 	$data['error'] = 1;
 	$data['msj']   = 'ERROR';
 	try {
@@ -71,30 +72,18 @@ function newPublish() {
 			$image = $this->subirImagen($_FILES['file']);
 		}
 
-		if($_POST) 	{ 
-		    $keys_post = array_keys($_POST); 
-		    foreach ($keys_post as $key_post) { 
-		      	$$key_post = $_POST[$key_post]; 
-		    } 
+		if($_POST) 	{
+		    $keys_post = array_keys($_POST);
+		    foreach ($keys_post as $key_post) {
+		      	$$key_post = $_POST[$key_post];
+		    }
 		}
-
-		$slug_publish = \limpiarURL($title_publish);
-		$slug_publish = substr($slug_publish, 0, 40);
-		$html_publish = \encode_HTML($html_publish);
-
-		$insert = array('title_publish'	  => $title_publish,
-						'descrip_publish'  => $descrip_publish,
-						'flg_publicado'   => 1,
-						'html_publish'     => trim($html_publish),
-						'slug_publish'     => trim($slug_publish),
-						'id_User'         => S::getValue('id_user')
-					   );
-
-		if ($image != '') {
-			$insert['img_portada']   = $image['name'];
-		}
-
-		$publish = $this->m_publish->newPublish($insert);
+		$insert = array('mail'	    => $mail,
+						'telefax'   => $telefax,
+						'direccion' => $direccion);
+		$this->m_utils->updateTable('general',['value_general' => $mail]     , ['id_general' => 1]);
+		$this->m_utils->updateTable('general',['value_general' => $telefax]  , ['id_general' => 2]);
+		$this->m_utils->updateTable('general',['value_general' => $direccion], ['id_general' => 3]);
 		$data['error'] = 0;
 		$data['msj']   = 'SUCCESS';
 	} catch (Exception $e) {
@@ -144,11 +133,11 @@ function deletePublish() {
 	$data['error'] = 1;
 	$data['msj']   = 'ERROR';
 	try {
-		if($_POST) 	{ 
-		    $keys_post = array_keys($_POST); 
-		    foreach ($keys_post as $key_post) { 
-		      	$$key_post = $_POST[$key_post]; 
-		    } 
+		if($_POST) 	{
+		    $keys_post = array_keys($_POST);
+		    foreach ($keys_post as $key_post) {
+		      	$$key_post = $_POST[$key_post];
+		    }
 		}
 		$where = array('id_publish' => $id_publish);
 		$data  = $this->m_utils->_deleteRow('publish', $where);
@@ -187,7 +176,6 @@ function subirImagen($file){
            \__log($handle->error);
         }
         // we delete the temporary files
-        
         $handle-> Clean();
 	}
 	return $data;
@@ -197,11 +185,11 @@ function resetAutoIncrement(){
 	$data['msj']   = 'ERROR';
 	$data['error'] = 1;
 	try {
-		if($_POST) 	{ 
-		    $keys_post = array_keys($_POST); 
-		    foreach ($keys_post as $key_post) { 
-		      	$$key_post = $_POST[$key_post]; 
-		    } 
+		if($_POST) 	{
+		    $keys_post = array_keys($_POST);
+		    foreach ($keys_post as $key_post) {
+		      	$$key_post = $_POST[$key_post];
+		    }
 		}
 		$this->m_publish->setAutoincrement($num);
 		$data['msj']   = 'RESET';

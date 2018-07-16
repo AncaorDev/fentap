@@ -6,8 +6,7 @@ use app\clases\gestionBD;
 use app\clases\Log;
 use model\Model;
 
-class noticesModel extends Model{ 
-	
+class noticesModel extends Model{
 	private $table;
 
 	public function __construct() {
@@ -31,14 +30,17 @@ class noticesModel extends Model{
 							n.flg_destacado
 					FROM notice n, user u
 					WHERE n.id_User=u.id_User";
+			__log($val);
 			if ($val != null ) {
 				$det = true;
-				$sql .= " AND n.id_notice={$val}";	
+				$sql .= " AND n.id_notice={$val}";
 			}
 			if ($slug_notice != null ) {
 				$det = true;
-				$sql .= " AND n.slug_notice='{$slug_notice}'";	
-			}		
+				$sql .= " AND n.slug_notice='{$slug_notice}'";
+			}
+			$sql .= " ORDER BY date_modificate";
+			__log($sql);
 			$lista = $this -> con -> ejecutararray($sql);
 			$statusTable = $this -> statusTable();
 			$compilated = array('datos' => $lista, 'status' => $statusTable, 'det' => $det);
@@ -52,15 +54,16 @@ class noticesModel extends Model{
 	function newNoticia($datos) {
 		try{
 			extract($datos);
-			$flg_destacado = isset($flg_destacado) ? $flg_destacado : ''; 
-			$sql = "INSERT INTO notice (title_notice, 
-									   descrip_notice, 
-									   flg_publicado, 
+			$flg_destacado = isset($flg_destacado) ? $flg_destacado : 0;
+			$img_portada   = isset($img_portada)   ? $img_portada : '';
+			$sql = "INSERT INTO notice (title_notice,
+									   descrip_notice,
+									   flg_publicado,
 									   html_notice,
 									   img_portada,
 									   slug_notice,
-									   flg_destacado, 
-									   id_User) 
+									   flg_destacado,
+									   id_User)
 						      VALUES ('{$title_notice}',
 						  			  '{$descrip_notice}' ,
 						  			   {$flg_publicado},
@@ -69,7 +72,7 @@ class noticesModel extends Model{
 						  			  '{$slug_notice}',
 						  			  '{$flg_destacado}',
 						  			  '{$id_User}')";
-			$sql = $this -> con -> ejecutar($sql);	
+			$sql = $this -> con -> ejecutar($sql);
 			$compilated = $arrayName = array('sql' => $sql, 'upd' => $sql);
 		}
 		catch(Exception $ex){
@@ -81,27 +84,27 @@ class noticesModel extends Model{
 	public function statusTable(){
 		try {
 			$sql = "SHOW TABLE STATUS LIKE '{$this -> table}'";
-			return  $lista = $this -> con -> ejecutararray($sql);	
+			return  $lista = $this -> con -> ejecutararray($sql);
 		} catch (Exception $e) {
 			throw $e;
 		}
 	}
-	
+
 	public function setAutoincrement($num){
 		try {
-				$sql = "ALTER TABLE {$this -> table} AUTO_INCREMENT =".$num;
-				$rows = $this -> con -> ejecutar($sql);
-			 	if ($rows) {
-			 		$rows = true;
-			 	} else {
-			 		$rows = false;
-			 	}
-			 	$data = array('sql' => $rows);
-			 	return $data;				
-			} catch (Exception $e) {
-				throw $e;
+			$sql = "ALTER TABLE {$this -> table} AUTO_INCREMENT =".$num;
+			$rows = $this -> con -> ejecutar($sql);
+			if ($rows) {
+				$rows = true;
+			} else {
+				$rows = false;
 			}
+			$data = array('sql' => $rows);
+			return $data;
+		} catch (Exception $e) {
+			throw $e;
 		}
+	}
 
 	public function __destruct () {
 		$this -> con -> cerrar();

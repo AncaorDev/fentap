@@ -16,16 +16,15 @@
         {{data.permisos}}
     {% for key, permiso in data['permisos'] %}
         {{key}}
-    {% endfor %} 
-    <p>{{ session.id_user }}</p>
-    <p>{{ session.time_session }}</p>
-    <p>{{ datos.hola}}</p>
+    {% endfor %}
+    {# <p>{{ session.id_user }}</p>
+    <p>{{ session.time_session }}</p> #}
 </div>
 <!-- /top tiles -->
 </div>
 <!-- /page content -->
 
 {% endblock %}
-{% block scripts %}   
+{% block scripts %}
   {{parent()}}
 {% endblock %}

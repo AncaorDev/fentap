@@ -49,15 +49,15 @@ class publishModel extends Model{
 
 	function newPublish($datos) {
 		try{
-			extract($datos);			
-			$img_portada   = isset($img_portada)   ? $img_portada : ''; 
-			$sql = "INSERT INTO publish (title_publish, 
-									   descrip_publish, 
-									   flg_publicado, 
+			extract($datos);
+			$img_portada   = isset($img_portada)   ? $img_portada : '';
+			$sql = "INSERT INTO publish (title_publish,
+									   descrip_publish,
+									   flg_publicado,
 									   html_publish,
 									   img_portada,
 									   slug_publish,
-									   id_User) 
+									   id_User)
 						      VALUES ('{$title_publish}',
 						  			  '{$descrip_publish}' ,
 						  			   {$flg_publicado},
@@ -65,7 +65,7 @@ class publishModel extends Model{
 						  			  '{$img_portada}',
 						  			  '{$slug_publish}',
 						  			  '{$id_User}')";
-			$sql = $this -> con -> ejecutar($sql);	
+			$sql = $this -> con -> ejecutar($sql);
 			$compilated = $arrayName = array('sql' => $sql, 'upd' => $sql);
 		}
 		catch(Exception $ex){
@@ -77,7 +77,7 @@ class publishModel extends Model{
 	public function statusTable(){
 		try {
 			$sql = "SHOW TABLE STATUS LIKE '{$this -> table}'";
-			return  $lista = $this -> con -> ejecutararray($sql);	
+			return  $lista = $this -> con -> ejecutararray($sql);
 		} catch (Exception $e) {
 			throw $e;
 		}

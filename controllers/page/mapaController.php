@@ -7,7 +7,6 @@ $auth => autenticación (booleano)
 ====================================================================== */
 use app\clases\View;
 use app\clases\Controller;
-use app\clases\Functions as F;
 use app\clases\Session as S;
 use model\utilsModel;
 use model\mapaModel;
@@ -41,20 +40,20 @@ function index() { //Función que se jecuta al recibir una variable del tipo con
             $mapa         = $this->m_mapa->listaDetallesMapa(null,$this->url['atributo']);
             $datos['mapa'] = $mapa['datos'][0];
             $datos['mapa']['html_mapa'] = \decode_HTML($datos['mapa']['html_mapa']);
-            // $querynotice    = $this -> ctr -> extractData('notices',null, $this->url['atributo']); 
-            // $datos['notice'] = $querynotice['notices']['datos'][0]; // asignación de datos a la variable array    
+            // $querynotice    = $this -> ctr -> extractData('notices',null, $this->url['atributo']);
+            // $datos['notice'] = $querynotice['notices']['datos'][0]; // asignación de datos a la variable array
             // $datos['notice']['html_notice'] = \decode_HTML($datos['notice']['html_notice']);
-            \__log($datos['mapa']);
 		}
 	} else {
 		\redirect('inicio');
 	}
 
 	View::renderPage('mapa',$this -> ctr -> ld,$datos);
-  } else {
-    // View::renderPage("error.unautorized");
-    F::redirect('login'); // Redirección en caso de autorización
-  }
+  	} else {
+		\redirect('inicio');
+        // View::renderPage("error.unautorized");
+         // Redirección en caso de autorización
+  	}
 }
 // Fin class
 }

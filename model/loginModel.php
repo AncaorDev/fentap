@@ -5,7 +5,7 @@
 use app\clases\gestionBD;
 use model\Model;
 
-class loginModel extends Model{ 
+class loginModel extends Model{
 	private $con;
 	private $user;
 	private $pass;
@@ -20,8 +20,8 @@ class loginModel extends Model{
 			$this -> pass = $pass;
 			$this -> sesion = $sesion;
 			$pass = encriptar($this -> pass);
-			$sql = $this -> con -> ejecutar("SELECT * FROM user 
-													  WHERE (name_User='{$user}' OR mail_User='{$user}') 
+			$sql = $this -> con -> ejecutar("SELECT * FROM user
+													  WHERE (name_User='{$user}' OR mail_User='{$user}')
 													  AND pass_User='$pass' LIMIT 1;");
 			if ($sql) {
 				$stdsql = true;
@@ -30,14 +30,14 @@ class loginModel extends Model{
 					$msg = 1;
 				} else {
 					$msg = 0;
-					$duracion_sesion = "none";	
+					$duracion_sesion = "none";
 				}
-				$this -> con -> liberar($sql);	
+				$this -> con -> liberar($sql);
 			} else {
 				$datos           = null;
 				$duracion_sesion = "sin definir";
 				$stdsql          = false;
-				$msg 		     = "error en la ejecución";	
+				$msg 		     = "error en la ejecución";
 			}
 			$response = array('stdsql' => $stdsql, 'msg' => $msg , 'data' => $datos);
 			return $response;
@@ -48,8 +48,8 @@ class loginModel extends Model{
 	}
 
 	public function logout(){
-			Session::init();  
-			Session::destroy();  
+			Session::init();
+			Session::destroy();
 	}
 	public function __destruct () {
 	 	$this -> con -> cerrar();

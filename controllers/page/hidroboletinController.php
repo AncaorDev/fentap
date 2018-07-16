@@ -37,8 +37,8 @@ function index() { //Función que se jecuta al recibir una variable del tipo con
     // $datos['this_page'] = $this->listaPaginasbySlug($this->url['controller']);
 	if ($this->url['metodo'] != null && $this->url['atributo'] != null) {
 		if ($this->url['metodo'] == 'read') {
-			$querynotice	= $this -> ctr -> extractData('boletin',null, $this->url['atributo']); 
-			$datos['boletin'] = $querynotice['boletin']['datos'][0]; // asignación de datos a la variable array    
+			$querynotice	= $this -> ctr -> extractData('boletin',null, $this->url['atributo']);
+			$datos['boletin'] = $querynotice['boletin']['datos'][0]; // asignación de datos a la variable array
 			$datos['boletin']['html_boletin'] = \decode_HTML($datos['boletin']['html_boletin']);
 		}
 	} else {

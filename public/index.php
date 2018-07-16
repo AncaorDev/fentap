@@ -1,29 +1,28 @@
 <?php
-/** Archivo que controla toda la web. 
+/** Archivo que controla toda la web.
 * @ Index
-**/ 
+**/
 require_once(realpath(__DIR__ . '/../app/time.php'));
-app\Time::Time(false); 
+app\Time::Time(false);
 /* ---------------------------------------------------
-Archivo Gestor de dependencias 
+Archivo Gestor de dependencias
 --------------------------------------------------- */
 require_once(realpath(__DIR__  . '/../vendor/autoload.php'));
 /* ---------------------------------------------------
   Archivo de registro y lectura de información
 --------------------------------------------------- */
-require_once(realpath(__DIR__ . '/../app/core.php')); 
+require_once(realpath(__DIR__ . '/../app/core.php'));
 
 use app\Core;
 use app\manager\Request;
 
-class Index 
-{  
-  	static function run() {   
+class Index
+{
+  	static function run() {
 	    // Ejecutamos core para obtener toda información necesaria para el uso de la APP
 	    new Core();
 	    // Ejecutamos Request para mostrar resultados según la URL
-	    new Request(); 
-	    
+	    new Request();
   	}
 }
 Index::run();

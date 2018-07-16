@@ -1,7 +1,7 @@
-<?php 
+<?php
 
 if (!function_exists('__log')) {
-	function __log($var) { 
+	function __log($var) {
 		$dbgt = debug_backtrace();
         if(isset($dbgt[1]['class'])) {
             $class = $dbgt[1]['class'];
@@ -17,26 +17,26 @@ if (!function_exists('__log')) {
 }
 
 if (!function_exists('error')) {
-	function error($texto,$numero = 'Error :: ') { 
+	function error($texto,$numero = 'Error :: ') {
 		try {
 			$folder   = __DIR__.'/../log/';
 			$filename = 'error-'.date('Y-m-d').'.log';
-			$path     =  $folder.$filename; 
+			$path     =  $folder.$filename;
 			if (file_exists($path)) {
-				$ddf  = fopen($path,'a+'); 
+				$ddf  = fopen($path,'a+');
 			} else {
-				mkdir($folder, 0777, true);
-				$ddf  = fopen($path,'w+'); 
+				!file_exists($folder) ? mkdir($folder, 0777, true) : '';
+				$ddf  = fopen($path,'w+');
 			}
 			$data = '['.date('Y-m-d H:m:s').']'."$numero - $texto\r\n";
 			if (!fwrite($ddf,$data)) {
-				throw new \Exception("No se creo archivo Log");	
-			} 
-			fclose($ddf); 
+				throw new \Exception("No se creo archivo Log");
+			}
+			fclose($ddf);
 		} catch (\Exception $e) {
 			echo  $e->getMessage();
 		}
-	} 
+	}
 }
 
 if (!function_exists('encriptar')) {
@@ -48,7 +48,6 @@ if (!function_exists('encriptar')) {
 		$key = substr(md5($llave),0,$tamanio); // Una clave de codificacion, debe usarse la misma para encriptar y desencriptar
 	    $encrypted = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($key), $cadena, MCRYPT_MODE_CBC, md5(md5($key))));
 	    return $encrypted."+/0LPdc1>".$len; //Devuelve el string encriptado
-	 
 	}
 }
 
@@ -97,7 +96,6 @@ if (!function_exists('leerDatos')) {
 		// Decodificamos los datos
 		// \__log(realpath(__DIR__."../../config/.dataconfig"));
 		// \__log($datajson);
-
 		$infohost = json_decode($datajson);
 		// Asignamos a una array
 		return $arr = get_object_vars($infohost);
@@ -131,7 +129,7 @@ if (!function_exists('limpiarURL')) {
 	    // Eliminamos y Reemplazamos otros carácteres especiales
 	    $find = array('/[^a-z0-9\-<>]/', '/[\-]+/', '/<[^>]*>/','/\-+/');
 	    $repl = array('', '-', '' ,'_');
-	    $url = preg_replace($find, $repl, $url); 
+	    $url = preg_replace($find, $repl, $url);
 	    return $url;
 	}
 }
@@ -150,21 +148,15 @@ if (!function_exists('limpiarAttr')) {
 	    // Eliminamos y Reemplazamos otros carácteres especiales
 	    $find = array('/[^a-z0-9\_<>]/', '/[\-]+/', '/<[^>]*>/','/\-+/');
 	    $repl = array('', '-', '' ,'_');
-	    $url = preg_replace($find, $repl, $url); 
+	    $url = preg_replace($find, $repl, $url);
 	    return $url;
 	}
 }
-
-
 
 if (!function_exists('redirect')) {
 	function redirect($destino){
 		header('Location:'.HOME.$destino);
 	}
 }
-
- 
-
-	
 
 

@@ -1,5 +1,5 @@
 {% extends "base.twig" %}
-{% block title %} Publicaciones {% endblock %}
+{% block title %} Inicio {% endblock %}
 {% block head %}
     {{parent()}}
 {% endblock %}
@@ -11,14 +11,55 @@
 {# Cuerpo General #}
  <!--Main layout-->
 <main>
-<div class="container-fluid">
-    <div class="row pt-4">
-        {% include 'body/primera_columna.twig' %}
+<div class="container">
+    <div class="row pt-4 h-100">
+        {# {% include 'body/primera_columna.twig' %} #}
+{#         name_User
+        id_publish
+        title_publish
+        slug_publish
+        descrip_publish
+        date_create
+        date_modificate
+        html_publish
+        img_portada #}
         <!--columnn Central-->
-        <div class="col-sm-6 col-lg-6">
-            <!--Card-->
+        <div class="col-sm-9 col-lg-9">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item color-fentap2"><a href="{{HOME}}">Inicio</a></li>
+                <li class="breadcrumb-item color-fentap2">Publicaciones</li>
+                <li class="breadcrumb-item color-fentap2 active" aria-current="page"> {{ datos.publish.title_publish }} </li>
+              </ol>
+            </nav>
             <div class="card wow fadeIn" data-wow-delay="0.4s">
-                {{datos.this_page.html_Page|raw}}
+                <div class="card-header card-header-title text-center text-white text-uppercase">
+                    <!--Title-->
+                    {{ datos.publish.title_publish }}
+                </div>
+                <!--Card content-->
+                <div class="card-body pt-0">
+                    <!--Text-->
+                    <div class="content-publish" style="">
+                        <p class="card-text text-justify card-body-title pt-3 color-fentap1"  style="font-size:19px;line-height:21px;">
+                                {{ datos.publish.descrip_publish }}
+                        </p>
+                        <div class="w-100 text-center">
+                            <img src="{{IMAGE}}/upload/{{datos.publish.img_portada}}" alt="">
+                        </div>
+                        <br>
+                        <div style="width:100%;overflow:hidden;">
+                            {% autoescape %}
+                                {{ datos.publish.html_publish|raw }} {# var won't be escaped #}
+                            {% endautoescape %}
+                        </div>
+                        <hr>
+                        <div class="d-flex pb-2">
+                            <div class="mr-auto"> <span style="font-size:14px;" class="font-weight-light">Autor : {{datos.publish.name_User}}</span></div>
+                            <div> <span class="font-weight-light" style="font-size:14px;">Fecha : {{datos.publish.date_modificate == '' ? datos.publish.date_create :  datos.publish.date_modificate }} </span> </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         {% include 'body/segunda_columna.twig' %}
@@ -30,3 +71,5 @@
 {% endblock %}
 {% block script %}
 {% endblock %}
+
+

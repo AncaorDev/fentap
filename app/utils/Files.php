@@ -44,7 +44,7 @@ class Files{
 		}
 	 	return $data;
 	}
-	 
+
 	 /**
 	 * Devuelve true o false si se eliminó el directorio
 	 * @access public
@@ -70,7 +70,7 @@ class Files{
 		}
 	 	return $data;
 	}
-}	
-// directorio actual 
+}
+// directorio actual
 // return $dir. "\n";
 // return getcwd();

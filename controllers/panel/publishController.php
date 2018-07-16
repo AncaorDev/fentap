@@ -59,7 +59,7 @@ function index() { //Función que se jecuta al recibir una variable del tipo con
 		View::renderPage('panel.publishes',$this->ctr->ld,$data);
 	} else {
 		// View::renderPage("error.unautorized");
-		F::redirect('panel'); // Redirección en caso de autorización
+		\redirect('login'); // Redirección en caso de autorización
 	}
 }
 

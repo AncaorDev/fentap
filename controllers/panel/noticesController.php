@@ -7,7 +7,6 @@ $auth => autenticación (booleano)
 ====================================================================== */
 use app\clases\View;
 use app\clases\Controller;
-use app\clases\Functions as F;
 use app\clases\Session as S;
 use model\panelModel;
 use model\noticesModel;
@@ -20,7 +19,7 @@ use Exception;
 class noticesController extends Controller {
 private $dp;
 private $ctr;
-private $bd; 
+private $bd;
 private $auth;
 private $m_panel;
 private $m_page;
@@ -38,32 +37,31 @@ function __construct($url){
 }
 
 function index() { //Función que se jecuta al recibir una variable del tipo controlador
-	$slug_notice = \limpiarURL('loreto_comunidades_nativas_desbloquearon');
-	$slug_notice = substr($slug_notice, 0, 40);
-	\__log($slug_notice);
 	if (parent::authenticate($this -> auth)) { // Aquí la vista en caso de que el acceso necesite autenticación
 		$data['accion'] = 'listar';
 		if ($this->url['metodo'] != null && $this->url['atributo'] != null) {
 			if ($this->url['metodo'] == 'edit') {
+				__log('idddddd');
+				__log($this->url['atributo']);
 				$notice         = $this->m_notice->listaDetallesNotices($this->url['atributo']);
+				__log($notice);
 				$data['notice'] = $notice['datos'][0];
 				$data['notice']['html_notice'] = \decode_HTML($data['notice']['html_notice']);
 			}
-		} 
+		}
 		$permisos = $this->m_panel->getPermisosByIdUser(S::getValue('id_user'));
 		$tabs = $this->m_utils->_getById('tabs');
 
 		$data['permisos'] = $permisos['data'];
 		$data['tabs']     = $tabs['data'];
 		$data['title'] 	  = 'Noticias';
-		
 		$notices           = $this->m_notice->listaDetallesNotices();
 		$data['count']    = count($notices['datos']);
 		$data = array_merge($data,$notices);
 		View::renderPage('panel.notices',$this->ctr->ld,$data);
 	} else {
 		// View::renderPage("error.unautorized");
-		F::redirect('panel'); // Redirección en caso de autorización
+		\redirect('panel'); // Redirección en caso de autorización
 	}
 }
 
@@ -75,14 +73,12 @@ function newNotice() {
 		if (count($_FILES) > 0) {
 			$image = $this->subirImagen($_FILES['file']);
 		}
-
-		if($_POST) 	{ 
-		    $keys_post = array_keys($_POST); 
-		    foreach ($keys_post as $key_post) { 
-		      	$$key_post = $_POST[$key_post]; 
-		    } 
+		if($_POST) 	{
+		    $keys_post = array_keys($_POST);
+		    foreach ($keys_post as $key_post) {
+		      	$$key_post = $_POST[$key_post];
+		    }
 		}
-
 		$slug_notice = \limpiarURL($title_notice);
 		$slug_notice = substr($slug_notice, 0, 40);
 		$html_notice = \encode_HTML($html_notice);
@@ -103,14 +99,13 @@ function newNotice() {
 			$insert['flg_destacado'] = $flg_destacado;
 			$m_utils->updateTable('notice', array('flg_destacado' => 0));
 		}
-
 		$notice = $this->m_notice->newNoticia($insert);
 		$data['error'] = 0;
 		$data['msj']   = 'SUCCESS';
 	} catch (Exception $e) {
 		$data['msj']   =  $e->getMessage();
 	}
-	echo json_encode(array_map('utf8_decode', $data));
+	echo json_encode($data);
 }
 
 function saveNotice() {
@@ -121,12 +116,12 @@ function saveNotice() {
 		if (count($_FILES) > 0) {
 			$image = $this->subirImagen($_FILES['file']);
 		}
-		if($_POST) 	{ 
-		    $keys_post = array_keys($_POST); 
-		    foreach ($keys_post as $key_post) { 
-		      	$$key_post = $_POST[$key_post]; 
-		    } 
-		} 
+		if($_POST) 	{
+		    $keys_post = array_keys($_POST);
+		    foreach ($keys_post as $key_post) {
+		      	$$key_post = $_POST[$key_post];
+		    }
+		}
 		\__log($_POST);
 		$html_notice = \encode_HTML($html_notice);
 
@@ -226,7 +221,6 @@ function subirImagen($file){
            \__log($handle->error);
         }
         // we delete the temporary files
-        
         $handle-> Clean();
 	}
 	return $data;
@@ -236,11 +230,11 @@ function resetAutoIncrement(){
 	$data['msj']   = 'ERROR';
 	$data['error'] = 1;
 	try {
-		if($_POST) 	{ 
-		    $keys_post = array_keys($_POST); 
-		    foreach ($keys_post as $key_post) { 
-		      	$$key_post = $_POST[$key_post]; 
-		    } 
+		if($_POST) 	{
+		    $keys_post = array_keys($_POST);
+		    foreach ($keys_post as $key_post) {
+		      	$$key_post = $_POST[$key_post];
+		    }
 		}
 		$this->m_notice->setAutoincrement($num);
 		$data['msj']   = 'RESET';

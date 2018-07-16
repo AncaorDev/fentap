@@ -1,7 +1,7 @@
 <?php namespace app\clases;
-	class View {	
+	class View {
 		public function __construct(){
-					
+
 		}
 		public static function renderPage($ruta , $listapage = "",$l = ""){
 			$datos = $l;
@@ -15,12 +15,12 @@
 			$twig->addGlobal('BASE'      , BASE);
 			$twig->addGlobal('BASE_PANEL', BASE.'panel/');
 			$twig->addGlobal('WEBSITE'   , WEBSITE);
-			$twig->addGlobal('AUTHOR'    , AUTHOR);	
+			$twig->addGlobal('AUTHOR'    , AUTHOR);
 			$twig->addGlobal('DIR_LIBS'  , DIR_LIBS);
 			$twig->addGlobal('DIR_LIBS2' , DIR_LIBS2);
-			$twig->addGlobal('IMAGE'     , IMAGE);	
+			$twig->addGlobal('IMAGE'     , IMAGE);
 			// $layout = $twig->load(__DIR__.'/../../../resources/views/base.twig');
-			$twig->display($ruta.'twig',compact('datos'));		
+			$twig->display($ruta.'twig',compact('datos'));
 		}
 		public function render($c ,$p , $datos=""){
 			$datos=$datos;
@@ -32,7 +32,7 @@
 			$twig->addGlobal('BASE', BASE);
 			// $layout = $twig->load(__DIR__.'/../../../resources/views/base.twig');
 			// print_r($datos);
-			$twig->display($c.'/'.$p.'.twig',compact('datos'));	
+			$twig->display($c.'/'.$p.'.twig',compact('datos'));
 		}
 
 		public static function verificarRuta($ruta){
@@ -43,14 +43,14 @@
 					$newArrayData = [];
 					$ruta = $arrayData[0];
 					if ($arrayCant > 1) {
-						for ($i=0; $i+1 < $arrayCant; $i++) { 
+						for ($i=0; $i+1 < $arrayCant; $i++) {
 							$ruta .= '/'.$arrayData[$i+1];
 						}
-					} 
+					}
 					return $ruta.'.';
 				}
 			} catch (Exception $e) {
-				echo $e->getMessage(); 
+				echo $e->getMessage();
 			}
 		}
 	}

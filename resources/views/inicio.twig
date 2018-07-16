@@ -28,7 +28,7 @@
                     <!--Text-->
                     {% for key, notice in datos['notices'] if notice.flg_destacado == 1 %}
                     <p class="card-text card-body-title color-fentap1 font-weight-bold">
-                        {{notice.title_notice}} 
+                        {{notice.title_notice}}
                     </p>
                     <div class="row">
                         <div class="col-sm-5">
@@ -44,7 +44,7 @@
                             </p>
                         </div>
                     </div>
-                    {% endfor %}     
+                    {% endfor %}
                 </div>
             </div>
             <!--/.Card-->
@@ -139,8 +139,8 @@
             // }],
             onMarkerLabelShow: function(event, label, code) {
                 // console.log(event);
-                // label.html("<img src=\"img/logo.png\"><br>"+ label.html());  
-                // label.css({'background': '#fff', 'color': '#66696d', 'z-index': '99999'})             
+                // label.html("<img src=\"img/logo.png\"><br>"+ label.html());
+                // label.css({'background': '#fff', 'color': '#66696d', 'z-index': '99999'})
             },
             onRegionLabelShow: function(event, label, code){
                 var map = $('#world-map').vectorMap('get', 'mapObject');
@@ -155,10 +155,9 @@
                 if(proyecto != "") {
                     label.html('<strong>'+name+'</strong><br>'+'<p>'+proyecto+'</p>');
                 }
-                
                 // label.html(label.html()+'<br><img src="" height="20">');
                 // label.html(names[currentLang][code]);
-            } 
+            }
         })
     });
     </script>

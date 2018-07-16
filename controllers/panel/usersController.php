@@ -1,13 +1,12 @@
 <?php namespace controllers\panel;
 /* ======================================================================
 $dp => Datos o Informacion desde la BD a la Página, si $bd esta descativada no enviara nada
-$ctr => Instancia de Controller 
+$ctr => Instancia de Controller
 $bd => Si necesita usar la Base de datos true, caso contrario false
 $auth => autenticación (booleano)
 ====================================================================== */
 use app\clases\View;
 use app\clases\Controller;
-use app\clases\Functions as F;
 use app\clases\Session as S;
 use model\panelModel;
 use model\utilsModel;
@@ -16,7 +15,7 @@ use model\userModel;
 class usersController extends Controller {
 private $dp;
 private $ctr;
-private $bd; 
+private $bd;
 private $auth;
 private $m_panel;
 private $m_utils;
@@ -40,16 +39,13 @@ function index() { //Función que se jecuta al recibir una variable del tipo con
 		$data['permisos'] = $permisos['data'];
 		$data['tabs']     = $tabs['data'];
 		$data['metodo']   = isset($this->url['metodo']) ? null : $this->url['metodo'];
-
 		$users = $this->m_utils->_getById('user');
 		$data['users']    = $users['data'];
-
 		$data['title']    = 'Usuarios';
 		$data['count']    = count($users['data']);
 		View::renderPage('panel/users',$this->ctr->ld,$data);
 	} else {
-		// View::renderPage("error.unautorized");
-		F::redirect('panel'); // Redirección en caso de autorización
+		\redirect('panel'); // Redirección en caso de autorización
 	}
 }
 
@@ -57,12 +53,12 @@ function newUser() {
 	$data['error'] = 1;
 	$data['msj']   = 'ERROR';
 	try {
-		if($_POST) 	{ 
-		    $keys_post = array_keys($_POST); 
-		    foreach ($keys_post as $key_post) { 
-		      	$$key_post = $_POST[$key_post]; 
-		    } 
-		} 
+		if($_POST) 	{
+		    $keys_post = array_keys($_POST);
+		    foreach ($keys_post as $key_post) {
+		      	$$key_post = $_POST[$key_post];
+		    }
+		}
 		$insert = array('name_User' => $name_User,
 						'pass_User' => \encriptar($pass_User),
 						'permisos'  => $permisos);
@@ -77,15 +73,13 @@ function deleteUser() {
 	$data['error'] = 1;
 	$data['msj']   = 'ERROR';
 	try {
-		// \__log(print_r($_POST,true));
-		if($_POST) 	{ 
-		    $keys_post = array_keys($_POST); 
-		    foreach ($keys_post as $key_post) { 
-		      	$$key_post = $_POST[$key_post]; 
-		    } 
-		} 
+		if($_POST) 	{
+		    $keys_post = array_keys($_POST);
+		    foreach ($keys_post as $key_post) {
+		      	$$key_post = $_POST[$key_post];
+		    }
+		}
 		$data = $this->m_user->deleterUser($id_user);
-		\__log(print_r($data,true));
 	} catch (Exception $e) {
 		$data['msj']  =  $e->getMessage();
 	}
@@ -96,12 +90,12 @@ function getPermisosbyIdUser() {
 	$data['error'] = 1;
 	$data['msj']   = 'ERROR';
 	try {
-		if($_POST) 	{ 
-	    	$keys_post = array_keys($_POST); 
-	    	foreach ($keys_post as $key_post) { 
-	      		$$key_post = $_POST[$key_post]; 
-	    	} 
-		} 
+		if($_POST) 	{
+	    	$keys_post = array_keys($_POST);
+	    	foreach ($keys_post as $key_post) {
+	      		$$key_post = $_POST[$key_post];
+	    	}
+		}
 	$query = $this->m_user->getPermisosbyIdUser($id_user);
 	$permisos = $query['data'];
 	$html = '<table class="table table-striped table-hover ">
@@ -112,20 +106,36 @@ function getPermisosbyIdUser() {
                             </tr>
                           </thead>
                           <tbody>';
-                        
       	foreach ($permisos as $permiso) {
       		$html .= ' <tr class="success" id="tdata">
                               <td> '.$permiso['id_tab'].' </td>
                               <td> '.$permiso['desc_tab'].'  </td>
 						</tr>';
-		}                  
+		}
         $html .= ' </tbody>
 					</table> ';
-		
 		$data['html'] =  $html;
 		$data['error'] =  0;
 	} catch (Exception $e) {
 		$data['msj']  =  $e->getMessage();
+	}
+	echo json_encode($data);
+}
+function resetAutoIncrement(){
+	$data['msj']   = 'ERROR';
+	$data['error'] = 1;
+	try {
+		if($_POST) 	{
+		    $keys_post = array_keys($_POST);
+		    foreach ($keys_post as $key_post) {
+		      	$$key_post = $_POST[$key_post];
+		    }
+		}
+		$this->m_user->setAutoincrement($num);
+		$data['msj']   = 'RESET';
+		$data['error'] = 0;
+	} catch (Exception $e) {
+		$file['msj'] = $e->getMessage();
 	}
 	echo json_encode($data);
 }

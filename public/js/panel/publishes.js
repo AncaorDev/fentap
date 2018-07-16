@@ -81,7 +81,6 @@ function newPublish(file, html) {
     data.append('title_publish'     , $('#title_publish').val());
     data.append('descrip_publish'   , $('#descrip_publish').val());
     data.append('html_publish'      , html);
-    console.log(data);
     $.ajax({
             url: 'panel/publish/newPublish',
             type: 'POST',
@@ -91,7 +90,6 @@ function newPublish(file, html) {
             dataType: 'json',
             data: data,
             success: function(data) {
-                console.log(data);
                 if (data.error == 0) {
                     alert('Acción realizada con éxito');
                     setTimeout(function() {

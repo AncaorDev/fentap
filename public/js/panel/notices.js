@@ -72,45 +72,44 @@ $('#form_page').submit(function(e) {
 });
 
 function newNotice(file, html) {
-    if (file.type.includes('image')) {
+    var data = new FormData();
+    if (file !== undefined) {
+        if (!file.type.includes('image')) {
+            alert("El tipo de archivo que intentaste subir no es una imagen");
+            return;
+        }
         var name = file.name.split(".");
         name = name[0];
-        var data = new FormData();
-        console.log(file);
         data.append('file', file);
-        data.append('name_User', $('#name_User').val());
-        data.append('title_notice', $('#title_notice').val());
-        data.append('descrip_notice', $('#descrip_notice').val());
-        data.append('flg_destacado', check);
-        data.append('html_notice', html);
-        console.log(data);
-        $.ajax({
-                url: 'panel/notices/newNotice',
-                type: 'POST',
-                contentType: false,
-                cache: false,
-                processData: false,
-                dataType: 'json',
-                data: data,
-                success: function(data) {
-                    console.log(data);
-                    if (data.error == 0) {
-                        alert('Acción realizada con éxito');
-                        setTimeout(function() {
-                            var URLactual = window.location.href;
-                            window.location = URLactual;
-                        }, 1000);
-                    } else {
-                        alert('ERROR');
-                    }
-                }
-            })
-            .fail(function(e) {
-                console.log(e);
-            });
-    } else {
-        alert("El tipo de archivo que intentaste subir no es una imagen");
     }
+    data.append('name_User'     , $('#name_User').val());
+    data.append('title_notice'  , $('#title_notice').val());
+    data.append('descrip_notice', $('#descrip_notice').val());
+    data.append('flg_destacado' , check);
+    data.append('html_notice'   , html);
+    $.ajax({
+        url: 'panel/notices/newNotice',
+        type: 'POST',
+        contentType: false,
+        cache: false,
+        processData: false,
+        dataType: 'json',
+        data: data,
+        success: function(data) {
+            if (data.error == 0) {
+                alert('Acción realizada con éxito');
+                setTimeout(function() {
+                    var URLactual = window.location.href;
+                    window.location = URLactual;
+                }, 1000);
+            } else {
+                alert('ERROR');
+            }
+        }
+    })
+    .fail(function(e) {
+        console.log(e);
+    });
 }
 
 function saveNotice(file, html) {

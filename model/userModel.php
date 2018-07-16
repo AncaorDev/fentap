@@ -36,7 +36,7 @@ class userModel
 				$sql .= " WHERE user.id_User = ".$id; 
 				$det = true; // 1
 
-			} 			
+			}
 			//Ejecución de consulta
 			//$ejePagina = $con -> ejecutar($sql);	
 			// return $sql;
@@ -116,7 +116,7 @@ class userModel
 			$sql = $this->con->ejecutar($sql);
 			if ($sql != 1) {
 				throw new Exception($sql);
-			}	
+			}
 			$data['error'] = 0;
 			$data['msj']   = 1;
 		} catch (Exception $e) {
@@ -143,8 +143,8 @@ class userModel
 			} else {
 				$response = ['sql' => $sql,
 							'upd' => false];
-			}		
-			return  $response;	
+			}
+			return  $response;
 		} catch (Exception $e) {
 			throw $e;
 		}
@@ -168,8 +168,24 @@ class userModel
 			} else {
 				$response = ['sql' => $sql,
 							'upd' => false];
-			}		
+			}
 			return  $response;
+		} catch (Exception $e) {
+			throw $e;
+		}
+	}
+
+	public function setAutoincrement($num){
+		try {
+			$sql = "ALTER TABLE {$this -> table} AUTO_INCREMENT =".$num;
+			$rows = $this -> con -> ejecutar($sql);
+			if ($rows) {
+				$rows = true;
+			} else {
+				$rows = false;
+			}
+			$data = array('sql' => $rows);
+			return $data;
 		} catch (Exception $e) {
 			throw $e;
 		}
@@ -178,7 +194,7 @@ class userModel
 	public function statusTable(){
 		try {
 			$sql = "SHOW TABLE STATUS LIKE '".$this -> table."'";
-			return  $lista = $this -> con -> ejecutararray($sql);	
+			return  $lista = $this -> con -> ejecutararray($sql);
 		} catch (Exception $e) {
 			throw $e;
 		}

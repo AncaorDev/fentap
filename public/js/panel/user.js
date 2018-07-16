@@ -6,22 +6,21 @@ function selectPermiso(tag) {
 	if (index<0) {
 		permisos.push(id);
 	} else {
-	    permisos.splice(index, 1); 
+	    permisos.splice(index, 1);
 	}
-	console.log(permisos);	
 }
 
 var modified = false;
-$("input[type='date'],input[type='mail'],input[type='text'],textarea").change(function () {   
+$("input[type='date'],input[type='mail'],input[type='text'],textarea").change(function () {
   submitForm()
-  modified = true; 
+  modified = true;
 });
 $("input[type='text']").focus(function(){
 	$(this).bind('keyup', function() {
 		var act = false;
 		if ($(this).val().length >= 2) {
 			act = true;
-		} 
+		}
 		submitForm(act)
 	})
 })
@@ -33,20 +32,18 @@ function submitForm(bool = true){
 	}
 }
 
-$('#form_user').submit(function(e) {  
+$('#form_user').submit(function(e) {
     e.preventDefault();
     var submit = false;
     // evaluate the form using generic validaing
     validatorResult = validator.checkAll(this);
     //Verificación de los datos del form
-    console.log(validatorResult);
     submitForm(false);
     if (!validatorResult) {
       submit = false;
-      
     } else {
     	if (modified) {
-			var form = $(this).serializeArray(); 
+			var form = $(this).serializeArray();
 			var object = arrayInObject(form);
         	crearUsuario(form);
     	}
@@ -74,7 +71,7 @@ function crearUsuario(datos) {
 		success: function(data){
 			if (data.error == 0) {
 				alert('Acción realizada con éxito');
-				setTimeout(function(){ 
+				setTimeout(function(){
 					var URLactual = window.location.href;
 					window.location=URLactual;
 				},1000);
@@ -89,8 +86,35 @@ function getPermisos() {
 
 }
 
-function deleteUsuario(tag) {
+function confirmDeleteUsuario(tag) {
 	var id_user = tag.parent().data('id_user');
+    $.confirm({
+        title: 'Mensaje!',
+        content: '¿Esta seguro que desea eliminar?',
+        type: 'dark',
+        typeAnimated: true,
+        icon: 'fa fa-spinner fa-spin',
+        closeIcon: true,
+        closeIconClass: 'fa fa-close',
+        theme: 'supervan',
+        buttons: {
+            aceptar: {
+                btnClass: 'btn-blue',
+                action: function() {
+                    deleteUsuario(id_user);
+                }
+            },
+            cancelar: {
+                btnClass: 'btn-red',
+                action: function() {
+
+                }
+            }
+        }
+    });
+}
+
+function deleteUsuario(id_user) {
 	$.ajax({
 		url      :'panel/users/deleteUser',
 		type     :'POST',
@@ -99,7 +123,7 @@ function deleteUsuario(tag) {
 		success: function(data){
 			if (data.error == 0) {
 				alert('Acción realizada con éxito');
-				setTimeout(function(){ 
+				setTimeout(function(){
 					var URLactual = window.location.href;
 					window.location=URLactual;
 				},1000);
@@ -119,7 +143,6 @@ function getPermisos(tag) {
 		data     : {'id_user' : id_user},
 		success: function(data){
 			if (data.error == 0) {
-				console.log(data);
 				$("#content-permisos").html(data.html);
 				modal('modalPermisos');
 			}
@@ -127,5 +150,57 @@ function getPermisos(tag) {
 	}).fail(function(e) {
 		console.log(e);
 	});
+}
+
+$("#btnincauto").click(function() {
+    event.preventDefault();
+    $.confirm({
+        title: 'Mensaje!',
+        content: 'El AUTO_INCREMENT se asignara autmaticamente',
+        type: 'dark',
+        typeAnimated: true,
+        icon: 'fa fa-spinner fa-spin',
+        closeIcon: true,
+        closeIconClass: 'fa fa-close',
+        theme: 'supervan',
+        buttons: {
+            aceptar: {
+                btnClass: 'btn-blue',
+                action: function() {
+                    resetAI();
+                }
+            },
+            cancelar: {
+                btnClass: 'btn-red',
+                action: function() {
+
+                }
+            }
+        }
+    });
+});
+
+function resetAI(num = 0) {
+    $.ajax({
+        url: 'panel/users/resetAutoIncrement',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            'num': num
+        },
+        success: function(data) {
+            if (data.error == 0) {
+                alert('Acción realizada con éxito');
+                setTimeout(function() {
+                    var URLactual = window.location.href;
+                    window.location = URLactual;
+                }, 1000);
+            } else {
+                console.log(data.error);
+            }
+        }
+    }).fail(function(e) {
+        console.log(e);
+    });
 }
 

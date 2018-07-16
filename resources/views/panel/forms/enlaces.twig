@@ -1,8 +1,8 @@
 <!-- method="post" action="panel/pages" -->
-<form action="" id="form_user" method="POST" class="form-horizontal form-label-left" novalidate>
+<form action="" id="form_enlaces" method="POST" class="form-horizontal form-label-left" novalidate>
     <!-- ITEM -->
     <div class="item form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Nombre de usuario: <span class="required">*</span>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Institución: <span class="required">*</span>
         </label>
         <div class="col-md-5 col-sm-5 col-xs-12">
             <input id="name_User" name="name_User" class="form-control col-md-7 col-xs-12" data-validate-length-range="5,20" required="required" type="text">
@@ -11,24 +11,10 @@
     <!-- /ITEM -->
     <!-- ITEM -->
     <div class="item form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name"> Contraseña <span class="required">*</span>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name"> Enlace <span class="required">*</span>
         </label>
         <div class="col-md-5 col-sm-5 col-xs-12">
             <input id="pass_User" name="pass_User" class="form-control col-md-7 col-xs-12" data-validate-length-range="5,20" required="required" type="text">
-        </div>
-    </div>
-    <!-- /ITEM -->
-        <!-- ITEM -->
-    <div class="item form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name"> Permisos <span class="required">*</span>
-        </label>
-        <div class="col-md-5 col-sm-5 col-xs-12">
-            {% for key, tab in datos.tabs %}
-            <label class="control control--checkbox">{{ tab.desc_tab }}
-                <input data-id_permiso="{{ tab.id_tab }}" type="checkbox" onclick="selectPermiso($(this));" />
-                <div class="control__indicator"></div>
-            </label>
-            {% endfor %}
         </div>
     </div>
     <!-- /ITEM -->

@@ -18,7 +18,7 @@ $(document).ready(function(){
 					var minutes = Math.floor( time / 60 );
 					var seconds = time % 60;
 					//Anteponiendo un 0 a los minutos si son menos de 10 
-					minutes = minutes < 10 ? '0' + minutes : minutes;		 
+					minutes = minutes < 10 ? '0' + minutes : minutes;
 					//Anteponiendo un 0 a los segundos si son menos de 10 
 					seconds = seconds < 10 ? '0' + seconds : seconds;			 
 					var result = minutes + ":" + seconds; 
@@ -114,13 +114,13 @@ $.ajax({
 				var timeSet = setInterval(timeRegresiva,1000);
 				function timeRegresiva(){
 				    if (time < 0) {
-				        clearInterval(timeSet);   
+				        clearInterval(timeSet);
 				    } else {
 				        document.getElementById('redirectl').innerHTML = time;
 				        time--;
-				    } 
-				};		
-				setTimeout(function(){ 
+				    }
+				};
+				setTimeout(function(){
 					var URLactual = window.location.href;
 					window.location=URLactual;},3000);
 			} else {

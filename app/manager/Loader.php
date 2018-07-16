@@ -1,6 +1,6 @@
 <?php namespace app\manager;
 
-class Loader 
+class Loader
 {
 	private $data;
 	static function filterController($data,$view = true) {
@@ -12,8 +12,7 @@ class Loader
 	    	} else {
 	    		self::runController($data,$view);
 	    	}
-	      
-	    } 	   
+	    }
 	}
 
 	static function runController($data,$view = true) {
@@ -21,15 +20,15 @@ class Loader
       	if (file_exists(__DIR__.'/../../controllers/page/'.$data['controller'].'Controller.php')) {
 	        // Si el archivo existe lo requerimos.
 	        require_once(__DIR__.'/../../controllers/page/'.$data['controller'].'Controller.php');
-	        // Asignamos nuestro controlador. 
-        	$controller = 'controllers\page\\'.$data['controller'].'Controller';  
+	        // Asignamos nuestro controlador.
+        	$controller = 'controllers\page\\'.$data['controller'].'Controller';
       	} else if ($data['controller'] == 'index' || $data['controller'] == 'index.php'){
         	\redirect('inicio');
       	}else {
         	require(__DIR__.'/../../controllers/error/error404Controller.php');
-        	$controller = 'controllers\error\error404Controller';  
+        	$controller = 'controllers\error\error404Controller';
         	\__log('error');
-      	}  
+      	}
 		$vista = new $controller($data);
 		if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' && $data['metodo'] != '') {
 			$metodo = $data['metodo'];
@@ -37,7 +36,7 @@ class Loader
 			$vista -> $metodo();
 		} else {
 			if ($view) {
-	    		$vista -> index(); 
+	    		$vista -> index();
 		    } else {
 		    	return $vista;
 		    }
@@ -49,14 +48,14 @@ class Loader
       	if (file_exists(__DIR__.'/../../controllers/panel/'.$data['subcontroller'].'Controller.php')) {
 	        // Si el archivo existe lo requerimos.
 	        require_once(__DIR__.'/../../controllers/panel/'.$data['subcontroller'].'Controller.php');
-	        // Asignamos nuestro controlador. 
-        	$controller = 'controllers\panel\\'.$data['subcontroller'].'Controller';  
+	        // Asignamos nuestro controlador.
+        	$controller = 'controllers\panel\\'.$data['subcontroller'].'Controller';
       	} else if ($data['subcontroller'] == 'index' || $data['subcontroller'] == 'index.php'){
         	\redirect('inicio');
       	}else {
         	require(__DIR__.'/../../controllers/error/error404Controller.php');
-        	$controller = 'controllers\error\error404Controller';  
-      	}  
+        	$controller = 'controllers\error\error404Controller';
+      	}
       	unset($data['subcontroller']);
       	$vista = new $controller($data);
 		if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' && $data['metodo'] != '' && $data['metodo'] != '') {
@@ -64,7 +63,7 @@ class Loader
 			$vista -> $data['metodo']();
 		} else {
 			if ($view) {
-	    		$vista -> index(); 
+	    		$vista -> index();
 		    } else {
 		    	return $vista;
 		    }
@@ -72,7 +71,7 @@ class Loader
 	}
 
 	private static function host(){
-	    // Obtenemos el Servidor , en caso de server local sera => http://localhost 
+	    // Obtenemos el Servidor , en caso de server local sera => http://localhost
 	    $host= $_SERVER["HTTP_HOST"];
 	    // Obentenos la URL, ejemplo al ser inicio sera => /ancaor2017/inicio
 	   	$url= $_SERVER["REQUEST_URI"];
